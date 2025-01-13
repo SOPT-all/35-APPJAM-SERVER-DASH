@@ -32,4 +32,5 @@ public class LessonRoundJpaEntity {
 
     @Column(nullable = false)
     private LocalDateTime endTime;
+
 }

@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LessonJpaEntity extends BaseTimeEntity {
 
-
     @Id
     @Column(name = "lesson_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
