@@ -1,4 +1,4 @@
-package be.dash.dashserver.database.core;
+package be.dash.dashserver.database.core.member;
 
 import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.domain.member.SocialProvider;
