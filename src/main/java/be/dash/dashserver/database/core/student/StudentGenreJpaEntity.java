@@ -1,6 +1,7 @@
 package be.dash.dashserver.database.core.student;
 
 import be.dash.dashserver.database.core.genre.GenreJpaEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 public class StudentGenreJpaEntity {
 
     @Id
+    @Column(name = "student_genre_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
