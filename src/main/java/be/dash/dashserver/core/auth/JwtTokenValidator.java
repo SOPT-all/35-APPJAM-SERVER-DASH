@@ -6,7 +6,9 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SecurityException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class JwtTokenValidator {
 
@@ -16,8 +18,7 @@ public class JwtTokenValidator {
     public void validate(String token) {
         try {
             Jwts.parser()
-                    .setSigningKey(keyGenerator.getKeyFromString(jwtProperties.getSecretKey()))
-                    .build()
+                    .setSigningKey(keyGenerator.getKeyFromString(jwtProperties.secretKey()))
                     .parseClaimsJws(token);
         } catch (SecurityException | MalformedJwtException | IllegalArgumentException | UnsupportedJwtException e) {
             throw new UnAuthorizedException("잘못된 토큰입니다.");
@@ -29,8 +30,7 @@ public class JwtTokenValidator {
     public String getSubject(String token) {
 
         return Jwts.parser()
-                .setSigningKey(keyGenerator.getKeyFromString(jwtProperties.getSecretKey()))
-                .build()
+                .setSigningKey(keyGenerator.getKeyFromString(jwtProperties.secretKey()))
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
