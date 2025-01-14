@@ -21,9 +21,9 @@ public class JwtTokenValidator {
                     .setSigningKey(keyGenerator.getKeyFromString(jwtProperties.secretKey()))
                     .parseClaimsJws(token);
         } catch (SecurityException | MalformedJwtException | IllegalArgumentException | UnsupportedJwtException e) {
-            throw new UnAuthorizedException("잘못된 토큰입니다.");
+            throw UnAuthorizedException.wrong(token);
         } catch (ExpiredJwtException e) {
-            throw new UnAuthorizedException("만료된 토큰입니다.");
+            throw UnAuthorizedException.expired(token);
         }
     }
 

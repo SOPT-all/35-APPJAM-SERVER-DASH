@@ -2,7 +2,7 @@ package be.dash.dashserver.core.auth;
 
 public class UnAuthorizedException extends RuntimeException {
 
-    UnAuthorizedException(String message) {
+    private UnAuthorizedException(String message) {
         super(message);
     }
 
