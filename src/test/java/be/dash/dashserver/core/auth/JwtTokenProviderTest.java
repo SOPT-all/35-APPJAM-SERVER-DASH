@@ -31,7 +31,7 @@ public class JwtTokenProviderTest {
         String payload = "1";
         Role role = Role.MEMBER;
         // when
-        String token = jwtTokenProvider.createAccessToken(payload, Role.MEMBER);
+        String token = jwtTokenProvider.createRefreshToken(payload, Role.MEMBER);
         // then
         Assertions.assertThat(token).isNotNull();
     }
