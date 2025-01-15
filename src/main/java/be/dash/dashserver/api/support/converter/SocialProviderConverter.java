@@ -1,4 +1,4 @@
-package be.dash.dashserver.api.support;
+package be.dash.dashserver.api.support.converter;
 
 import be.dash.dashserver.api.exception.DashApiException;
 import be.dash.dashserver.core.domain.member.SocialProvider;
