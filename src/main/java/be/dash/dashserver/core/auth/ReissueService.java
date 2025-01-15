@@ -34,7 +34,7 @@ public class ReissueService {
         String parsedToken = getToken(refreshToken);
         jwtTokenValidator.validate(parsedToken);
         RefreshToken token = refreshTokenRepository.findByRefreshToken(parsedToken)
-                .orElseThrow(() -> new DashException("유효하지 않은 토큰입니다."));
+                .orElseThrow(() -> UnAuthorizedException.wrong(refreshToken));
         return token;
     }
 
