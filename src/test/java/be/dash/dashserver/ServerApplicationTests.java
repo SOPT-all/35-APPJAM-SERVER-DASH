@@ -11,9 +11,4 @@ class ServerApplicationTests {
     @Test
     void contextLoads() {
     }
-
-    @BeforeEach
-    void setup() {
-        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
-    }
 }

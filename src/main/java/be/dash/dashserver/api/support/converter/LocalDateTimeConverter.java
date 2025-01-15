@@ -11,7 +11,7 @@ import be.dash.dashserver.api.exception.DashApiException;
 @Component
 public class LocalDateTimeConverter implements Converter<String, LocalDateTime> {
 
-    private static final String PATTERN = "yyyy-MM-dd['T'HH[:mm[:ss[.SSSSSS]]]]";
+    private static final String PATTERN = "yyyy-MM-dd['T'HH[:mm[:ss[.SSSSSSSSS]]]]";
 
     @Override
     public LocalDateTime convert(String source) {
