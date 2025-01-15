@@ -26,13 +26,4 @@ public class JwtTokenValidator {
             throw UnAuthorizedException.expired(token);
         }
     }
-
-    public String getSubject(String token) {
-
-        return Jwts.parser()
-                .setSigningKey(keyGenerator.getKeyFromString(jwtProperties.secretKey()))
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-    }
 }

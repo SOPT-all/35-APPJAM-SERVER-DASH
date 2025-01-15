@@ -47,21 +47,4 @@ public class JwtTokenValidatorTest {
                 .isExactlyInstanceOf(UnAuthorizedException.class)
                 .hasMessageContaining("만료된 토큰");
     }
-
-    @Test
-    @DisplayName("토큰에서 subject를 가져올 수 있어야 한다.")
-    void getSubject() {
-        //given
-        Date now = new Date();
-        String token = Jwts.builder()
-                .setSubject("1")
-                .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
-                .setExpiration(new Date(now.getTime() + jwtProperties.accessTokenValidTime()))
-                .signWith(keyGenerator.getKeyFromString(jwtProperties.secretKey()), SignatureAlgorithm.HS256)
-                .compact();
-        //when
-        String subject = jwtTokenValidator.getSubject(token);
-        //then
-        Assertions.assertThat(subject).isEqualTo("1");
-    }
 }

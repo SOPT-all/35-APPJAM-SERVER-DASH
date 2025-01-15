@@ -1,0 +1,34 @@
+package be.dash.dashserver.core.auth;
+
+import be.dash.dashserver.core.domain.member.Role;
+import io.jsonwebtoken.Jwts;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+public class JwtTokenExtractor {
+
+    private final JwtProperties jwtProperties;
+    private final KeyGenerator keyGenerator;
+
+    public String getSubject(String token) {
+
+        return Jwts.parser()
+                .setSigningKey(keyGenerator.getKeyFromString(jwtProperties.secretKey()))
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    public Role getRole(String token) {
+        String role = Jwts.parser()
+                .setSigningKey(keyGenerator.getKeyFromString(jwtProperties.secretKey()))
+                .parseClaimsJws(token)
+                .getBody()
+                .get("role", String.class);
+
+        return Role.valueOf(role);
+    }
+
+}
