@@ -1,6 +1,7 @@
 package be.dash.dashserver.database.core.lesson;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,10 +42,10 @@ class LessonRepositoryAdapterTest {
     @DisplayName("동적으로 필터에 해당하며, 마감기한이 지나지 않은 수업들을 조회한다.")
     @Test
     void findActiveLessonsByFilters() {
-        LocalDateTime startDateTime = LocalDateTime.now().minusDays(1);
-        LocalDateTime endDateTime = LocalDateTime.now().plusDays(5);
+        LocalDateTime startDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).minusDays(5);
+        LocalDateTime endDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusDays(10);
         createLessons(startDateTime, endDateTime);
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
         List<Lesson> lessonsHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, now);
         List<Lesson> lessonsFemaleHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.FEMALE_HIPHOP, Level.BEGINNER, startDateTime, endDateTime, now);

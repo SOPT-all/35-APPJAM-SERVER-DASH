@@ -1,15 +1,14 @@
 package be.dash.dashserver.api.core.lesson;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import be.dash.dashserver.api.config.WebMvcConfig;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.common.SortOption;
@@ -47,8 +46,8 @@ class LessonControllerTest {
         mockMvc.perform(get("/api/v1/lessons")
                         .param("genre", "HIPHOP")
                         .param("level", "BEGINNER")
-                        .param("startDate", LocalDateTime.now().toString())
-                        .param("endDate", LocalDateTime.now().plusDays(2).toString())
+                        .param("startDate", LocalDateTime.now(ZoneId.of("Asia/Seoul")).toString())
+                        .param("endDate", LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusDays(2).toString())
                         .param("sortOption", "LATEST"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.lessons[0].id").value(lessons.lessons().get(0).getId()))
