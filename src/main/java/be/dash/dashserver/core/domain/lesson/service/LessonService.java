@@ -1,6 +1,7 @@
 package be.dash.dashserver.core.domain.lesson.service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import be.dash.dashserver.core.domain.common.Genre;
@@ -18,7 +19,7 @@ public class LessonService {
 
     public Lessons search(Genre genre, Level level, LocalDateTime startDateTime, LocalDateTime endDateTime, SortOption sortOption) {
         Lessons lessons = new Lessons(
-                lessonRepository.findActiveLessonsByFilters(genre, level, startDateTime, endDateTime, LocalDateTime.now())
+                lessonRepository.findActiveLessonsByFilters(genre, level, startDateTime, endDateTime, LocalDateTime.now(ZoneId.of("Asia/Seoul")))
         );
         return lessons.sort(sortOption);
     }

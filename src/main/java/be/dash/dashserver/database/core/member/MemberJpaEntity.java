@@ -55,7 +55,6 @@ public class MemberJpaEntity extends BaseTimeEntity {
 
     @Builder
     public MemberJpaEntity(SocialProvider provider, String socialId, String socialName, Role role, String email, String name, String phoneNumber, String nickname) {
-        this.id = id;
         this.provider = provider;
         this.socialId = socialId;
         this.socialName = socialName;
