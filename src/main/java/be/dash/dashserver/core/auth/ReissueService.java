@@ -9,12 +9,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ReissueService {
 
-    private static final String BEARER_PREFIX = "Bearer ";
-
     private final JwtTokenGenerator jwtTokenGenerator;
     private final JwtTokenValidator jwtTokenValidator;
     private final JwtTokenExtractor jwtTokenExtractor;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final TokenParser tokenParser;
 
     public Token reissue(String refreshToken) {
 
@@ -31,18 +30,10 @@ public class ReissueService {
     }
 
     private RefreshToken getValidRefreshToken(String refreshToken) {
-        String parsedToken = getToken(refreshToken);
+        String parsedToken = tokenParser.getToken(refreshToken);
         jwtTokenValidator.validate(parsedToken);
         RefreshToken token = refreshTokenRepository.findByRefreshToken(parsedToken)
                 .orElseThrow(() -> UnAuthorizedException.wrong(refreshToken));
         return token;
-    }
-
-    private String getToken(String token){
-        if (token.startsWith(BEARER_PREFIX)) {
-            return token.substring(BEARER_PREFIX.length());
-        } else {
-            throw new DashException("잘못된 토큰 형식입니다.");
-        }
     }
 }
