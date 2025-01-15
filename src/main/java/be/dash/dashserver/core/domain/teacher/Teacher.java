@@ -7,14 +7,14 @@ import lombok.Getter;
 @Getter
 public class Teacher {
 
-    private Long id;
-    private Member member;
-    private String detail;
-    private String education;
-    private String experience;
-    private String instagram;
-    private String youtube;
-    private String imageUrl;
+    private final Long id;
+    private final Member member;
+    private final String detail;
+    private final String education;
+    private final String experience;
+    private final String instagram;
+    private final String youtube;
+    private final String imageUrl;
 
     @Builder
     public Teacher(

@@ -46,9 +46,12 @@ class LessonServiceTest extends ServiceSliceTest {
         Lessons lessonsUpComing = lessonService.search(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, SortOption.UPCOMING);
 
         assertAll(
-                () -> assertThat(lessonsLatest.lessons().stream().map(Lesson::getId).toList()).containsExactly(5L, 4L, 3L),
-                () -> assertThat(lessonsMostFavorite.lessons().stream().map(Lesson::getId).toList()).containsExactly(3L, 4L, 5L),
-                () -> assertThat(lessonsUpComing.lessons().stream().map(Lesson::getId).toList()).containsExactly(3L, 5L, 4L)
+                () -> assertThat(lessonsLatest.lessons().stream().map(Lesson::getId)
+                        .toList()).containsExactly(5L, 4L, 3L),
+                () -> assertThat(lessonsMostFavorite.lessons().stream().map(Lesson::getId)
+                        .toList()).containsExactly(3L, 4L, 5L),
+                () -> assertThat(lessonsUpComing.lessons().stream().map(Lesson::getId)
+                        .toList()).containsExactly(3L, 5L, 4L)
         );
     }
 

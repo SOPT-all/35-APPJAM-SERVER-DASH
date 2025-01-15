@@ -3,7 +3,6 @@ package be.dash.dashserver.api.support.converter;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import be.dash.dashserver.api.exception.DashApiException;
 
 import static org.assertj.core.api.Assertions.assertThat;

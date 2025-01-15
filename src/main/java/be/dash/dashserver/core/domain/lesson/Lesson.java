@@ -10,23 +10,23 @@ import lombok.Getter;
 @Getter
 public class Lesson {
 
-    private Long id;
-    private Teacher teacher;
-    private String name;
-    private Genre genre;
-    private Level level;
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
-    private String location;
-    private String streetAddress;
-    private String oldStreetAddress;
-    private Long favoriteCount;
-    private Long reservationCount;
-    private Long maxReservationCount;
-    private String detail;
-    private String recommendation;
-    private Integer individualPrice;
-    private LocalDateTime createdAt;
+    private final Long id;
+    private final Teacher teacher;
+    private final String name;
+    private final Genre genre;
+    private final Level level;
+    private final LocalDateTime startDateTime;
+    private final LocalDateTime endDateTime;
+    private final String location;
+    private final String streetAddress;
+    private final String oldStreetAddress;
+    private final Long favoriteCount;
+    private final Long reservationCount;
+    private final Long maxReservationCount;
+    private final String detail;
+    private final String recommendation;
+    private final Integer individualPrice;
+    private final LocalDateTime createdAt;
 
     @Builder
     public Lesson(Long id, Teacher teacher, String name, Genre genre, Level level, LocalDateTime startDateTime, LocalDateTime endDateTime, String location, String streetAddress, String oldStreetAddress, Long favoriteCount, Long reservationCount, Long maxReservationCount, String detail, String recommendation, Integer individualPrice, LocalDateTime createdAt) {
