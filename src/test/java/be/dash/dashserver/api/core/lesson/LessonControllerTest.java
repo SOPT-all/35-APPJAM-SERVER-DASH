@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(LessonController.class)
-@Import({LocalDateTimeConverter.class, LevelConverter.class, GenreConverter.class, SortOptionConverter.class})
+@Import({WebMvcTest.class, LocalDateTimeConverter.class, LevelConverter.class, GenreConverter.class, SortOptionConverter.class})
 class LessonControllerTest {
 
     @MockitoBean
