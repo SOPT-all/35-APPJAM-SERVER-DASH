@@ -15,4 +15,8 @@ public class UnAuthorizedException extends DashException {
     public static UnAuthorizedException expired(String token) {
         return new UnAuthorizedException(String.format("만료된 토큰 (%s) 입니다", token));
     }
+
+    public static UnAuthorizedException empty() {
+        return new UnAuthorizedException(String.format("토큰이 없습니다."));
+    }
 }
