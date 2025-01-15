@@ -9,6 +9,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import be.dash.dashserver.core.auth.JwtTokenExtractor;
+import be.dash.dashserver.core.auth.TokenParser;
 import be.dash.dashserver.core.auth.UnAuthorizedException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberIdArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final JwtTokenExtractor jwtTokenExtractor;
+    private final TokenParser tokenParser;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -33,7 +35,7 @@ public class MemberIdArgumentResolver implements HandlerMethodArgumentResolver {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         String memberId;
         try {
-            memberId = jwtTokenExtractor.getSubject(token);
+            memberId = jwtTokenExtractor.getSubject(tokenParser.getToken(token));
         } catch (ExpiredJwtException e) {
             throw UnAuthorizedException.expired(token);
         } catch (JwtException | IllegalArgumentException e) {

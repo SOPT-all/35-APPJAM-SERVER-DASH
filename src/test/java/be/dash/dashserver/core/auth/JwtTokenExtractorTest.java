@@ -9,9 +9,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JwtTokenExtractorTest {
-
-    private static final String BEARER_PREFIX = "Bearer ";
-
     private final KeyGenerator keyGenerator = new KeyGenerator();
     private final JwtProperties jwtProperties = new JwtProperties("secretasdfasdfasdfasdfasdlmlmllklklklfasdfasdfasdf",
             5000,
@@ -31,7 +28,7 @@ public class JwtTokenExtractorTest {
                 .signWith(keyGenerator.getKeyFromString(jwtProperties.secretKey()), SignatureAlgorithm.HS256)
                 .compact();
         //when
-        String subject = jwtTokenExtractor.getSubject(BEARER_PREFIX + token);
+        String subject = jwtTokenExtractor.getSubject(token);
         //then
         Assertions.assertThat(subject).isEqualTo("1");
     }

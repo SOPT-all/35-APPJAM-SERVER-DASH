@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import be.dash.dashserver.core.auth.JwtTokenExtractor;
+import be.dash.dashserver.core.auth.TokenParser;
 import be.dash.dashserver.core.auth.UnAuthorizedException;
 import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.exception.ForbiddenException;
@@ -22,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PermissionInterceptor implements HandlerInterceptor {
 
     private final JwtTokenExtractor jwtTokenExtractor;
+    private final TokenParser tokenParser;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -32,7 +34,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         Role role;
         try {
-            role = jwtTokenExtractor.getRole(token);
+            role = jwtTokenExtractor.getRole(tokenParser.getToken(token));
         }catch (NullPointerException e) {
             throw UnAuthorizedException.empty();
         }
@@ -46,14 +48,14 @@ public class PermissionInterceptor implements HandlerInterceptor {
 
         if (annotations.contains(Role.MEMBER)) {
             if (role == Role.MEMBER) {
-                log.info("Successfully authenticated as ADMIN");
+                log.info("Successfully authenticated as Member");
                 return true; // Check @Permission
             }
         }
 
         if (annotations.contains(Role.TEACHER)) {
             if (role == Role.TEACHER) {
-                log.info("Successfully authenticated as STAFF");
+                log.info("Successfully authenticated as Teacher");
                 return true; // Check @Permission
             }
         }

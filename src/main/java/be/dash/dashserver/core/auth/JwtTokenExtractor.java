@@ -16,7 +16,7 @@ public class JwtTokenExtractor {
     public String getSubject(String token) {
         return Jwts.parser()
                 .setSigningKey(keyGenerator.getKeyFromString(jwtProperties.secretKey()))
-                .parseClaimsJws(tokenParser.getToken(token))
+                .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
     }
@@ -24,7 +24,7 @@ public class JwtTokenExtractor {
     public Role getRole(String token) {
         String role = Jwts.parser()
                 .setSigningKey(keyGenerator.getKeyFromString(jwtProperties.secretKey()))
-                .parseClaimsJws(tokenParser.getToken(token))
+                .parseClaimsJws(token)
                 .getBody()
                 .get("role", String.class);
 
