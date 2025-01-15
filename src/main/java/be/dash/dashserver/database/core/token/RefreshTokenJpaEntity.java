@@ -5,17 +5,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import be.dash.dashserver.core.auth.RefreshToken;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "refresh_token")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RefreshTokenJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "token_id")
+    @Column(name = "refresh_token_id")
     private Long id;
 
     @Column(nullable = false)
