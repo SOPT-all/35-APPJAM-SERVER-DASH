@@ -2,6 +2,8 @@ package be.dash.dashserver.api.core.lesson;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.TimeZone;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,11 @@ class LessonControllerTest {
     private LessonService lessonService;
     @Autowired
     private MockMvc mockMvc;
+
+    @BeforeEach
+    void setup() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+    }
 
     @DisplayName("주어진 필터와 정렬 옵션으로 수업 검색 요청을 처리하고 올바른 응답을 반환한다.")
     @Test

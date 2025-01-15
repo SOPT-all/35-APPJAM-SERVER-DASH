@@ -2,6 +2,8 @@ package be.dash.dashserver.database.core.lesson;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.TimeZone;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,11 @@ class LessonRepositoryAdapterTest {
     private TeacherImageJpaRepository teacherImageJpaRepository;
     @Autowired
     private MemberJpaRepositoy memberJpaRepositoy;
+
+    @BeforeEach
+    void setup() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+    }
 
     @DisplayName("동적으로 필터에 해당하며, 마감기한이 지나지 않은 수업들을 조회한다.")
     @Test
