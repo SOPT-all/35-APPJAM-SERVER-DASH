@@ -41,10 +41,10 @@ class LessonRepositoryAdapterTest {
     @DisplayName("동적으로 필터에 해당하며, 마감기한이 지나지 않은 수업들을 조회한다.")
     @Test
     void findActiveLessonsByFilters() {
-        LocalDateTime startDateTime = LocalDateTime.now().minusDays(5);
-        LocalDateTime endDateTime = LocalDateTime.now().plusDays(10);
+        LocalDateTime startDateTime = LocalDateTime.of(2025,1,15,3,40,50).minusDays(5);
+        LocalDateTime endDateTime = LocalDateTime.of(2025,1,15,3,40,50).plusDays(10);
         createLessons(startDateTime, endDateTime);
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.of(2025,1,15,3,40,50);
 
         List<Lesson> lessonsHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, now);
         List<Lesson> lessonsFemaleHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.FEMALE_HIPHOP, Level.BEGINNER, startDateTime, endDateTime, now);
