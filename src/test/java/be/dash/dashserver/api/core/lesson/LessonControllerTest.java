@@ -27,6 +27,10 @@ class LessonControllerTest {
 
     @MockitoBean
     private LessonService lessonService;
+    @MockitoBean
+    private JwtTokenExtractor jwtTokenExtractor;
+    @MockitoBean
+    private TokenParser tonParser;
     @Autowired
     private MockMvc mockMvc;
 
