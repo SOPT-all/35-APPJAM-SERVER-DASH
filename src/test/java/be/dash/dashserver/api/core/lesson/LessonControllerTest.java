@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import be.dash.dashserver.api.config.WebMvcConfig;
 import be.dash.dashserver.api.support.converter.GenreConverter;
 import be.dash.dashserver.api.support.converter.LevelConverter;
 import be.dash.dashserver.api.support.converter.LocalDateTimeConverter;
@@ -30,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(LessonController.class)
-@Import({WebMvcTest.class, LocalDateTimeConverter.class, LevelConverter.class, GenreConverter.class, SortOptionConverter.class})
+@Import({WebMvcConfig.class, LocalDateTimeConverter.class, LevelConverter.class, GenreConverter.class, SortOptionConverter.class})
 class LessonControllerTest {
 
     @MockitoBean
