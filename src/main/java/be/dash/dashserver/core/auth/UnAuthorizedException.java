@@ -8,11 +8,11 @@ public class UnAuthorizedException extends DashException {
         super(message);
     }
 
-    static UnAuthorizedException wrong(String token) {
+    public static UnAuthorizedException wrong(String token) {
         return new UnAuthorizedException(String.format("잘못된 토큰 (%s) 입니다", token));
     }
 
-    static UnAuthorizedException expired(String token) {
+    public static UnAuthorizedException expired(String token) {
         return new UnAuthorizedException(String.format("만료된 토큰 (%s) 입니다", token));
     }
 }
