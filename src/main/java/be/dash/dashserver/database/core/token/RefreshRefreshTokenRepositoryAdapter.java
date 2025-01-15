@@ -22,4 +22,9 @@ public class RefreshRefreshTokenRepositoryAdapter implements RefreshTokenReposit
         return refreshTokenJpaRepository.findByRefreshToken(refreshToken)
                 .map(RefreshTokenJpaEntity::toDomain);
     }
+
+    @Override
+    public void deleteAllByMemberId(long memberId) {
+        refreshTokenJpaRepository.deleteAllByMemberId(memberId);
+    }
 }
