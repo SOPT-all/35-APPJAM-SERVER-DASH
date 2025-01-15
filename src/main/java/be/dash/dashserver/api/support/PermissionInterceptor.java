@@ -33,7 +33,10 @@ public class PermissionInterceptor implements HandlerInterceptor {
         Role role;
         try {
             role = jwtTokenExtractor.getRole(token);
-        } catch (ExpiredJwtException e) {
+        }catch (NullPointerException e) {
+            throw UnAuthorizedException.empty();
+        }
+        catch (ExpiredJwtException e) {
             throw UnAuthorizedException.expired(token);
         } catch (JwtException | IllegalArgumentException e) {
             throw UnAuthorizedException.wrong(token);
