@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class LoginService {
 
     private static final String BEARER_PREFIX = "Bearer ";
 
