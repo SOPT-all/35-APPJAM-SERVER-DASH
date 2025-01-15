@@ -1,7 +1,7 @@
 package be.dash.dashserver.core.auth;
 
 import be.dash.dashserver.core.domain.member.Role;
-import be.dash.dashserver.core.exception.DashException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,7 @@ public class ReissueService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final TokenParser tokenParser;
 
+    @Transactional
     public Token reissue(String refreshToken) {
 
         RefreshToken token = getValidRefreshToken(refreshToken);

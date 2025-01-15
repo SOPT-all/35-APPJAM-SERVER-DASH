@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 public class LogoutService {
 
     private final RefreshTokenRepository refreshTokenRepository;
+
+    @Transactional
     public void logout(long memberId) {
         refreshTokenRepository.deleteAllByMemberId(memberId);
     }

@@ -5,6 +5,7 @@ import be.dash.dashserver.core.auth.dto.OauthTokenResult;
 import be.dash.dashserver.core.auth.dto.SocialInfoResult;
 import be.dash.dashserver.core.domain.member.AuthMember;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +13,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LoginService {
 
-    private static final String BEARER_PREFIX = "Bearer ";
-
     private final OauthClientApi oauthClientApi;
     private final MemberRepository memberRepository;
     private final JwtTokenGenerator jwtTokenGenerator;
     private final RefreshTokenRepository refreshTokenRepository;
 
+    @Transactional
     public Token login(LoginCommand command) {
 
         SocialInfoResult socialUserInfo = getSocialInfo(command);
