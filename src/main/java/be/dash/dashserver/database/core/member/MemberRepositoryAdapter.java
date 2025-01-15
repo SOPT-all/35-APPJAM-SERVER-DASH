@@ -26,6 +26,6 @@ public class MemberRepositoryAdapter implements MemberRepository {
 
     @Override
     public void save(Member member) {
-        memberJpaRepositoy.save(new MemberJpaEntity(member));
+        memberJpaRepository.save(new MemberJpaEntity(member));
     }
 }

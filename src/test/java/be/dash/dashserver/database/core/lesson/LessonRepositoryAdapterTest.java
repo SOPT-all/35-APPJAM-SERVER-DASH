@@ -13,7 +13,7 @@ import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.lesson.service.LessonRepository;
 import be.dash.dashserver.core.fixture.LessonFixture;
 import be.dash.dashserver.database.core.member.MemberJpaEntity;
-import be.dash.dashserver.database.core.member.MemberJpaRepositoy;
+import be.dash.dashserver.database.core.member.MemberJpaRepository;
 import be.dash.dashserver.database.core.teacher.TeacherImageJpaEntity;
 import be.dash.dashserver.database.core.teacher.TeacherImageJpaRepository;
 import be.dash.dashserver.database.core.teacher.TeacherJpaEntity;
@@ -36,7 +36,7 @@ class LessonRepositoryAdapterTest {
     @Autowired
     private TeacherImageJpaRepository teacherImageJpaRepository;
     @Autowired
-    private MemberJpaRepositoy memberJpaRepositoy;
+    private MemberJpaRepository memberJpaRepository;
 
     @DisplayName("동적으로 필터에 해당하며, 마감기한이 지나지 않은 수업들을 조회한다.")
     @Test
@@ -59,7 +59,7 @@ class LessonRepositoryAdapterTest {
 
     private void createLessons(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         MemberJpaEntity memberJpaEntity = MemberJpaEntityFixture.create();
-        memberJpaRepositoy.save(memberJpaEntity);
+        memberJpaRepository.save(memberJpaEntity);
         TeacherJpaEntity teacherEntity = TeacherJpaEntityFixture.create(memberJpaEntity);
         teacherJpaRepository.save(teacherEntity);
         TeacherImageJpaEntity teacherImage = TeacherImageJpaEntityFixture.create(teacherEntity, "imageUrl");
