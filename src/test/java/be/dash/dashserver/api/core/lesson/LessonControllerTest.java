@@ -1,7 +1,6 @@
 package be.dash.dashserver.api.core.lesson;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,8 +45,8 @@ class LessonControllerTest {
         mockMvc.perform(get("/api/v1/lessons")
                         .param("genre", "HIPHOP")
                         .param("level", "BEGINNER")
-                        .param("startDate", LocalDateTime.now(ZoneId.of("Asia/Seoul")).toString())
-                        .param("endDate", LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusDays(2).toString())
+                        .param("startDate", LocalDateTime.now().toString())
+                        .param("endDate", LocalDateTime.now().plusDays(2).toString())
                         .param("sortOption", "LATEST"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.lessons[0].id").value(lessons.lessons().get(0).getId()))
