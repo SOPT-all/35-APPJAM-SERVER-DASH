@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
 
+    private static final String BEARER_PREFIX = "Bearer ";
+
     private final OauthClientApi oauthClientApi;
     private final MemberRepository memberRepository;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final TokenRepository tokenRepository;
+    private final JwtTokenGenerator jwtTokenGenerator;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     public Token login(LoginCommand command) {
 
@@ -28,13 +30,13 @@ public class AuthService {
     }
 
     private void updateRefreshToken(String refreshToken, long id) {
-        tokenRepository.save(refreshToken, id);
+        refreshTokenRepository.save(refreshToken, id);
     }
 
     private Token createToken(AuthMember authMember) {
         return new Token(
-               jwtTokenProvider.createAccessToken(String.valueOf(authMember.getId()), authMember.getRole()),
-               jwtTokenProvider.createRefreshToken(String.valueOf(authMember.getId()), authMember.getRole())
+               jwtTokenGenerator.createAccessToken(String.valueOf(authMember.getId()), authMember.getRole()),
+               jwtTokenGenerator.createRefreshToken(String.valueOf(authMember.getId()), authMember.getRole())
        );
     }
 
@@ -60,5 +62,4 @@ public class AuthService {
         SocialInfoResult socialUserInfo = oauthClientApi.getSocialUserInfo(tokenResult.accessToken());
         return socialUserInfo;
     }
-
 }
