@@ -1,9 +1,7 @@
 package be.dash.dashserver.api.support;
 
 import be.dash.dashserver.core.auth.JwtTokenExtractor;
-import be.dash.dashserver.core.auth.TokenParser;
 import be.dash.dashserver.core.auth.UnAuthorizedException;
-import be.dash.dashserver.core.exception.DashException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,9 +18,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @RequiredArgsConstructor
 public class MemberIdArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private static final String BEARER_PREFIX = "Bearer ";
     private final JwtTokenExtractor jwtTokenExtractor;
-    private final TokenParser tokenParser;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
