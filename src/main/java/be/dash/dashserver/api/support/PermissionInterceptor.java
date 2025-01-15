@@ -1,0 +1,59 @@
+package be.dash.dashserver.api.support;
+
+import be.dash.dashserver.core.auth.JwtTokenExtractor;
+import be.dash.dashserver.core.auth.UnAuthorizedException;
+import be.dash.dashserver.core.domain.member.Role;
+import be.dash.dashserver.core.exception.ForbiddenException;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.util.Set;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class PermissionInterceptor implements HandlerInterceptor {
+
+    private final JwtTokenExtractor jwtTokenExtractor;
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        HandlerMethod method = (HandlerMethod) handler;
+        Permission permission = method.getMethodAnnotation(Permission.class);
+        if (permission == null) return true;
+
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        Role role;
+        try {
+            role = jwtTokenExtractor.getRole(token);
+        } catch (ExpiredJwtException e) {
+            throw UnAuthorizedException.expired(token);
+        } catch (JwtException | IllegalArgumentException e) {
+            throw UnAuthorizedException.wrong(token);
+        }
+
+        Set<Role> annotations = Set.of(permission.role());
+
+        if (annotations.contains(Role.MEMBER)) {
+            if (role == Role.MEMBER) {
+                log.info("Successfully authenticated as ADMIN");
+                return true; // Check @Permission
+            }
+        }
+
+        if (annotations.contains(Role.TEACHER)) {
+            if (role == Role.TEACHER) {
+                log.info("Successfully authenticated as STAFF");
+                return true; // Check @Permission
+            }
+        }
+        throw new ForbiddenException("요청하신 자원에 대해 권한이 없습니다.");
+    }
+}
