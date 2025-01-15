@@ -1,8 +1,8 @@
 package be.dash.dashserver.core.auth;
 
+import org.springframework.stereotype.Component;
 import be.dash.dashserver.core.exception.DashException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

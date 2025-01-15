@@ -1,11 +1,11 @@
 package be.dash.dashserver.database.core.token;
 
-import be.dash.dashserver.core.auth.RefreshToken;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import be.dash.dashserver.core.auth.RefreshToken;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

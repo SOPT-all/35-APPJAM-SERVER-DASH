@@ -1,10 +1,10 @@
 package be.dash.dashserver.database.core.token;
 
+import java.util.Optional;
+import org.springframework.stereotype.Component;
 import be.dash.dashserver.core.auth.RefreshToken;
 import be.dash.dashserver.core.auth.RefreshTokenRepository;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

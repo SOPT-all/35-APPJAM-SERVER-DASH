@@ -1,9 +1,9 @@
 package be.dash.dashserver.core.auth;
 
+import org.springframework.stereotype.Component;
 import be.dash.dashserver.core.domain.member.Role;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

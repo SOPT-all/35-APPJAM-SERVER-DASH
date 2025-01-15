@@ -1,9 +1,9 @@
 package be.dash.dashserver.core.auth;
 
-import be.dash.dashserver.core.domain.member.Role;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import be.dash.dashserver.core.domain.member.Role;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

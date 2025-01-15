@@ -1,11 +1,6 @@
 package be.dash.dashserver.api.support;
 
-import be.dash.dashserver.core.auth.JwtTokenExtractor;
-import be.dash.dashserver.core.auth.UnAuthorizedException;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -13,6 +8,11 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+import be.dash.dashserver.core.auth.JwtTokenExtractor;
+import be.dash.dashserver.core.auth.UnAuthorizedException;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor

@@ -1,11 +1,11 @@
 package be.dash.dashserver.database.core.member;
 
+import org.springframework.stereotype.Component;
 import be.dash.dashserver.core.domain.member.AuthMember;
 import be.dash.dashserver.core.domain.member.Member;
 import be.dash.dashserver.core.domain.member.SocialProvider;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

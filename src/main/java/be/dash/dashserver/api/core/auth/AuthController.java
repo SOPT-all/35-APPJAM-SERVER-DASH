@@ -1,5 +1,12 @@
 package be.dash.dashserver.api.core.auth;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import be.dash.dashserver.api.core.auth.dto.LoginRequest;
 import be.dash.dashserver.api.core.auth.dto.LoginResponse;
 import be.dash.dashserver.api.core.auth.dto.ReissueResponse;
@@ -12,13 +19,6 @@ import be.dash.dashserver.core.auth.Token;
 import be.dash.dashserver.core.auth.command.LoginCommand;
 import be.dash.dashserver.core.domain.member.Role;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/auth")
