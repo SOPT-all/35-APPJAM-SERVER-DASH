@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import be.dash.dashserver.core.domain.member.AuthMember;
+import be.dash.dashserver.core.domain.member.Member;
 import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.domain.member.SocialProvider;
 import be.dash.dashserver.database.core.common.BaseTimeEntity;
