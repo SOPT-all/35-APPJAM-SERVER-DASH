@@ -8,4 +8,5 @@ public interface MemberRepository {
     AuthMember findBySocialIdAndProviderOrNull(String socialId, SocialProvider provider);
     AuthMember save(AuthMember authMember);
     void save(Member member);
+    Member findById(long id);
 }

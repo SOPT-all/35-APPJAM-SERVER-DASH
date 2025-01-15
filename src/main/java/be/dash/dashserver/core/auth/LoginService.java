@@ -2,10 +2,12 @@ package be.dash.dashserver.core.auth;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import be.dash.dashserver.core.LoginResult;
 import be.dash.dashserver.core.auth.command.LoginCommand;
 import be.dash.dashserver.core.auth.dto.OauthTokenResult;
 import be.dash.dashserver.core.auth.dto.SocialInfoResult;
 import be.dash.dashserver.core.domain.member.AuthMember;
+import be.dash.dashserver.core.domain.member.Member;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -19,14 +21,15 @@ public class LoginService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public Token login(LoginCommand command) {
+    public LoginResult login(LoginCommand command) {
 
         SocialInfoResult socialUserInfo = getSocialInfo(command);
         AuthMember authMember = loadOrCreateMember(command, socialUserInfo);
         Token token = createToken(authMember);
         updateRefreshToken(token.refreshToken(), authMember.getId());
+        Member member = memberRepository.findById(authMember.getId());
 
-        return token;
+        return LoginResult.of(token, member.isOnboarded());
     }
 
     private void updateRefreshToken(String refreshToken, long id) {

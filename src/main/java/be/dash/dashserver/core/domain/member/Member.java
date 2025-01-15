@@ -37,4 +37,8 @@ public class Member {
         this.phoneNumber = phoneNumber;
         this.nickname = nickname;
     }
+
+    public boolean isOnboarded() {
+        return nickname != null;
+    }
 }

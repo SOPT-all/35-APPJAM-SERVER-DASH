@@ -37,6 +37,7 @@ public class MemberJpaEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private String socialName;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 

@@ -12,12 +12,14 @@ import be.dash.dashserver.api.core.auth.dto.LoginResponse;
 import be.dash.dashserver.api.core.auth.dto.ReissueResponse;
 import be.dash.dashserver.api.support.MemberId;
 import be.dash.dashserver.api.support.Permission;
+import be.dash.dashserver.core.LoginResult;
 import be.dash.dashserver.core.auth.LoginService;
 import be.dash.dashserver.core.auth.LogoutService;
 import be.dash.dashserver.core.auth.ReissueService;
 import be.dash.dashserver.core.auth.Token;
 import be.dash.dashserver.core.auth.command.LoginCommand;
 import be.dash.dashserver.core.domain.member.Role;
+import be.dash.dashserver.core.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -28,12 +30,12 @@ public class AuthController {
     private final LoginService loginService;
     private final ReissueService reissueService;
     private final LogoutService logoutService;
+    private final MemberService memberService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-        Token token = loginService.login(new LoginCommand(request.provider(), request.redirectUrl(), request.code()));
-        //todo 온보딩 여부 확인
-        return ResponseEntity.ok(LoginResponse.of(token));
+        LoginResult result = loginService.login(new LoginCommand(request.provider(), request.redirectUrl(), request.code()));
+        return ResponseEntity.ok(LoginResponse.of(result));
     }
 
     @Permission(role = {Role.MEMBER, Role.TEACHER})
