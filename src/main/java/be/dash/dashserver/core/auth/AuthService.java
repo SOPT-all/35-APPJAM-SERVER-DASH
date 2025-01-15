@@ -50,7 +50,7 @@ public class AuthService {
                 AuthMember.create(command.provider(),
                         socialUserInfo.id(),
                         socialUserInfo.kakaoAccount().email(),
-                        socialUserInfo.kakaoAccount().name()
+                        socialUserInfo.kakaoAccount().profile().nickname()
                 )
         );
     }

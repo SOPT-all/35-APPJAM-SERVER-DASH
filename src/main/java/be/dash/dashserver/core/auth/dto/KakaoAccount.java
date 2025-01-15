@@ -1,8 +1,9 @@
 package be.dash.dashserver.core.auth.dto;
 
-public record KaKaoAccount(
+public record KakaoAccount(
         String email,
-        String name
+
+        KakaoProfile profile
 
 ) {
 }
