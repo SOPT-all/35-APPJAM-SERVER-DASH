@@ -6,12 +6,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class TokenRepositoryAdapter implements TokenRepository {
+public class RefreshTokenRepositoryAdapter implements TokenRepository {
 
-        private final TokenJpaRepository tokenJpaRepository;
+        private final RefreshTokenJpaRepository refreshTokenJpaRepository;
 
         @Override
         public void save(String refreshToken, long memberId) {
-            tokenJpaRepository.save(TokenJpaEntity.of(refreshToken, memberId));
+            refreshTokenJpaRepository.save(RefreshTokenJpaEntity.of(refreshToken, memberId));
         }
 }

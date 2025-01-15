@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TokenJpaEntity {
+public class RefreshTokenJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,12 +23,12 @@ public class TokenJpaEntity {
     @Column(nullable = false)
     private Long memberId;
 
-    public TokenJpaEntity(String refreshToken, Long memberId) {
+    public RefreshTokenJpaEntity(String refreshToken, Long memberId) {
         this.refreshToken = refreshToken;
         this.memberId = memberId;
     }
 
-    static TokenJpaEntity of(String refreshToken, long memberId) {
-        return new TokenJpaEntity(refreshToken, memberId);
+    static RefreshTokenJpaEntity of(String refreshToken, long memberId) {
+        return new RefreshTokenJpaEntity(refreshToken, memberId);
     }
 }
