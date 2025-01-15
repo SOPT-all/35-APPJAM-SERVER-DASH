@@ -1,5 +1,6 @@
 package be.dash.dashserver.database.core.token;
 
+import be.dash.dashserver.core.auth.RefreshToken;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +29,11 @@ public class RefreshTokenJpaEntity {
         this.memberId = memberId;
     }
 
-    static RefreshTokenJpaEntity of(String refreshToken, long memberId) {
+    static RefreshTokenJpaEntity from(String refreshToken, long memberId) {
         return new RefreshTokenJpaEntity(refreshToken, memberId);
+    }
+
+    RefreshToken toDomain() {
+        return new RefreshToken(memberId, refreshToken);
     }
 }
