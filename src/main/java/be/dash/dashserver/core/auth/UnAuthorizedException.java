@@ -4,7 +4,7 @@ import be.dash.dashserver.core.exception.DashException;
 
 public class UnAuthorizedException extends DashException {
 
-    private UnAuthorizedException(String message) {
+    UnAuthorizedException(String message) {
         super(message);
     }
 
