@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class JwtTokenProvider {
+public class JwtTokenGenerator {
 
     private static final String JWT_CLAIM_ROLE = "role";
     private static final String JWT_IS_ACCESS_TOKEN = "isAccessToken";
