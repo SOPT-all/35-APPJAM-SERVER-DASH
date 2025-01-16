@@ -89,9 +89,9 @@ public class LessonJpaEntity extends BaseTimeEntity {
         this.level = lesson.getLevel();
         this.startDateTime = lesson.getStartDateTime();
         this.endDateTime = lesson.getEndDateTime();
-        this.location = lesson.getLocation();
-        this.streetAddress = lesson.getStreetAddress();
-        this.oldStreetAddress = lesson.getOldStreetAddress();
+        this.location = lesson.getLocation().getTitle();
+        this.streetAddress = lesson.getLocation().getRoadAddress();
+        this.oldStreetAddress = lesson.getLocation().getAddress();
         this.favoriteCount = lesson.getFavoriteCount();
         this.reservationCount = lesson.getReservationCount();
         this.maxReservationCount = lesson.getMaxReservationCount();
