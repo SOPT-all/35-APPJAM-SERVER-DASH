@@ -16,7 +16,7 @@ import be.dash.dashserver.core.domain.teacher.service.TeacherRepository;
 import be.dash.dashserver.core.fixture.LessonFixture;
 import be.dash.dashserver.database.core.lesson.LessonRepositoryAdapter;
 import be.dash.dashserver.database.core.member.MemberJpaEntity;
-import be.dash.dashserver.database.core.member.MemberJpaRepositoy;
+import be.dash.dashserver.database.core.member.MemberJpaRepository;
 import be.dash.dashserver.database.fixture.MemberJpaEntityFixture;
 import be.dash.dashserver.database.fixture.TeacherImageJpaEntityFixture;
 import be.dash.dashserver.database.fixture.TeacherJpaEntityFixture;
@@ -36,9 +36,9 @@ class TeacherRepositoryAdapterTest {
     @Autowired
     private TeacherImageJpaRepository teacherImageJpaRepository;
     @Autowired
-    private MemberJpaRepositoy memberJpaRepositoy;
+    private MemberJpaRepository memberJpaRepository;
 
-    @DisplayName("")
+    @DisplayName("수업을 많이 한 순서대로 댄서들을 내림차순 정렬한다.")
     @Test
     void findTeachersSortByLessonCountsDesc() {
         TeacherJpaEntity teacher = createTeacher("teacher", 1);
@@ -61,7 +61,7 @@ class TeacherRepositoryAdapterTest {
 
     private TeacherJpaEntity createTeacher(String nickname, int index) {
         MemberJpaEntity memberJpaEntity = MemberJpaEntityFixture.createWithNickname(nickname, index);
-        memberJpaRepositoy.save(memberJpaEntity);
+        memberJpaRepository.save(memberJpaEntity);
         TeacherJpaEntity teacherEntity = TeacherJpaEntityFixture.createWithNickname(nickname, memberJpaEntity);
         teacherJpaRepository.save(teacherEntity);
         TeacherImageJpaEntity teacherImage = TeacherImageJpaEntityFixture.create(teacherEntity, "imageUrl");
