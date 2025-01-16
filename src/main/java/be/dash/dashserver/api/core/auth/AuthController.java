@@ -30,7 +30,6 @@ public class AuthController {
     private final LoginService loginService;
     private final ReissueService reissueService;
     private final LogoutService logoutService;
-    private final MemberService memberService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
