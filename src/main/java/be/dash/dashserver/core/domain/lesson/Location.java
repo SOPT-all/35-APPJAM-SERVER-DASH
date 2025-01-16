@@ -1,8 +1,10 @@
 package be.dash.dashserver.core.domain.lesson;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class Location {
     private String title;
     /**

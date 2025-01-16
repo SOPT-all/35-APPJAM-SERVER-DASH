@@ -17,9 +17,7 @@ public class Lesson {
     private final Level level;
     private final LocalDateTime startDateTime;
     private final LocalDateTime endDateTime;
-    private final String location;
-    private final String streetAddress;
-    private final String oldStreetAddress;
+    private final Location location;
     private final Long favoriteCount;
     private final Long reservationCount;
     private final Long maxReservationCount;
@@ -37,9 +35,7 @@ public class Lesson {
         this.level = level;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
-        this.location = location;
-        this.streetAddress = streetAddress;
-        this.oldStreetAddress = oldStreetAddress;
+        this.location = new Location(location, streetAddress, oldStreetAddress);
         this.favoriteCount = favoriteCount;
         this.reservationCount = reservationCount;
         this.maxReservationCount = maxReservationCount;
