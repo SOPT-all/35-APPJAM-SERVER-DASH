@@ -1,9 +1,9 @@
 package be.dash.dashserver.core.auth;
 
-import io.jsonwebtoken.io.Decoders;
 import java.security.Key;
 import javax.crypto.spec.SecretKeySpec;
 import org.springframework.stereotype.Component;
+import io.jsonwebtoken.io.Decoders;
 
 
 @Component

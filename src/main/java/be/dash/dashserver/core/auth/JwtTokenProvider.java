@@ -1,14 +1,14 @@
 package be.dash.dashserver.core.auth;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.stereotype.Component;
 import be.dash.dashserver.core.domain.member.Role;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
