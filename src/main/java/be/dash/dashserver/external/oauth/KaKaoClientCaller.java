@@ -16,7 +16,6 @@ public class KaKaoClientCaller implements OauthClientApi {
 
     @Value("${kakao.client-id}")
     private String clientId;
-
     private final RestClient restClient;
 
     @Override
@@ -45,7 +44,7 @@ public class KaKaoClientCaller implements OauthClientApi {
 
     private String createHttpBody(String redirectUrl, String code) {
         return new StringBuilder("grant_type=authorization_code")
-                .append("&client_id=").append("802706f4d7371ae8587dec525ed29979")
+                .append("&client_id=").append(clientId)
                 .append("&redirect_uri=").append(redirectUrl)
                 .append("&code=").append(code)
                 .toString();
