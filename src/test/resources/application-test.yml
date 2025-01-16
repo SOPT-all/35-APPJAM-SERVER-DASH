@@ -26,3 +26,10 @@ jwt:
 
 kakao:
   client-id: 1234
+
+s3:
+  secret-key: 1234
+  access-key: 1234
+  s3-endpoint: www.s3.com
+  region: ap-northeast-2
+  s3-bucket-name: s3
