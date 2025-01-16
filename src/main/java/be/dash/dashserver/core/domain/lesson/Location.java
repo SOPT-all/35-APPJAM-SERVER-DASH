@@ -1,0 +1,17 @@
+package be.dash.dashserver.core.domain.lesson;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+
+@Getter
+public class Location {
+    private String title;
+    /**
+    * 도로명 주소
+    **/
+    private String roadAddress;
+    /**
+     * 지번 주소
+     **/
+    private String address;
+}
