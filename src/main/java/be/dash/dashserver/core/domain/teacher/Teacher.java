@@ -15,6 +15,7 @@ public class Teacher {
     private final String instagram;
     private final String youtube;
     private final String imageUrl;
+    private final long lessonCount;
 
     @Builder
     public Teacher(
@@ -25,7 +26,8 @@ public class Teacher {
             String experience,
             String instagram,
             String youtube,
-            String imageUrl) {
+            String imageUrl,
+            long lessonCount) {
         this.id = id;
         this.member = member;
         this.detail = detail;
@@ -34,5 +36,6 @@ public class Teacher {
         this.instagram = instagram;
         this.youtube = youtube;
         this.imageUrl = imageUrl;
+        this.lessonCount = lessonCount;
     }
 }

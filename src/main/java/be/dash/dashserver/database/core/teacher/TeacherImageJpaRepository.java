@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TeacherImageJpaRepository extends JpaRepository<TeacherImageJpaEntity, Long> {
 
-    Optional<TeacherImageJpaEntity> findByTeacherId(Long teacherId);
+    Optional<TeacherImageJpaEntity> findFirstByTeacherId(Long teacherId);
 }
