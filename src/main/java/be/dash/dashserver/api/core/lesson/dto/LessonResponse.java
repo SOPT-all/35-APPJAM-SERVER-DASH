@@ -24,7 +24,7 @@ public record LessonResponse(
                 lesson.getTeacher().getMember().getName(),
                 lesson.getStartDateTime().toString(),
                 lesson.getEndDateTime().toString(),
-                lesson.getLocation(),
+                lesson.getLocation().getTitle(),
                 calculateRemainingDays(lesson.getStartDateTime())
         );
     }
