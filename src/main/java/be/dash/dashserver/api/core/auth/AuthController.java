@@ -12,12 +12,12 @@ import be.dash.dashserver.api.core.auth.dto.LoginResponse;
 import be.dash.dashserver.api.core.auth.dto.ReissueResponse;
 import be.dash.dashserver.api.support.MemberId;
 import be.dash.dashserver.api.support.Permission;
-import be.dash.dashserver.core.auth.dto.LoginResult;
 import be.dash.dashserver.core.auth.LoginService;
 import be.dash.dashserver.core.auth.LogoutService;
 import be.dash.dashserver.core.auth.ReissueService;
 import be.dash.dashserver.core.auth.Token;
 import be.dash.dashserver.core.auth.command.LoginCommand;
+import be.dash.dashserver.core.auth.dto.LoginResult;
 import be.dash.dashserver.core.domain.member.Role;
 import lombok.RequiredArgsConstructor;
 

@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import be.dash.dashserver.api.core.external.dto.LocationsResponse;
-import be.dash.dashserver.core.domain.lesson.Locations;
 import be.dash.dashserver.core.external.LocationSearchService;
 import lombok.RequiredArgsConstructor;
 

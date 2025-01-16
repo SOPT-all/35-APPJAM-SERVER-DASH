@@ -1,6 +1,5 @@
 package be.dash.dashserver.external.naver;
 
-import java.net.URI;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import be.dash.dashserver.core.domain.lesson.Locations;

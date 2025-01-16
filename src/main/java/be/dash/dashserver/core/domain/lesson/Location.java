@@ -1,6 +1,5 @@
 package be.dash.dashserver.core.domain.lesson;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 @Getter
