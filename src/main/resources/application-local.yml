@@ -15,7 +15,7 @@ spring:
         show_sql: true
 
 jwt:
-  secret-key: 8r4fh8w39uefr4uj2j3jfer4jfh498frfj29tooq4f8w38wtrgf8ewjr9f384oj8ejhqhe99hn3ho490htw3gh
+  secret-key: 1234
   access-token-valid-time: 1800000 # 30분
   refresh-token-valid-time: 1209600000 # 2주
 
