@@ -3,7 +3,6 @@ package be.dash.dashserver.api.core.external;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,19 +12,14 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import be.dash.dashserver.api.config.TestConfig;
 import be.dash.dashserver.api.config.WebMvcConfig;
-import be.dash.dashserver.api.core.auth.AuthController;
-import be.dash.dashserver.api.core.external.dto.LocationsResponse;
 import be.dash.dashserver.core.auth.JwtTokenExtractor;
 import be.dash.dashserver.core.auth.TokenParser;
-import be.dash.dashserver.core.domain.lesson.Location;
 import be.dash.dashserver.core.domain.lesson.Locations;
 import be.dash.dashserver.core.external.LocationSearchService;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(value = LocationSearchController.class,
