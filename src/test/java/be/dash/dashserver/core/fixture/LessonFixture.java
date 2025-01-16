@@ -52,6 +52,26 @@ public class LessonFixture {
                 .build();
     }
 
+    public static Lesson create(long teacherId, long memberId, Genre genre, Level level) {
+        return Lesson.builder()
+                .teacher(TeacherFixture.create(teacherId, memberId))
+                .name("박재연의 미친 웨이브")
+                .genre(genre)
+                .level(level)
+                .startDateTime(LocalDateTime.now().minusDays(1))
+                .endDateTime(LocalDateTime.now().plusDays(5))
+                .location("서울 광진구")
+                .streetAddress("서울 광진구 자양동")
+                .oldStreetAddress("서울 광진구 구 주소")
+                .favoriteCount(100L)
+                .reservationCount(50L)
+                .maxReservationCount(100L)
+                .detail("수업에 대한 상세 설명")
+                .recommendation("수강 추천사")
+                .individualPrice(50000)
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
 
     public static Lesson create(long id, long teacherId, long memberId, LocalDateTime startDateTime, Long favoriteCount) {
         return Lesson.builder()
