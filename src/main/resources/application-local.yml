@@ -1,0 +1,23 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:dash
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+jwt:
+  secret-key: 8r4fh8w39uefr4uj2j3jfer4jfh498frfj29tooq4f8w38wtrgf8ewjr9f384oj8ejhqhe99hn3ho490htw3gh
+  access-token-valid-time: 1800000 # 30분
+  refresh-token-valid-time: 1209600000 # 2주
+
+kakao:
+  client-id: 1234
