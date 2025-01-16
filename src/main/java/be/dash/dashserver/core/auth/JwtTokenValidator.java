@@ -1,12 +1,12 @@
 package be.dash.dashserver.core.auth;
 
+import org.springframework.stereotype.Component;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SecurityException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
@@ -25,14 +25,5 @@ public class JwtTokenValidator {
         } catch (ExpiredJwtException e) {
             throw UnAuthorizedException.expired(token);
         }
-    }
-
-    public String getSubject(String token) {
-
-        return Jwts.parser()
-                .setSigningKey(keyGenerator.getKeyFromString(jwtProperties.secretKey()))
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
     }
 }

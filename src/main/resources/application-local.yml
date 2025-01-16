@@ -1,0 +1,28 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  application:
+    name: dash
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:dash
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+  access-token-valid-time: ${ACCESS_TOKEN_VALID_TIME}
+  refresh-token-valid-time: ${REFRESH_TOKEN_VALID_TIME}
+
+kakao:
+  client-id: ${KAKAO_CLIENT_ID}

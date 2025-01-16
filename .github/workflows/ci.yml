@@ -16,6 +16,13 @@ jobs:
       run:
         shell: bash
 
+    env:
+      ACCESS_TOKEN_VALID_TIME: ${{ secrets.ACCESS_TOKEN_VALID_TIME }}
+      JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+      KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+      REFRESH_TOKEN_VALID_TIME: ${{ secrets.REFRESH_TOKEN_VALID_TIME }}
+
+
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -44,13 +51,13 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: ${{ github.workspace }}/backend/build/test-results/**/*.xml
+          files: ${{ github.workspace }}/build/test-results/**/*.xml
 
       - name: Jacoco Report to PR
         id: jacoco
         uses: madrapps/jacoco-report@v1.6.1
         with:
-          paths: ${{ github.workspace }}/backend/build/reports/jacoco/test/jacocoTestReport.xml
+          paths: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 70
           min-coverage-changed-files: 70

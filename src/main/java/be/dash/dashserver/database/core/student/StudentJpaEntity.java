@@ -1,8 +1,5 @@
 package be.dash.dashserver.database.core.student;
 
-import be.dash.dashserver.core.domain.common.Level;
-import be.dash.dashserver.database.core.common.BaseTimeEntity;
-import be.dash.dashserver.database.core.member.MemberJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,9 +11,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import be.dash.dashserver.core.domain.common.Level;
+import be.dash.dashserver.database.core.common.BaseTimeEntity;
+import be.dash.dashserver.database.core.member.MemberJpaEntity;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @Table(name = "student")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

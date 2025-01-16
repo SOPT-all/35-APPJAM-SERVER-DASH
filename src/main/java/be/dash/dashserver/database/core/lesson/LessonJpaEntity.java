@@ -1,11 +1,7 @@
 package be.dash.dashserver.database.core.lesson;
 
-import be.dash.dashserver.core.domain.common.Genre;
-import be.dash.dashserver.core.domain.common.Level;
-import be.dash.dashserver.database.core.common.BaseTimeEntity;
-import be.dash.dashserver.database.core.teacher.TeacherJpaEntity;
+import java.time.LocalDateTime;
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,12 +11,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import java.time.LocalDateTime;
+import jakarta.persistence.Table;
+import be.dash.dashserver.core.domain.common.Genre;
+import be.dash.dashserver.core.domain.common.Level;
+import be.dash.dashserver.core.domain.lesson.Lesson;
+import be.dash.dashserver.database.core.common.BaseTimeEntity;
+import be.dash.dashserver.database.core.teacher.TeacherImageJpaEntity;
+import be.dash.dashserver.database.core.teacher.TeacherJpaEntity;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "lesson")
 public class LessonJpaEntity extends BaseTimeEntity {
 
     @Id
@@ -76,4 +81,66 @@ public class LessonJpaEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private Integer individualPrice;
 
+    public LessonJpaEntity(Lesson lesson) {
+        this.id = lesson.getId();
+        this.teacher = new TeacherJpaEntity(lesson.getTeacher());
+        this.name = lesson.getName();
+        this.genre = lesson.getGenre();
+        this.level = lesson.getLevel();
+        this.startDateTime = lesson.getStartDateTime();
+        this.endDateTime = lesson.getEndDateTime();
+        this.location = lesson.getLocation();
+        this.streetAddress = lesson.getStreetAddress();
+        this.oldStreetAddress = lesson.getOldStreetAddress();
+        this.favoriteCount = lesson.getFavoriteCount();
+        this.reservationCount = lesson.getReservationCount();
+        this.maxReservationCount = lesson.getMaxReservationCount();
+        this.detail = lesson.getDetail();
+        this.recommendation = lesson.getRecommendation();
+        this.individualPrice = lesson.getIndividualPrice();
+    }
+
+    public Lesson toDomain() {
+        return Lesson.builder()
+                .id(id)
+                .teacher(teacher.toDomain())
+                .name(name)
+                .genre(genre)
+                .level(level)
+                .startDateTime(startDateTime)
+                .endDateTime(endDateTime)
+                .location(location)
+                .streetAddress(streetAddress)
+                .oldStreetAddress(oldStreetAddress)
+                .favoriteCount(favoriteCount)
+                .reservationCount(reservationCount)
+                .maxReservationCount(maxReservationCount)
+                .detail(detail)
+                .recommendation(recommendation)
+                .individualPrice(individualPrice)
+                .createdAt(getCreatedAt())
+                .build();
+    }
+
+    public Lesson toDomainWithTeacherImage(TeacherImageJpaEntity teacherImageJpaEntity) {
+        return Lesson.builder()
+                .id(id)
+                .teacher(teacher.toDomainWithTeacherImage(teacherImageJpaEntity))
+                .name(name)
+                .genre(genre)
+                .level(level)
+                .startDateTime(startDateTime)
+                .endDateTime(endDateTime)
+                .location(location)
+                .streetAddress(streetAddress)
+                .oldStreetAddress(oldStreetAddress)
+                .favoriteCount(favoriteCount)
+                .reservationCount(reservationCount)
+                .maxReservationCount(maxReservationCount)
+                .detail(detail)
+                .recommendation(recommendation)
+                .individualPrice(individualPrice)
+                .createdAt(getCreatedAt())
+                .build();
+    }
 }
