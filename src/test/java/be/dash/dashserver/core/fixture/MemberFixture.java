@@ -48,4 +48,17 @@ public class MemberFixture {
                 .nickname("yeonghee")
                 .build();
     }
+
+    public static Member createTeacherWithNickname(String nickname, int index) {
+        return Member.builder()
+                .provider(SocialProvider.KAKAO)
+                .socialId("socialId_67890")
+                .socialName("facebook_user")
+                .role(Role.TEACHER)
+                .email("admin@example.com")
+                .name("김영희")
+                .phoneNumber("010-8765-432" + index)
+                .nickname(nickname)
+                .build();
+    }
 }

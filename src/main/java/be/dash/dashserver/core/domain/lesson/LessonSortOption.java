@@ -1,16 +1,15 @@
-package be.dash.dashserver.core.domain.common;
+package be.dash.dashserver.core.domain.lesson;
 
 import java.util.Comparator;
-import be.dash.dashserver.core.domain.lesson.Lesson;
 
-public enum SortOption {
+public enum LessonSortOption {
     LATEST(Comparator.comparing(Lesson::getCreatedAt).reversed()),
     MOST_FAVORITE(Comparator.comparing(Lesson::getFavoriteCount).reversed()),
     UPCOMING(Comparator.comparing(Lesson::getStartDateTime));
 
     private final Comparator<Lesson> comparator;
 
-    SortOption(Comparator<Lesson> comparator) {
+    LessonSortOption(Comparator<Lesson> comparator) {
         this.comparator = comparator;
     }
 

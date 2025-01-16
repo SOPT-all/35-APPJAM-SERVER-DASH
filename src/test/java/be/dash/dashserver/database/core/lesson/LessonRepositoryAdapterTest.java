@@ -41,10 +41,11 @@ class LessonRepositoryAdapterTest {
     @DisplayName("동적으로 필터에 해당하며, 마감기한이 지나지 않은 수업들을 조회한다.")
     @Test
     void findActiveLessonsByFilters() {
-        LocalDateTime startDateTime = LocalDateTime.of(2025,1,15,3,40,50).minusDays(5);
-        LocalDateTime endDateTime = LocalDateTime.of(2025,1,15,3,40,50).plusDays(10);
-        createLessons(startDateTime, endDateTime);
-        LocalDateTime now = LocalDateTime.of(2025,1,15,3,40,50);
+        LocalDateTime startDateTime = LocalDateTime.of(2025, 1, 15, 3, 40, 50).minusDays(5);
+        LocalDateTime endDateTime = LocalDateTime.of(2025, 1, 15, 3, 40, 50).plusDays(10);
+        TeacherJpaEntity teacher = createTeacher();
+        createLessons(teacher, startDateTime, endDateTime);
+        LocalDateTime now = LocalDateTime.of(2025, 1, 15, 3, 40, 50);
 
         List<Lesson> lessonsHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, now);
         List<Lesson> lessonsFemaleHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.FEMALE_HIPHOP, Level.BEGINNER, startDateTime, endDateTime, now);
@@ -57,25 +58,39 @@ class LessonRepositoryAdapterTest {
         );
     }
 
-    private void createLessons(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    private void createLessons(TeacherJpaEntity teacherJpaEntity, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember().getId(), Genre.HIPHOP, Level.BEGINNER,
+                startDateTime.minusDays(5), endDateTime.minusDays(3), 10));
+        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember().getId(), Genre.HIPHOP, Level.BEGINNER,
+                startDateTime, endDateTime, 10));
+        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember().getId(), Genre.FEMALE_HIPHOP, Level.BEGINNER,
+                startDateTime, endDateTime, 10));
+        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember().getId(), Genre.HIPHOP, Level.ADVANCED,
+                startDateTime.plusDays(1), endDateTime.minusDays(1), 50));
+        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember().getId(), Genre.HIPHOP, Level.BEGINNER,
+                startDateTime.plusDays(3), endDateTime.minusDays(1), 40));
+        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember().getId(), Genre.HIPHOP, Level.BEGINNER,
+                startDateTime.plusDays(2), endDateTime.minusDays(1), 30));
+    }
+
+    private TeacherJpaEntity createTeacher() {
         MemberJpaEntity memberJpaEntity = MemberJpaEntityFixture.create();
         memberJpaRepository.save(memberJpaEntity);
         TeacherJpaEntity teacherEntity = TeacherJpaEntityFixture.create(memberJpaEntity);
         teacherJpaRepository.save(teacherEntity);
         TeacherImageJpaEntity teacherImage = TeacherImageJpaEntityFixture.create(teacherEntity, "imageUrl");
         teacherImageJpaRepository.save(teacherImage);
+        return teacherEntity;
+    }
 
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
-                startDateTime.minusDays(5), endDateTime.minusDays(3), 10));
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
-                startDateTime, endDateTime, 10));
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.FEMALE_HIPHOP, Level.BEGINNER,
-                startDateTime, endDateTime, 10));
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.ADVANCED,
-                startDateTime.plusDays(1), endDateTime.minusDays(1), 50));
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
-                startDateTime.plusDays(3), endDateTime.minusDays(1), 40));
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
-                startDateTime.plusDays(2), endDateTime.minusDays(1), 30));
+    @DisplayName("특정 댄서가 수업에서 가장 많이 열었던 장르를 많은 순서부터 내림차순으로 정렬하여 반환한다.")
+    @Test
+    void findDistinctGenresByTeacherIdOrderByCountDesc() {
+        TeacherJpaEntity teacher = createTeacher();
+        lessonRepository.save(LessonFixture.create(teacher.getId(), 1, Genre.HIPHOP, Level.BEGINNER));
+        lessonRepository.save(LessonFixture.create(teacher.getId(), 1, Genre.HIPHOP, Level.BEGINNER));
+        lessonRepository.save(LessonFixture.create(teacher.getId(), 1, Genre.FEMALE_HIPHOP, Level.BEGINNER));
+
+        assertThat(lessonRepository.findDistinctGenresByTeacherIdOrderByCountDesc(1L)).containsExactly(Genre.HIPHOP, Genre.FEMALE_HIPHOP);
     }
 }

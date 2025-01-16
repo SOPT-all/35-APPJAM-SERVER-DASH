@@ -24,16 +24,20 @@ public class LessonRepositoryAdapter implements LessonRepository {
         List<LessonJpaEntity> activeLessons = lessonJpaEntityRepository.findAll(LessonSpecifications.findActiveLessonsByFilters(genre, level, startDateTime, endDateTime, LocalDateTime.now()));
         return activeLessons.stream()
                 .map(lessonEntity -> {
-                    TeacherImageJpaEntity teacherImageJpaEntity = teacherImageJpaRepository.findByTeacherId(lessonEntity.getTeacher()
+                    TeacherImageJpaEntity teacherImageJpaEntity = teacherImageJpaRepository.findFirstByTeacherId(lessonEntity.getTeacher()
                             .getId()).orElseThrow(() -> new DashException("해당 수업에 일치하는 선생님이 없습니다."));
                     return lessonEntity.toDomainWithTeacherImage(teacherImageJpaEntity);
                 })
                 .toList();
     }
 
-
     @Override
     public void save(Lesson lesson) {
         lessonJpaEntityRepository.save(new LessonJpaEntity(lesson));
+    }
+
+    @Override
+    public List<Genre> findDistinctGenresByTeacherIdOrderByCountDesc(Long teacherId) {
+        return lessonJpaEntityRepository.findDistinctGenresByTeacherIdOrderByCountDesc(teacherId);
     }
 }

@@ -1,16 +1,15 @@
-package be.dash.dashserver.core.domain.common;
+package be.dash.dashserver.core.domain.lesson;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.fixture.LessonFixture;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class SortOptionTest {
+class LessonSortOptionTest {
 
     @Test
     void latest() {
@@ -22,7 +21,7 @@ class SortOptionTest {
         lessons.add(LessonFixture.create(3, 3, 3, LocalDateTime.of(2024, 12, 31, 10, 0), 5L, LocalDateTime.now()
                 .minusHours(3)));
 
-        lessons.sort(SortOption.LATEST.getComparator());
+        lessons.sort(LessonSortOption.LATEST.getComparator());
 
         assertAll(
                 () -> assertThat(lessons.get(0).getId()).isEqualTo(1),
@@ -38,7 +37,7 @@ class SortOptionTest {
         lessons.add(LessonFixture.create(2, 2, 2, LocalDateTime.now(), 50L));
         lessons.add(LessonFixture.create(3, 3, 3, LocalDateTime.now(), 30L));
 
-        lessons.sort(SortOption.MOST_FAVORITE.getComparator());
+        lessons.sort(LessonSortOption.MOST_FAVORITE.getComparator());
 
         assertAll(
                 () -> assertThat(lessons.get(0).getId()).isEqualTo(2),
@@ -54,7 +53,7 @@ class SortOptionTest {
         lessons.add(LessonFixture.create(2, 2, 2, LocalDateTime.of(2025, 1, 1, 10, 0), 0L));
         lessons.add(LessonFixture.create(3, 3, 3, LocalDateTime.of(2025, 1, 2, 10, 0), 0L));
 
-        lessons.sort(SortOption.UPCOMING.getComparator());
+        lessons.sort(LessonSortOption.UPCOMING.getComparator());
 
         assertAll(
                 () -> assertThat(lessons.get(0).getId()).isEqualTo(2),
