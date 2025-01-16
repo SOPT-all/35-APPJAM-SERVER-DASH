@@ -12,7 +12,7 @@ public class TokenParser {
         if (token.startsWith(BEARER_PREFIX)) {
             return token.substring(BEARER_PREFIX.length());
         } else {
-            throw new DashException("잘못된 토큰 형식입니다.");
+            throw new UnAuthorizedException("잘못된 토큰 형식입니다.");
         }
     }
 }
