@@ -9,9 +9,8 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import be.dash.dashserver.api.config.WebMvcConfig;
 import be.dash.dashserver.api.config.TestConfig;
-import be.dash.dashserver.core.LoginResult;
+import be.dash.dashserver.api.config.WebMvcConfig;
 import be.dash.dashserver.core.auth.JwtTokenExtractor;
 import be.dash.dashserver.core.auth.LoginService;
 import be.dash.dashserver.core.auth.LogoutService;
@@ -19,6 +18,7 @@ import be.dash.dashserver.core.auth.ReissueService;
 import be.dash.dashserver.core.auth.Token;
 import be.dash.dashserver.core.auth.TokenParser;
 import be.dash.dashserver.core.auth.command.LoginCommand;
+import be.dash.dashserver.core.auth.dto.LoginResult;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;

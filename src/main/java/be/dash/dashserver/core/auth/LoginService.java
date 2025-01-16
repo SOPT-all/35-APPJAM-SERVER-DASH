@@ -2,8 +2,8 @@ package be.dash.dashserver.core.auth;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import be.dash.dashserver.core.LoginResult;
 import be.dash.dashserver.core.auth.command.LoginCommand;
+import be.dash.dashserver.core.auth.dto.LoginResult;
 import be.dash.dashserver.core.auth.dto.OauthTokenResult;
 import be.dash.dashserver.core.auth.dto.SocialInfoResult;
 import be.dash.dashserver.core.domain.member.AuthMember;

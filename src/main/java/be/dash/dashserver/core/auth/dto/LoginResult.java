@@ -1,4 +1,4 @@
-package be.dash.dashserver.core;
+package be.dash.dashserver.core.auth.dto;
 
 import be.dash.dashserver.core.auth.Token;
 

@@ -1,4 +1,4 @@
-package be.dash.dashserver.external.config;
+package be.dash.dashserver.external.config.s3;
 
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +10,7 @@ import software.amazon.awssdk.services.s3.S3Client;
 
 @Configuration
 @RequiredArgsConstructor
-@ConfigurationPropertiesScan(basePackages = "be.dash.dashserver.external.config")
+@ConfigurationPropertiesScan(basePackages = "be.dash.dashserver.external.config.s3")
 public class S3Config {
 
     private static final String AWS_ACCESS_KEY_ID = "aws.accessKeyId";

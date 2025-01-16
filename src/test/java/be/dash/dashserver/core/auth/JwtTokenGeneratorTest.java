@@ -1,9 +1,9 @@
 package be.dash.dashserver.core.auth;
 
-import be.dash.dashserver.core.domain.member.Role;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import be.dash.dashserver.core.domain.member.Role;
 
 public class JwtTokenGeneratorTest {
     private KeyGenerator keyGenerator = new KeyGenerator();

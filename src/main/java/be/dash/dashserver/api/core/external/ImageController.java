@@ -1,4 +1,4 @@
-package be.dash.dashserver.api.core.image;
+package be.dash.dashserver.api.core.external;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import be.dash.dashserver.api.core.image.dto.ImagePostResponse;
+import be.dash.dashserver.api.core.external.dto.ImagePostResponse;
 import be.dash.dashserver.core.image.ImageService;
 import lombok.RequiredArgsConstructor;
 

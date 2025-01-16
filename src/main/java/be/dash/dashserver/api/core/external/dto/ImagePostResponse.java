@@ -1,4 +1,4 @@
-package be.dash.dashserver.api.core.image.dto;
+package be.dash.dashserver.api.core.external.dto;
 
 public record ImagePostResponse(String imageUrl) {
 }

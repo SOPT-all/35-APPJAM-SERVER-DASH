@@ -33,3 +33,7 @@ s3:
   s3-endpoint: www.s3.com
   region: ap-northeast-2
   s3-bucket-name: s3
+
+naver:
+  client-id: 1234
+  client-secret: 1234
