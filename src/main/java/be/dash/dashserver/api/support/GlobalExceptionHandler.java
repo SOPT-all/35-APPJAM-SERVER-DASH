@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -35,6 +36,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorMessage> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
         log.info("handleMethodArgumentTypeMismatchException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        return ResponseEntity.badRequest().body(new ErrorMessage(e.getMessage()));
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ErrorMessage> handleMethodMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+        log.info("handleMissingServletRequestParameterException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
         return ResponseEntity.badRequest().body(new ErrorMessage(e.getMessage()));
     }
 
