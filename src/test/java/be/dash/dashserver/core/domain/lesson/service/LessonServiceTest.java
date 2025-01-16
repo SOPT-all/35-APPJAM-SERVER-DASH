@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import be.dash.dashserver.ServiceSliceTest;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
-import be.dash.dashserver.core.domain.common.SortOption;
 import be.dash.dashserver.core.domain.lesson.Lesson;
+import be.dash.dashserver.core.domain.lesson.LessonSortOption;
 import be.dash.dashserver.core.domain.lesson.Lessons;
 import be.dash.dashserver.core.domain.member.Member;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
@@ -41,9 +41,9 @@ class LessonServiceTest extends ServiceSliceTest {
         LocalDateTime endDateTime = LocalDateTime.now().plusDays(10);
         createLessons(startDateTime, endDateTime);
 
-        Lessons lessonsLatest = lessonService.search(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, SortOption.LATEST);
-        Lessons lessonsMostFavorite = lessonService.search(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, SortOption.MOST_FAVORITE);
-        Lessons lessonsUpComing = lessonService.search(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, SortOption.UPCOMING);
+        Lessons lessonsLatest = lessonService.search(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, LessonSortOption.LATEST);
+        Lessons lessonsMostFavorite = lessonService.search(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, LessonSortOption.MOST_FAVORITE);
+        Lessons lessonsUpComing = lessonService.search(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, LessonSortOption.UPCOMING);
 
         assertAll(
                 () -> assertThat(lessonsLatest.lessons().stream().map(Lesson::getId)

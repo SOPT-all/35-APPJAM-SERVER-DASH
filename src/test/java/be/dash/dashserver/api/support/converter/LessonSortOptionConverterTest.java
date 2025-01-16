@@ -3,18 +3,18 @@ package be.dash.dashserver.api.support.converter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import be.dash.dashserver.api.exception.DashApiException;
-import be.dash.dashserver.core.domain.common.SortOption;
+import be.dash.dashserver.core.domain.lesson.LessonSortOption;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class SortOptionConverterTest {
+class LessonSortOptionConverterTest {
 
     @DisplayName("정렬 기준이 소문자로 들어와도 정상적으로 매핑된다.")
     @Test
     void convert() {
         SortOptionConverter sortOptionConverter = new SortOptionConverter();
-        assertThat(sortOptionConverter.convert("LATESt")).isEqualTo(SortOption.LATEST);
+        assertThat(sortOptionConverter.convert("LATESt")).isEqualTo(LessonSortOption.LATEST);
     }
 
     @DisplayName("올바르지 않은 정렬 기준이 들어오는 경우 예외가 발생한다.")

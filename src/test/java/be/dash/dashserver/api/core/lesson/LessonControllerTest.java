@@ -12,7 +12,7 @@ import be.dash.dashserver.core.auth.JwtTokenExtractor;
 import be.dash.dashserver.core.auth.TokenParser;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
-import be.dash.dashserver.core.domain.common.SortOption;
+import be.dash.dashserver.core.domain.lesson.LessonSortOption;
 import be.dash.dashserver.core.domain.lesson.Lessons;
 import be.dash.dashserver.core.domain.lesson.service.LessonService;
 import be.dash.dashserver.core.fixture.LessonFixture;
@@ -45,7 +45,7 @@ class LessonControllerTest {
                 any(Level.class),
                 any(LocalDateTime.class),
                 any(LocalDateTime.class),
-                any(SortOption.class)
+                any(LessonSortOption.class)
         )).thenReturn(lessons);
 
         mockMvc.perform(get("/api/v1/lessons")

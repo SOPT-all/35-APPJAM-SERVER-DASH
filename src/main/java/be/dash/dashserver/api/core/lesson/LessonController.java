@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import be.dash.dashserver.api.core.lesson.dto.LessonFilterRequest;
 import be.dash.dashserver.api.core.lesson.dto.LessonResponses;
-import be.dash.dashserver.core.domain.common.SortOption;
+import be.dash.dashserver.core.domain.lesson.LessonSortOption;
 import be.dash.dashserver.core.domain.lesson.Lessons;
 import be.dash.dashserver.core.domain.lesson.service.LessonService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class LessonController {
 
     @GetMapping
     public ResponseEntity<LessonResponses> search(@ModelAttribute LessonFilterRequest lessonFilterRequest,
-                                                  @RequestParam SortOption sortOption) {
+                                                  @RequestParam LessonSortOption sortOption) {
         Lessons searched = lessonService.search(lessonFilterRequest.genre(),
                 lessonFilterRequest.level(),
                 lessonFilterRequest.startDate(),
