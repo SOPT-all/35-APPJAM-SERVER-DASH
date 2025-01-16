@@ -16,6 +16,13 @@ jobs:
       run:
         shell: bash
 
+    env:
+      ACCESS_TOKEN_VALID_TIME: ${{ secrets.ACCESS_TOKEN_VALID_TIME }}
+      JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+      KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+      REFRESH_TOKEN_VALID_TIME: ${{ secrets.REFRESH_TOKEN_VALID_TIME }}
+
+
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
