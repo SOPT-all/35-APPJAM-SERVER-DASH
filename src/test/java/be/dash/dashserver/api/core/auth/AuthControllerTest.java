@@ -11,7 +11,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import be.dash.dashserver.api.config.WebMvcConfig;
 import be.dash.dashserver.api.config.TestConfig;
-import be.dash.dashserver.core.LoginResult;
+import be.dash.dashserver.core.auth.dto.LoginResult;
 import be.dash.dashserver.core.auth.JwtTokenExtractor;
 import be.dash.dashserver.core.auth.LoginService;
 import be.dash.dashserver.core.auth.LogoutService;

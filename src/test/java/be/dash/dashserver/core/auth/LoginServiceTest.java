@@ -8,7 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import be.dash.dashserver.ServiceSliceTest;
-import be.dash.dashserver.core.LoginResult;
+import be.dash.dashserver.core.auth.dto.LoginResult;
 import be.dash.dashserver.core.auth.command.LoginCommand;
 import be.dash.dashserver.core.auth.dto.KakaoAccount;
 import be.dash.dashserver.core.auth.dto.KakaoProfile;
