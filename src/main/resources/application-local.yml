@@ -26,3 +26,9 @@ jwt:
 
 kakao:
   client-id: ${KAKAO_CLIENT_ID}
+s3:
+  secret-key: ${SECRET_KEY}
+  access-key: ${ACCESS_KEY}
+  s3-endpoint: ${S3_ENDPOINT}
+  region: ${REGION}
+  s3-bucket-name: ${S3_BUCKET_NAME}
