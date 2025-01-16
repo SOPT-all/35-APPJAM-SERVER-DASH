@@ -1,4 +1,9 @@
 spring:
+  config:
+    activate:
+      on-profile: local
+  application:
+    name: dash
   h2:
     console:
       enabled: true
@@ -15,9 +20,9 @@ spring:
         show_sql: true
 
 jwt:
-  secret-key: 1234
-  access-token-valid-time: 1800000 # 30분
-  refresh-token-valid-time: 1209600000 # 2주
+  secret-key: ${JWT_SECRET_KEY}
+  access-token-valid-time: ${ACCESS_TOKEN_VALID_TIME}
+  refresh-token-valid-time: ${REFRESH_TOKEN_VALID_TIME}
 
 kakao:
-  client-id: 1234
+  client-id: ${KAKAO_CLIENT_ID}
