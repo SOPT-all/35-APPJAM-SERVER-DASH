@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
-import be.dash.dashserver.core.domain.member.command.OnboardCommand;
 
 public record OnBoardRequest(
         @NotBlank @Size(min = 2, max = 8) String name,
