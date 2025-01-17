@@ -25,7 +25,15 @@ public class AdvertisementJpaEntity {
     @Column(nullable = false)
     private String imageUrl;
 
+    @Column(nullable = false)
+    private String description;
+
     public Advertisement toDomain() {
-        return new Advertisement(imageUrl);
+        return new Advertisement(imageUrl, description);
+    }
+
+    public AdvertisementJpaEntity(Advertisement advertisement) {
+        this.imageUrl = advertisement.imageUrl();
+        this.description = advertisement.description();
     }
 }
