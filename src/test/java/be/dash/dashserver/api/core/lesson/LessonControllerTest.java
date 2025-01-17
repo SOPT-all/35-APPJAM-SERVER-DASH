@@ -32,6 +32,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static be.dash.dashserver.core.domain.common.Genre.CHOREOGRAPHY;
+import static be.dash.dashserver.core.domain.common.Genre.HIPHOP;
+import static be.dash.dashserver.core.domain.common.Genre.KPOP;
 
 
 @WebMvcTest(LessonController.class)
@@ -76,7 +79,7 @@ class LessonControllerTest {
     @Test
     void recommendation() throws Exception {
         Long memberId = 1L;
-        Lessons lessons = new Lessons(List.of(LessonFixture.createWithImage(memberId, 1, 1, Genre.HIPHOP, Level.BEGINNER, "image")));
+        Lessons lessons = new Lessons(List.of(LessonFixture.createWithImage(memberId, 1, 1, HIPHOP, Level.BEGINNER, "image")));
         when(tokenParser.getToken(anyString())).thenReturn("subject");
         when(jwtTokenExtractor.getSubject(anyString())).thenReturn(String.valueOf(memberId));
         when(lessonService.getRecommendationLessons(any(Long.class))).thenReturn(lessons);
@@ -111,5 +114,18 @@ class LessonControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isBadRequest());
+    }
+
+    @DisplayName("장르를 추천한다.")
+    @Test
+    void popularGenres() throws Exception {
+        when(lessonService.getPopularGenres()).thenReturn(List.of(HIPHOP, Genre.CHOREOGRAPHY, Genre.KPOP, Genre.BRAKING));
+
+        mockMvc.perform(get("/api/v1/lessons/popular-genres")
+                        .header(HttpHeaders.AUTHORIZATION, "token"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.genres[0]").value(HIPHOP.name()))
+                .andExpect(jsonPath("$.genres[1]").value(CHOREOGRAPHY.name()))
+                .andExpect(jsonPath("$.genres[2]").value(KPOP.name()));
     }
 }
