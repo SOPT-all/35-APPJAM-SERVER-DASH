@@ -15,6 +15,7 @@ public class Lesson {
     private final String name;
     private final Genre genre;
     private final Level level;
+    private final String imageUrl;
     private final LocalDateTime startDateTime;
     private final LocalDateTime endDateTime;
     private final Location location;
@@ -27,12 +28,13 @@ public class Lesson {
     private final LocalDateTime createdAt;
 
     @Builder
-    public Lesson(Long id, Teacher teacher, String name, Genre genre, Level level, LocalDateTime startDateTime, LocalDateTime endDateTime, String location, String streetAddress, String oldStreetAddress, Long favoriteCount, Long reservationCount, Long maxReservationCount, String detail, String recommendation, Integer individualPrice, LocalDateTime createdAt) {
+    public Lesson(Long id, Teacher teacher, String name, Genre genre, Level level, String imageUrl, LocalDateTime startDateTime, LocalDateTime endDateTime, String location, String streetAddress, String oldStreetAddress, Long favoriteCount, Long reservationCount, Long maxReservationCount, String detail, String recommendation, Integer individualPrice, LocalDateTime createdAt) {
         this.id = id;
         this.teacher = teacher;
         this.name = name;
         this.genre = genre;
         this.level = level;
+        this.imageUrl = imageUrl;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.location = new Location(location, streetAddress, oldStreetAddress);

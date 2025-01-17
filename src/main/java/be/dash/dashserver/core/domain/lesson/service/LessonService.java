@@ -1,13 +1,18 @@
 package be.dash.dashserver.core.domain.lesson.service;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.LessonSortOption;
 import be.dash.dashserver.core.domain.lesson.Lessons;
+import be.dash.dashserver.core.domain.member.Student;
+import be.dash.dashserver.core.domain.member.service.MemberRepository;
 import lombok.RequiredArgsConstructor;
+
+import static be.dash.dashserver.core.domain.lesson.LessonSortOption.LATEST;
 
 @Service
 @RequiredArgsConstructor
@@ -15,11 +20,28 @@ import lombok.RequiredArgsConstructor;
 public class LessonService {
 
     private final LessonRepository lessonRepository;
+    private final MemberRepository memberRepository;
 
     public Lessons search(Genre genre, Level level, LocalDateTime startDateTime, LocalDateTime endDateTime, LessonSortOption sortOption) {
         Lessons lessons = new Lessons(
                 lessonRepository.findActiveLessonsByFilters(genre, level, startDateTime, endDateTime, LocalDateTime.now())
         );
         return lessons.sort(sortOption);
+    }
+
+    public Lessons getRecommendationLessons(Long memberId) {
+        if (isGuest(memberId)) {
+            Lessons lessons = new Lessons(lessonRepository.findActiveLessons(LocalDateTime.now()));
+            return lessons.sort(LATEST);
+        }
+        Student student = memberRepository.findStudentByMemberId(memberId);
+        Lessons lessons = new Lessons(
+                lessonRepository.findActiveLessonsByGenreOrLevel(LocalDateTime.now(), student.getGenres(), student.getLevel())
+        );
+        return lessons.sort(LATEST);
+    }
+
+    private boolean isGuest(Long memberId) {
+        return Objects.isNull(memberId);
     }
 }

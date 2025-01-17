@@ -32,4 +32,9 @@ public class LessonImageJpaEntity extends BaseCreatedAtEntity {
     @Column(nullable = false)
     private String imageUrl;
 
+    public LessonImageJpaEntity(LessonJpaEntity lesson, String imageUrl) {
+        this.id = id;
+        this.lesson = lesson;
+        this.imageUrl = imageUrl;
+    }
 }

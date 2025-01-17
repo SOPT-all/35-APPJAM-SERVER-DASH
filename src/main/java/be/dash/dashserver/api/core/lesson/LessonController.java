@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import be.dash.dashserver.api.core.lesson.dto.LessonFilterRequest;
 import be.dash.dashserver.api.core.lesson.dto.LessonResponses;
+import be.dash.dashserver.api.support.MemberId;
 import be.dash.dashserver.core.domain.lesson.LessonSortOption;
 import be.dash.dashserver.core.domain.lesson.Lessons;
 import be.dash.dashserver.core.domain.lesson.service.LessonService;
@@ -29,5 +30,11 @@ public class LessonController {
                 lessonFilterRequest.endDate(),
                 sortOption);
         return ResponseEntity.ok(new LessonResponses(searched));
+    }
+
+    @GetMapping("/recommendations")
+    public ResponseEntity<LessonResponses> recommendation(@MemberId Long memberId) {
+        Lessons lessons = lessonService.getRecommendationLessons(memberId);
+        return ResponseEntity.ok(new LessonResponses(lessons));
     }
 }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import be.dash.dashserver.core.auth.JwtTokenExtractor;
@@ -18,6 +19,7 @@ import be.dash.dashserver.core.domain.lesson.service.LessonService;
 import be.dash.dashserver.core.fixture.LessonFixture;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -39,7 +41,7 @@ class LessonControllerTest {
     @DisplayName("주어진 필터와 정렬 옵션으로 수업 검색 요청을 처리하고 올바른 응답을 반환한다.")
     @Test
     void search() throws Exception {
-        Lessons lessons = new Lessons(List.of(LessonFixture.create(1, 1, 1, Genre.HIPHOP, Level.BEGINNER)));
+        Lessons lessons = new Lessons(List.of(LessonFixture.createWithImage(1, 1, 1, Genre.HIPHOP, Level.BEGINNER, "image")));
         when(lessonService.search(
                 any(Genre.class),
                 any(Level.class),
@@ -58,6 +60,26 @@ class LessonControllerTest {
                 .andExpect(jsonPath("$.lessons[0].id").value(lessons.lessons().get(0).getId()))
                 .andExpect(jsonPath("$.lessons[0].genre").value(lessons.lessons().get(0).getGenre().name()))
                 .andExpect(jsonPath("$.lessons[0].level").value(lessons.lessons().get(0).getLevel().name()))
-                .andExpect(jsonPath("$.lessons[0].name").value(lessons.lessons().get(0).getName()));
+                .andExpect(jsonPath("$.lessons[0].name").value(lessons.lessons().get(0).getName()))
+                .andExpect(jsonPath("$.lessons[0].imageUrl").value(lessons.lessons().get(0).getImageUrl()));
+    }
+
+    @DisplayName("수업을 추천한다.")
+    @Test
+    void recommendation() throws Exception {
+        Long memberId = 1L;
+        Lessons lessons = new Lessons(List.of(LessonFixture.createWithImage(memberId, 1, 1, Genre.HIPHOP, Level.BEGINNER, "image")));
+        when(tokenParser.getToken(anyString())).thenReturn("subject");
+        when(jwtTokenExtractor.getSubject(anyString())).thenReturn(String.valueOf(memberId));
+        when(lessonService.getRecommendationLessons(any(Long.class))).thenReturn(lessons);
+
+        mockMvc.perform(get("/api/v1/lessons/recommendations")
+                        .header(HttpHeaders.AUTHORIZATION, "token"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.lessons[0].id").value(lessons.lessons().get(0).getId()))
+                .andExpect(jsonPath("$.lessons[0].genre").value(lessons.lessons().get(0).getGenre().name()))
+                .andExpect(jsonPath("$.lessons[0].level").value(lessons.lessons().get(0).getLevel().name()))
+                .andExpect(jsonPath("$.lessons[0].name").value(lessons.lessons().get(0).getName()))
+                .andExpect(jsonPath("$.lessons[0].imageUrl").value(lessons.lessons().get(0).getImageUrl()));
     }
 }

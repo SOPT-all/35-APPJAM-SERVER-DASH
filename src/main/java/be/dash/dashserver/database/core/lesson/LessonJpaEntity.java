@@ -123,13 +123,14 @@ public class LessonJpaEntity extends BaseTimeEntity {
                 .build();
     }
 
-    public Lesson toDomainWithTeacherImage(List<TeacherImageJpaEntity> teacherImageJpaEntitys) {
+    public Lesson toDomainWithImages(List<TeacherImageJpaEntity> teacherImageJpaEntities, List<LessonImageJpaEntity> lessonImages) {
         return Lesson.builder()
                 .id(id)
-                .teacher(teacher.toDomainWithTeacherImage(teacherImageJpaEntitys))
+                .teacher(teacher.toDomainWithTeacherImage(teacherImageJpaEntities))
                 .name(name)
                 .genre(genre)
                 .level(level)
+                .imageUrl(lessonImages.get(0).getImageUrl())
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
                 .location(location)

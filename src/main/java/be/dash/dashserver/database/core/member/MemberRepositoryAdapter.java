@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import be.dash.dashserver.core.domain.member.AuthMember;
 import be.dash.dashserver.core.domain.member.Member;
 import be.dash.dashserver.core.domain.member.SocialProvider;
+import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
 import be.dash.dashserver.core.exception.NotFoundException;
 import be.dash.dashserver.database.core.student.StudentGenreJpaEntity;
@@ -32,27 +33,51 @@ public class MemberRepositoryAdapter implements MemberRepository {
     }
 
     @Override
-    public void save(Member member) {
-        memberJpaRepository.save(new MemberJpaEntity(member));
+    public Member save(Member member) {
+        MemberJpaEntity save = memberJpaRepository.save(new MemberJpaEntity(member));
+        return Member.builder()
+                .id(save.getId())
+                .provider(member.getProvider())
+                .socialId(member.getSocialId())
+                .socialName(member.getSocialName())
+                .role(member.getRole())
+                .email(member.getEmail())
+                .name(member.getName())
+                .phoneNumber(member.getPhoneNumber())
+                .nickname(member.getNickname())
+                .student(member.getStudent())
+                .build();
     }
 
     @Override
     public Member findById(long id) {
-        return memberJpaRepository.findById(id).map(MemberJpaEntity::toDomain).orElseThrow(() -> new NotFoundException("멤버를 찾을 수 없습니다."));
+        return memberJpaRepository.findById(id).map(MemberJpaEntity::toDomain)
+                .orElseThrow(() -> new NotFoundException("멤버를 찾을 수 없습니다."));
     }
 
     @Override
     public void onboard(Member member) {
-        MemberJpaEntity memberJpaEntity = memberJpaRepository.findById(member.getId()).orElseThrow(() -> new NotFoundException("멤버를 찾을 수 없습니다."));
+        MemberJpaEntity memberJpaEntity = memberJpaRepository.findById(member.getId())
+                .orElseThrow(() -> new NotFoundException("멤버를 찾을 수 없습니다."));
         memberJpaEntity.updateOnboardDetails(member);
         StudentJpaEntity studentJpaEntity = studentJpaRepository.save(StudentJpaEntity.builder()
                 .profileImageUrl(member.getStudent().getProfileImageUrl())
                 .level(member.getStudent().getLevel())
                 .member(memberJpaEntity)
                 .build());
-        studentGenreJpaRepository.saveAll(member.getStudent().getGenres().stream().map(genre -> StudentGenreJpaEntity.builder()
-                .student(studentJpaEntity)
-                .genre(genre)
-                .build()).toList());
+        studentGenreJpaRepository.saveAll(member.getStudent().getGenres().stream()
+                .map(genre -> StudentGenreJpaEntity.builder()
+                        .student(studentJpaEntity)
+                        .genre(genre)
+                        .build()).toList());
     }
+
+    @Override
+    public Student findStudentByMemberId(long memberId) {
+        StudentGenreJpaEntity studentGenreJpaEntity = studentGenreJpaRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new NotFoundException("멤버를 찾을 수 없습니다."));
+        return studentGenreJpaEntity.toStudent();
+    }
+
+
 }
