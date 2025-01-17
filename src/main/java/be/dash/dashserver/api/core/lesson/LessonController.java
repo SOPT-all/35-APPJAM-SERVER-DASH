@@ -46,4 +46,10 @@ public class LessonController {
         return ResponseEntity.ok().build();
 
     }
+
+    @GetMapping("/recommendations")
+    public ResponseEntity<LessonResponses> recommendation(@MemberId Long memberId) {
+        Lessons lessons = lessonService.getRecommendationLessons(memberId);
+        return ResponseEntity.ok(new LessonResponses(lessons));
+    }
 }

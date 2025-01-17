@@ -70,31 +70,56 @@ public class LessonSpecifications {
     ) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
+            Predicate genrePredicate = null;
+            genrePredicate = checkContainGenres(genres, root, genrePredicate);
+            Predicate levelPredicate = null;
+            levelPredicate = checkContainLevels(levels, root, levelPredicate);
+
+            Predicate genreOrLevel = null;
+            if (allMatch(genrePredicate, levelPredicate)) {
+                genreOrLevel = cb.or(genrePredicate, levelPredicate);
+            } else if (genreMatch(genrePredicate)) {
+                genreOrLevel = genrePredicate;
+            } else if (levelMatch(levelPredicate)) {
+                genreOrLevel = levelPredicate;
+            }
+
+            if (anyMatch(genreOrLevel)) {
+                predicates.add(genreOrLevel);
+            }
             checkExpiredDate(now, root, cb, predicates);
-            inGenres(genres, root, predicates);
-            inLevels(levels, root, predicates);
-            if (checkNoneMatch(cb, predicates))
-                return cb.conjunction();
-            return cb.or(predicates.toArray(new Predicate[0]));
+
+            return cb.and(predicates.toArray(new Predicate[0]));
         };
     }
 
-    private static boolean checkNoneMatch(CriteriaBuilder cb, List<Predicate> predicates) {
-        if (predicates.isEmpty()) {
-            return true;
-        }
-        return false;
-    }
-
-    private static void inLevels(List<Level> levels, Root<LessonJpaEntity> root, List<Predicate> predicates) {
-        if (levels != null && !levels.isEmpty()) {
-            predicates.add(root.get("level").in(levels));
-        }
-    }
-
-    private static void inGenres(List<Genre> genres, Root<LessonJpaEntity> root, List<Predicate> predicates) {
+    private static Predicate checkContainGenres(List<Genre> genres, Root<LessonJpaEntity> root, Predicate genrePredicate) {
         if (genres != null && !genres.isEmpty()) {
-            predicates.add(root.get("genre").in(genres));
+            genrePredicate = root.get("genre").in(genres);
         }
+        return genrePredicate;
+    }
+
+    private static Predicate checkContainLevels(List<Level> levels, Root<LessonJpaEntity> root, Predicate levelPredicate) {
+        if (levels != null && !levels.isEmpty()) {
+            levelPredicate = root.get("level").in(levels);
+        }
+        return levelPredicate;
+    }
+
+    private static boolean allMatch(Predicate genrePredicate, Predicate levelPredicate) {
+        return genrePredicate != null && levelPredicate != null;
+    }
+
+    private static boolean genreMatch(Predicate genrePredicate) {
+        return genrePredicate != null;
+    }
+
+    private static boolean levelMatch(Predicate levelPredicate) {
+        return levelPredicate != null;
+    }
+
+    private static boolean anyMatch(Predicate genreOrLevel) {
+        return genreOrLevel != null;
     }
 }

@@ -125,13 +125,14 @@ public class LessonJpaEntity extends BaseTimeEntity {
                 .build();
     }
 
-    public Lesson toDomainWithTeacherImage(List<TeacherImageJpaEntity> teacherImageJpaEntities) {
+    public Lesson toDomainWithImages(List<TeacherImageJpaEntity> teacherImageJpaEntities, List<LessonImageJpaEntity> lessonImages) {
         return Lesson.builder()
                 .id(id)
                 .teacher(teacher.toDomainWithTeacherImage(teacherImageJpaEntities))
                 .name(name)
                 .genre(genre)
                 .level(level)
+                .images(lessonImages)
                 .rounds(new Rounds(List.of(new Round(startDateTime, endDateTime))))
                 .location(new Location(location, streetAddress, oldStreetAddress, detailedAddress))
                 .favoriteCount(favoriteCount)

@@ -39,6 +39,8 @@ class AdvertisementControllerTest {
         mockMvc.perform(get("/api/v1/advertisements"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.advertisements[0].imageUrl").value(advertisement.imageUrl()))
-                .andExpect(jsonPath("$.advertisements[1].imageUrl").value(advertisement.imageUrl()));
+                .andExpect(jsonPath("$.advertisements[0].description").value(advertisement.description()))
+                .andExpect(jsonPath("$.advertisements[1].imageUrl").value(advertisement1.imageUrl()))
+                .andExpect(jsonPath("$.advertisements[1].description").value(advertisement1.description()));
     }
 }

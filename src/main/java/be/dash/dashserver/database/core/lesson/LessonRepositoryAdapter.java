@@ -57,16 +57,16 @@ public class LessonRepositoryAdapter implements LessonRepository {
     private List<Lesson> getLessons(List<LessonJpaEntity> activeLessons) {
         return activeLessons.stream()
                 .map(lessonEntity -> {
-                    List<TeacherImageJpaEntity> allByTeacher = teacherImageJpaRepository.findAllByTeacherId(lessonEntity.getTeacher()
-                            .getId());
-                    return lessonEntity.toDomainWithTeacherImage(allByTeacher);
+                    List<TeacherImageJpaEntity> allByTeacher = teacherImageJpaRepository.findAllByTeacherId(lessonEntity.getTeacher().getId());
+                    List<LessonImageJpaEntity> lessonImages = lessonImageJpaRepository.findAllByLesson_Id(lessonEntity.getId());
+                    return lessonEntity.toDomainWithImages(allByTeacher, lessonImages);
                 })
                 .toList();
     }
 
     @Override
-    public List<Lesson> findActiveLessonsByGenreOrLevel(LocalDateTime now, List<Genre> genres, List<Level> levels) {
-        List<LessonJpaEntity> activeLessons = lessonJpaEntityRepository.findAll(LessonSpecifications.findActiveLessonsByGenreOrLevel(now, genres, levels));
+    public List<Lesson> findActiveLessonsByGenreOrLevel(LocalDateTime now, List<Genre> genres, Level level) {
+        List<LessonJpaEntity> activeLessons = lessonJpaEntityRepository.findAll(LessonSpecifications.findActiveLessonsByGenreOrLevel(now, genres, List.of(level)));
         return getLessons(activeLessons);
     }
 }

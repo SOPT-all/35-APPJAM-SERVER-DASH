@@ -16,5 +16,5 @@ public interface LessonRepository {
 
     List<Lesson> findActiveLessons(LocalDateTime now);
 
-    List<Lesson> findActiveLessonsByGenreOrLevel(LocalDateTime localDateTime, List<Genre> genres, List<Level> levels);
+    List<Lesson> findActiveLessonsByGenreOrLevel(LocalDateTime localDateTime, List<Genre> genres, Level level);
 }

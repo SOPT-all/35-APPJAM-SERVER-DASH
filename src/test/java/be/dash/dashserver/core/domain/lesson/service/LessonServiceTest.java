@@ -47,11 +47,11 @@ class LessonServiceTest extends ServiceSliceTest {
 
         assertAll(
                 () -> assertThat(lessonsLatest.lessons().stream().map(Lesson::getId)
-                        .toList()).containsExactly(5L, 4L, 3L),
+                        .toList()).containsExactly(6L, 5L, 4L),
                 () -> assertThat(lessonsMostFavorite.lessons().stream().map(Lesson::getId)
-                        .toList()).containsExactly(3L, 4L, 5L),
+                        .toList()).containsExactly(4L, 5L, 6L),
                 () -> assertThat(lessonsUpComing.lessons().stream().map(Lesson::getId)
-                        .toList()).containsExactly(3L, 5L, 4L)
+                        .toList()).containsExactly(4L, 6L, 5L)
         );
     }
 
@@ -64,6 +64,8 @@ class LessonServiceTest extends ServiceSliceTest {
         teacherImageRepository.saveAll(teacher);
 
         lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
+                startDateTime.minusDays(5), endDateTime.minusDays(15), 10));
+        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
                 startDateTime.minusDays(5), endDateTime.minusDays(3), 10));
         lessonRepository.save(LessonFixture.create(1, 1, Genre.FEMALE_HIPHOP, Level.BEGINNER,
                 startDateTime, endDateTime, 10));
@@ -73,5 +75,50 @@ class LessonServiceTest extends ServiceSliceTest {
                 startDateTime.plusDays(3), endDateTime.minusDays(1), 40));
         lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
                 startDateTime.plusDays(2), endDateTime.minusDays(1), 30));
+    }
+
+    @DisplayName("회원의 경우 회원이 관심있어 하는 장르와 난이도에 따라 수업을 추천한다.")
+    @Test
+    void getRecommendationLessonsMember() {
+        LocalDateTime startDateTime = LocalDateTime.now().minusDays(10);
+        LocalDateTime endDateTime = LocalDateTime.now().plusDays(10);
+        createRecommendationLessons(startDateTime, endDateTime);
+        Member studentWithoutId = MemberFixture.createStudentWithoutId("nickname", Genre.POPPING, Level.BEGINNER, "010-3333-2222");
+        Member member = memberRepository.save(studentWithoutId);
+        memberRepository.onboard(member);
+
+        Lessons recommendationLessons = lessonService.getRecommendationLessons(member.getId());
+
+        assertAll(
+                () -> assertThat(recommendationLessons.lessons().size()).isEqualTo(3),
+                () -> assertThat(recommendationLessons.lessons().get(0).getGenre()).isEqualTo(Genre.FEMALE_HIPHOP),
+                () -> assertThat(recommendationLessons.lessons().get(0).getLevel()).isEqualTo(Level.BEGINNER),
+                () -> assertThat(recommendationLessons.lessons().get(1).getGenre()).isEqualTo(Genre.HIPHOP),
+                () -> assertThat(recommendationLessons.lessons().get(1).getLevel()).isEqualTo(Level.BEGINNER),
+                () -> assertThat(recommendationLessons.lessons().get(2).getGenre()).isEqualTo(Genre.POPPING),
+                () -> assertThat(recommendationLessons.lessons().get(2).getLevel()).isEqualTo(Level.NOVICE)
+        );
+    }
+
+    private void createRecommendationLessons(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        Member memberWithoutId = MemberFixture.createTeacherWithoutId();
+        memberRepository.save(memberWithoutId);
+        Teacher teacherWithoutId = TeacherFixture.createWithoutId(1);
+        teacherRepository.save(teacherWithoutId);
+        Teacher teacher = TeacherFixture.create(1, 1);
+        teacherImageRepository.saveAll(teacher);
+
+        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
+                startDateTime.minusDays(5), endDateTime.minusDays(15), 10));
+        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.INTERMEDIATE,
+                startDateTime.plusDays(1), endDateTime.minusDays(1), 50));
+        lessonRepository.save(LessonFixture.create(1, 1, Genre.POPPING, Level.NOVICE,
+                startDateTime.plusDays(3), endDateTime.minusDays(1), 40));
+        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
+                startDateTime.plusDays(2), endDateTime.minusDays(1), 30));
+        lessonRepository.save(LessonFixture.create(1, 1, Genre.FEMALE_HIPHOP, Level.BEGINNER,
+                startDateTime.plusDays(2), endDateTime.minusDays(1), 30));
+        lessonRepository.save(LessonFixture.create(1, 1, Genre.POPPING, Level.BEGINNER,
+                startDateTime.minusDays(10), endDateTime.minusDays(15), 40));
     }
 }
