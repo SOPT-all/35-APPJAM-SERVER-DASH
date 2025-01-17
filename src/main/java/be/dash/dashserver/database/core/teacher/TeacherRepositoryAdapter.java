@@ -2,14 +2,11 @@ package be.dash.dashserver.database.core.teacher;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 import org.springframework.stereotype.Repository;
-import be.dash.dashserver.core.domain.member.service.MemberRepository;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.domain.teacher.Teachers;
 import be.dash.dashserver.core.domain.teacher.projection.TeacherLessonCount;
 import be.dash.dashserver.core.domain.teacher.service.TeacherRepository;
-import be.dash.dashserver.core.exception.DashException;
 import be.dash.dashserver.database.core.lesson.LessonJpaEntityRepository;
 import lombok.RequiredArgsConstructor;
 
