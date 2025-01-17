@@ -70,6 +70,6 @@ class TeacherServiceTest extends ServiceSliceTest {
         Teacher teacherWithoutId = TeacherFixture.createWithoutId(id);
         teacherRepository.save(teacherWithoutId);
         Teacher teacher = TeacherFixture.create(id, id);
-        teacherImageRepository.save(teacher);
+        teacherImageRepository.saveAll(teacher);
     }
 }
