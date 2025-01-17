@@ -1,5 +1,8 @@
 package be.dash.dashserver.database.core.teacher;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -61,10 +64,21 @@ public class TeacherJpaEntity extends BaseTimeEntity {
         this.id = teacher.getId();
         this.member = new MemberJpaEntity(teacher.getMember());
         this.detail = teacher.getDetail();
-        this.education = teacher.getEducation();
-        this.experience = teacher.getExperience();
+        this.education = String.join(",", teacher.getEducations());
+        this.experience = String.join(",", teacher.getExperiences());
         this.instagram = teacher.getInstagram();
         this.youtube = teacher.getYoutube();
+    }
+
+    public static TeacherJpaEntity fromDomain(Teacher teacher) {
+        return TeacherJpaEntity.builder()
+                .member(new MemberJpaEntity(teacher.getMember()))
+                .detail(teacher.getDetail())
+                .education(teacher.getEducations().stream().collect(Collectors.joining(",")))
+                .experience(teacher.getExperiences().stream().collect(Collectors.joining(",")))
+                .instagram(teacher.getInstagram())
+                .youtube(teacher.getYoutube())
+                .build();
     }
 
     public Teacher toDomain() {
@@ -72,23 +86,23 @@ public class TeacherJpaEntity extends BaseTimeEntity {
                 .id(id)
                 .member(member.toDomain())
                 .detail(detail)
-                .education(education)
-                .experience(experience)
+                .educations(Arrays.stream(education.split(",")).toList())
+                .experiences(Arrays.stream(experience.split(",")).toList())
                 .instagram(instagram)
                 .youtube(youtube)
                 .build();
     }
 
-    public Teacher toDomainWithTeacherImage(TeacherImageJpaEntity teacherImageJpaEntity) {
+    public Teacher toDomainWithTeacherImage(List<TeacherImageJpaEntity> teacherImageJpaEntities) {
         return Teacher.builder()
                 .id(id)
                 .member(member.toDomain())
                 .detail(detail)
-                .education(education)
-                .experience(experience)
+                .educations(Arrays.stream(education.split(",")).toList())
+                .experiences(Arrays.stream(experience.split(",")).toList())
                 .instagram(instagram)
                 .youtube(youtube)
-                .imageUrl(teacherImageJpaEntity.getImageUrl())
+                .imageUrls(teacherImageJpaEntities.stream().map(TeacherImageJpaEntity::getImageUrl).toList())
                 .build();
     }
 }

@@ -10,11 +10,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import be.dash.dashserver.database.core.common.BaseTimeEntity;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "teacher_video")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@AllArgsConstructor
 public class TeacherVideoJpaEntity extends BaseTimeEntity {
 
     @Id

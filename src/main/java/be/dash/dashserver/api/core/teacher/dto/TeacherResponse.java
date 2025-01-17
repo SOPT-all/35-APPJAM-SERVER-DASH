@@ -11,7 +11,7 @@ public record TeacherResponse(long id, String nickname, String profileImage, Lis
         this(
                 teacherLessonGenres.teacher().getId(),
                 teacherLessonGenres.teacher().getMember().getNickname(),
-                teacherLessonGenres.teacher().getImageUrl(),
+                teacherLessonGenres.teacher().getImageUrls().get(0),
                 selectGenres(teacherLessonGenres.genres())
         );
     }

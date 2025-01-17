@@ -61,7 +61,7 @@ class LessonServiceTest extends ServiceSliceTest {
         Teacher teacherWithoutId = TeacherFixture.createWithoutId(1);
         teacherRepository.save(teacherWithoutId);
         Teacher teacher = TeacherFixture.create(1, 1);
-        teacherImageRepository.save(teacher);
+        teacherImageRepository.saveAll(teacher);
 
         lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
                 startDateTime.minusDays(5), endDateTime.minusDays(3), 10));
