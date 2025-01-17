@@ -17,6 +17,7 @@ import be.dash.dashserver.core.auth.LogoutService;
 import be.dash.dashserver.core.auth.ReissueService;
 import be.dash.dashserver.core.auth.Token;
 import be.dash.dashserver.core.auth.TokenParser;
+import be.dash.dashserver.core.auth.TokenService;
 import be.dash.dashserver.core.auth.command.LoginCommand;
 import be.dash.dashserver.core.auth.dto.LoginResult;
 
@@ -39,6 +40,8 @@ class AuthControllerTest {
     private ReissueService reissueService;
     @MockitoBean
     private LogoutService logoutService;
+    @MockitoBean
+    private TokenService tokenService;
     @MockitoBean
     private JwtTokenExtractor jwtTokenExtractor;
     @MockitoBean
