@@ -1,4 +1,4 @@
-package be.dash.dashserver.api.core.home.dto;
+package be.dash.dashserver.api.core.advertisement.dto;
 
 import java.util.List;
 import be.dash.dashserver.core.domain.advertisement.Advertisement;
