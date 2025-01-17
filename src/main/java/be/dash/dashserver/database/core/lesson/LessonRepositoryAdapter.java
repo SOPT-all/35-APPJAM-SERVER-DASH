@@ -21,12 +21,7 @@ public class LessonRepositoryAdapter implements LessonRepository {
     @Override
     public List<Lesson> findActiveLessonsByFilters(Genre genre, Level level, LocalDateTime startDateTime, LocalDateTime endDateTime, LocalDateTime now) {
         List<LessonJpaEntity> activeLessons = lessonJpaEntityRepository.findAll(LessonSpecifications.findActiveLessonsByFilters(genre, level, startDateTime, endDateTime, LocalDateTime.now()));
-        return activeLessons.stream()
-                .map(lessonEntity -> {
-                    List<TeacherImageJpaEntity> allByTeacher = teacherImageJpaRepository.findAllByTeacherId(lessonEntity.getTeacher().getId());
-                    return lessonEntity.toDomainWithTeacherImage(allByTeacher);
-                })
-                .toList();
+        return getLessons(activeLessons);
     }
 
     @Override
@@ -37,5 +32,26 @@ public class LessonRepositoryAdapter implements LessonRepository {
     @Override
     public List<Genre> findDistinctGenresByTeacherIdOrderByCountDesc(Long teacherId) {
         return lessonJpaEntityRepository.findDistinctGenresByTeacherIdOrderByCountDesc(teacherId);
+    }
+
+    @Override
+    public List<Lesson> findActiveLessons(LocalDateTime now) {
+        return getLessons(lessonJpaEntityRepository.findByEndDateTimeGreaterThan(now));
+    }
+
+    private List<Lesson> getLessons(List<LessonJpaEntity> activeLessons) {
+        return activeLessons.stream()
+                .map(lessonEntity -> {
+                    List<TeacherImageJpaEntity> allByTeacher = teacherImageJpaRepository.findAllByTeacherId(lessonEntity.getTeacher()
+                            .getId());
+                    return lessonEntity.toDomainWithTeacherImage(allByTeacher);
+                })
+                .toList();
+    }
+
+    @Override
+    public List<Lesson> findActiveLessonsByGenreOrLevel(LocalDateTime now, List<Genre> genres, List<Level> levels) {
+        List<LessonJpaEntity> activeLessons = lessonJpaEntityRepository.findAll(LessonSpecifications.findActiveLessonsByGenreOrLevel(now, genres, levels));
+        return getLessons(activeLessons);
     }
 }

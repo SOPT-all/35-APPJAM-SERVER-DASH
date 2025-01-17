@@ -1,5 +1,6 @@
 package be.dash.dashserver.database.core.lesson;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -23,4 +24,6 @@ public interface LessonJpaEntityRepository extends JpaRepository<LessonJpaEntity
             "group by l.genre " +
             "order by count(l) desc")
     List<Genre> findDistinctGenresByTeacherIdOrderByCountDesc(@Param("teacherId") Long teacherId);
+
+    List<LessonJpaEntity> findByEndDateTimeGreaterThan(LocalDateTime endDateTime);
 }
