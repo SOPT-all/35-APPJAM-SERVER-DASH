@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.domain.teacher.Teachers;
-import be.dash.dashserver.core.domain.teacher.projection.TeacherLessonCount;
 import be.dash.dashserver.core.domain.teacher.service.TeacherRepository;
 import be.dash.dashserver.database.core.lesson.LessonJpaEntityRepository;
+import be.dash.dashserver.database.core.teacher.projection.TeacherLessonCount;
 import lombok.RequiredArgsConstructor;
 
 @Repository
