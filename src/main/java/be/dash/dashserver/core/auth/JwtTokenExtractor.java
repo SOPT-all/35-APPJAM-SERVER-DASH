@@ -11,7 +11,6 @@ public class JwtTokenExtractor {
 
     private final JwtProperties jwtProperties;
     private final KeyGenerator keyGenerator;
-    private final TokenParser tokenParser;
 
     public String getSubject(String token) {
         return Jwts.parser()

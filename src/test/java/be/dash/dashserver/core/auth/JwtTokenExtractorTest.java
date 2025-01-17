@@ -14,7 +14,7 @@ public class JwtTokenExtractorTest {
             5000,
             5000);
     private final TokenParser tokenParser = new TokenParser();
-    private final JwtTokenExtractor jwtTokenExtractor = new JwtTokenExtractor(jwtProperties, keyGenerator, tokenParser);
+    private final JwtTokenExtractor jwtTokenExtractor = new JwtTokenExtractor(jwtProperties, keyGenerator);
 
     @Test
     @DisplayName("토큰에서 subject를 가져올 수 있어야 한다.")
