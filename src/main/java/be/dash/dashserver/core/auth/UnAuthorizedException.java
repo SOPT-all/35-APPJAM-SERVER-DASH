@@ -17,6 +17,6 @@ public class UnAuthorizedException extends DashException {
     }
 
     public static UnAuthorizedException empty() {
-        return new UnAuthorizedException(String.format("토큰이 없습니다."));
+        return new UnAuthorizedException("토큰이 없습니다.");
     }
 }

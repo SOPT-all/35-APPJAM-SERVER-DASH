@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TokenParser {
     private static final String BEARER_PREFIX = "Bearer ";
-    public String getToken(String token){
+
+    public String getToken(String token) {
         if (token.startsWith(BEARER_PREFIX)) {
             return token.substring(BEARER_PREFIX.length());
         } else {

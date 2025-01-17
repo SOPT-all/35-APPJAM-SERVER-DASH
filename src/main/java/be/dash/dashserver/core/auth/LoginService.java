@@ -38,9 +38,9 @@ public class LoginService {
 
     private Token createToken(AuthMember authMember) {
         return new Token(
-               jwtTokenGenerator.createAccessToken(String.valueOf(authMember.getId()), authMember.getRole()),
-               jwtTokenGenerator.createRefreshToken(String.valueOf(authMember.getId()), authMember.getRole())
-       );
+                jwtTokenGenerator.createAccessToken(String.valueOf(authMember.getId()), authMember.getRole()),
+                jwtTokenGenerator.createRefreshToken(String.valueOf(authMember.getId()), authMember.getRole())
+        );
     }
 
     private AuthMember loadOrCreateMember(LoginCommand command, SocialInfoResult socialUserInfo) {

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LocationSearchService {
     private final LocationSearchClientApi locationSearchClientApi;
+
     public Locations getLocations(String query) {
         return locationSearchClientApi.getLocations(query);
     }

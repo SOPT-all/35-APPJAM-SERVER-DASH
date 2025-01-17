@@ -4,7 +4,7 @@ import java.util.List;
 import be.dash.dashserver.core.domain.common.Genre;
 
 public record PopularGenres(List<Genre> genres) {
-    private static int MAX_GENRES_SIZE = 3;
+    private static final int MAX_GENRES_SIZE = 3;
 
     public PopularGenres {
         if (genres.size() >= MAX_GENRES_SIZE) {

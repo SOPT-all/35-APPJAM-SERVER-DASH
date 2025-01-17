@@ -6,11 +6,11 @@ import lombok.Getter;
 public class AuthMember {
 
     private long id;
-    private SocialProvider socialProvider;
-    private String socialId;
-    private String email;
-    private String socialName;
-    private Role role;
+    private final SocialProvider socialProvider;
+    private final String socialId;
+    private final String email;
+    private final String socialName;
+    private final Role role;
 
     private AuthMember(SocialProvider socialProvider, String socialId, String email, String socialName, Role role) {
         this.socialProvider = socialProvider;

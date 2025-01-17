@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import be.dash.dashserver.core.domain.member.Role;
 
 public class JwtTokenGeneratorTest {
-    private KeyGenerator keyGenerator = new KeyGenerator();
-    private JwtProperties jwtProperties = new JwtProperties("secretasdfasdfasdfasdfasdlmlmllklklklfasdfasdfasdf",
+    private final KeyGenerator keyGenerator = new KeyGenerator();
+    private final JwtProperties jwtProperties = new JwtProperties("secretasdfasdfasdfasdfasdlmlmllklklklfasdfasdfasdf",
             5000,
             5000);
-    private JwtTokenGenerator jwtTokenGenerator = new JwtTokenGenerator(jwtProperties, keyGenerator);
+    private final JwtTokenGenerator jwtTokenGenerator = new JwtTokenGenerator(jwtProperties, keyGenerator);
 
     @Test
     @DisplayName("Access Token을 생성할 수 있다.")

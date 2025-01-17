@@ -34,6 +34,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addConverter(localDateTimeConverter);
         registry.addConverter(sortOptionConverter);
     }
+
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(MemberIdArgumentResolver);

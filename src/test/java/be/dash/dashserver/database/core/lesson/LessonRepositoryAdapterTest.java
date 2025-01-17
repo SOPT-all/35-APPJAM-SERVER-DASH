@@ -66,17 +66,23 @@ class LessonRepositoryAdapterTest {
     }
 
     private void createLessons(TeacherJpaEntity teacherJpaEntity, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember().getId(), Genre.HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember()
+                        .getId(), Genre.HIPHOP, Level.BEGINNER,
                 startDateTime.minusDays(5), endDateTime.minusDays(3), 10));
-        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember().getId(), Genre.HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember()
+                        .getId(), Genre.HIPHOP, Level.BEGINNER,
                 startDateTime, endDateTime, 10));
-        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember().getId(), Genre.FEMALE_HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember()
+                        .getId(), Genre.FEMALE_HIPHOP, Level.BEGINNER,
                 startDateTime, endDateTime, 10));
-        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember().getId(), Genre.HIPHOP, Level.ADVANCED,
+        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember()
+                        .getId(), Genre.HIPHOP, Level.ADVANCED,
                 startDateTime.plusDays(1), endDateTime.minusDays(1), 50));
-        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember().getId(), Genre.HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember()
+                        .getId(), Genre.HIPHOP, Level.BEGINNER,
                 startDateTime.plusDays(3), endDateTime.minusDays(1), 40));
-        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember().getId(), Genre.HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember()
+                        .getId(), Genre.HIPHOP, Level.BEGINNER,
                 startDateTime.plusDays(2), endDateTime.minusDays(1), 30));
     }
 
