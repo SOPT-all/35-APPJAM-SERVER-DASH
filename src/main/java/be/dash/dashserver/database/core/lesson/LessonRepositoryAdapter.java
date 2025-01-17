@@ -56,4 +56,9 @@ public class LessonRepositoryAdapter implements LessonRepository {
         List<LessonJpaEntity> activeLessons = lessonJpaEntityRepository.findAll(LessonSpecifications.findActiveLessonsByGenreOrLevel(now, genres, List.of(level)));
         return getLessons(activeLessons);
     }
+
+    @Override
+    public List<Genre> popularGenres(LocalDateTime localDateTime) {
+        return lessonJpaEntityRepository.findPopularGenresByActiveLessons(localDateTime);
+    }
 }

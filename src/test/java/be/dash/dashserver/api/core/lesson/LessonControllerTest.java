@@ -24,6 +24,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static be.dash.dashserver.core.domain.common.Genre.CHOREOGRAPHY;
+import static be.dash.dashserver.core.domain.common.Genre.HIPHOP;
+import static be.dash.dashserver.core.domain.common.Genre.KPOP;
 
 
 @WebMvcTest(LessonController.class)
@@ -41,7 +44,7 @@ class LessonControllerTest {
     @DisplayName("주어진 필터와 정렬 옵션으로 수업 검색 요청을 처리하고 올바른 응답을 반환한다.")
     @Test
     void search() throws Exception {
-        Lessons lessons = new Lessons(List.of(LessonFixture.createWithImage(1, 1, 1, Genre.HIPHOP, Level.BEGINNER, "image")));
+        Lessons lessons = new Lessons(List.of(LessonFixture.createWithImage(1, 1, 1, HIPHOP, Level.BEGINNER, "image")));
         when(lessonService.search(
                 any(Genre.class),
                 any(Level.class),
@@ -68,7 +71,7 @@ class LessonControllerTest {
     @Test
     void recommendation() throws Exception {
         Long memberId = 1L;
-        Lessons lessons = new Lessons(List.of(LessonFixture.createWithImage(memberId, 1, 1, Genre.HIPHOP, Level.BEGINNER, "image")));
+        Lessons lessons = new Lessons(List.of(LessonFixture.createWithImage(memberId, 1, 1, HIPHOP, Level.BEGINNER, "image")));
         when(tokenParser.getToken(anyString())).thenReturn("subject");
         when(jwtTokenExtractor.getSubject(anyString())).thenReturn(String.valueOf(memberId));
         when(lessonService.getRecommendationLessons(any(Long.class))).thenReturn(lessons);
@@ -81,5 +84,18 @@ class LessonControllerTest {
                 .andExpect(jsonPath("$.lessons[0].level").value(lessons.lessons().get(0).getLevel().name()))
                 .andExpect(jsonPath("$.lessons[0].name").value(lessons.lessons().get(0).getName()))
                 .andExpect(jsonPath("$.lessons[0].imageUrl").value(lessons.lessons().get(0).getImageUrl()));
+    }
+
+    @DisplayName("장르를 추천한다.")
+    @Test
+    void popularGenres() throws Exception {
+        when(lessonService.getPopularGenres()).thenReturn(List.of(HIPHOP, Genre.CHOREOGRAPHY, Genre.KPOP, Genre.BRAKING));
+
+        mockMvc.perform(get("/api/v1/lessons/popular-genres")
+                        .header(HttpHeaders.AUTHORIZATION, "token"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.genres[0]").value(HIPHOP.name()))
+                .andExpect(jsonPath("$.genres[1]").value(CHOREOGRAPHY.name()))
+                .andExpect(jsonPath("$.genres[2]").value(KPOP.name()));
     }
 }

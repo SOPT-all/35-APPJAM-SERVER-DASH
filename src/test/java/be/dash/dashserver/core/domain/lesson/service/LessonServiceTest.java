@@ -1,6 +1,7 @@
 package be.dash.dashserver.core.domain.lesson.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ import be.dash.dashserver.core.fixture.TeacherFixture;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static be.dash.dashserver.core.domain.common.Genre.CHOREOGRAPHY;
+import static be.dash.dashserver.core.domain.common.Genre.FEMALE_HIPHOP;
+import static be.dash.dashserver.core.domain.common.Genre.HIPHOP;
+import static be.dash.dashserver.core.domain.common.Genre.HOUSE;
+import static be.dash.dashserver.core.domain.common.Genre.KPOP;
 
 class LessonServiceTest extends ServiceSliceTest {
     @Autowired
@@ -41,9 +47,9 @@ class LessonServiceTest extends ServiceSliceTest {
         LocalDateTime endDateTime = LocalDateTime.now().plusDays(10);
         createLessons(startDateTime, endDateTime);
 
-        Lessons lessonsLatest = lessonService.search(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, LessonSortOption.LATEST);
-        Lessons lessonsMostFavorite = lessonService.search(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, LessonSortOption.MOST_FAVORITE);
-        Lessons lessonsUpComing = lessonService.search(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, LessonSortOption.UPCOMING);
+        Lessons lessonsLatest = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime, endDateTime, LessonSortOption.LATEST);
+        Lessons lessonsMostFavorite = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime, endDateTime, LessonSortOption.MOST_FAVORITE);
+        Lessons lessonsUpComing = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime, endDateTime, LessonSortOption.UPCOMING);
 
         assertAll(
                 () -> assertThat(lessonsLatest.lessons().stream().map(Lesson::getId)
@@ -63,17 +69,17 @@ class LessonServiceTest extends ServiceSliceTest {
         Teacher teacher = TeacherFixture.create(1, 1);
         teacherImageRepository.saveAll(teacher);
 
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, Level.BEGINNER,
                 startDateTime.minusDays(5), endDateTime.minusDays(15), 10));
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, Level.BEGINNER,
                 startDateTime.minusDays(5), endDateTime.minusDays(3), 10));
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.FEMALE_HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(1, 1, FEMALE_HIPHOP, Level.BEGINNER,
                 startDateTime, endDateTime, 10));
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, Level.BEGINNER,
                 startDateTime.plusDays(1), endDateTime.minusDays(1), 50));
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, Level.BEGINNER,
                 startDateTime.plusDays(3), endDateTime.minusDays(1), 40));
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, Level.BEGINNER,
                 startDateTime.plusDays(2), endDateTime.minusDays(1), 30));
     }
 
@@ -91,9 +97,9 @@ class LessonServiceTest extends ServiceSliceTest {
 
         assertAll(
                 () -> assertThat(recommendationLessons.lessons().size()).isEqualTo(3),
-                () -> assertThat(recommendationLessons.lessons().get(0).getGenre()).isEqualTo(Genre.FEMALE_HIPHOP),
+                () -> assertThat(recommendationLessons.lessons().get(0).getGenre()).isEqualTo(FEMALE_HIPHOP),
                 () -> assertThat(recommendationLessons.lessons().get(0).getLevel()).isEqualTo(Level.BEGINNER),
-                () -> assertThat(recommendationLessons.lessons().get(1).getGenre()).isEqualTo(Genre.HIPHOP),
+                () -> assertThat(recommendationLessons.lessons().get(1).getGenre()).isEqualTo(HIPHOP),
                 () -> assertThat(recommendationLessons.lessons().get(1).getLevel()).isEqualTo(Level.BEGINNER),
                 () -> assertThat(recommendationLessons.lessons().get(2).getGenre()).isEqualTo(Genre.POPPING),
                 () -> assertThat(recommendationLessons.lessons().get(2).getLevel()).isEqualTo(Level.NOVICE)
@@ -108,17 +114,55 @@ class LessonServiceTest extends ServiceSliceTest {
         Teacher teacher = TeacherFixture.create(1, 1);
         teacherImageRepository.saveAll(teacher);
 
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, Level.BEGINNER,
                 startDateTime.minusDays(5), endDateTime.minusDays(15), 10));
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.INTERMEDIATE,
+        lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, Level.INTERMEDIATE,
                 startDateTime.plusDays(1), endDateTime.minusDays(1), 50));
         lessonRepository.save(LessonFixture.create(1, 1, Genre.POPPING, Level.NOVICE,
                 startDateTime.plusDays(3), endDateTime.minusDays(1), 40));
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, Level.BEGINNER,
                 startDateTime.plusDays(2), endDateTime.minusDays(1), 30));
-        lessonRepository.save(LessonFixture.create(1, 1, Genre.FEMALE_HIPHOP, Level.BEGINNER,
+        lessonRepository.save(LessonFixture.create(1, 1, FEMALE_HIPHOP, Level.BEGINNER,
                 startDateTime.plusDays(2), endDateTime.minusDays(1), 30));
         lessonRepository.save(LessonFixture.create(1, 1, Genre.POPPING, Level.BEGINNER,
                 startDateTime.minusDays(10), endDateTime.minusDays(15), 40));
+    }
+
+    @DisplayName("예약이 가장 많은 순서대로 장르를 반환한다.")
+    @Test
+    void getPopularGenres() {
+        LocalDateTime startDateTime = LocalDateTime.now().minusDays(10);
+        LocalDateTime endDateTime = LocalDateTime.now().plusDays(10);
+        createPopularGenreLessons(startDateTime, endDateTime);
+
+        List<Genre> popularGenres = lessonService.getPopularGenres();
+        assertAll(
+                () -> assertThat(popularGenres.size()).isEqualTo(4),
+                () -> assertThat(popularGenres.get(0)).isEqualTo(FEMALE_HIPHOP),
+                () -> assertThat(popularGenres.get(1)).isEqualTo(KPOP),
+                () -> assertThat(popularGenres.get(2)).isEqualTo(CHOREOGRAPHY),
+                () -> assertThat(popularGenres.get(3)).isEqualTo(HIPHOP)
+        );
+    }
+
+    private void createPopularGenreLessons(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        Member memberWithoutId = MemberFixture.createTeacherWithoutId();
+        memberRepository.save(memberWithoutId);
+        Teacher teacherWithoutId = TeacherFixture.createWithoutId(1);
+        teacherRepository.save(teacherWithoutId);
+        Teacher teacher = TeacherFixture.create(1, 1);
+        teacherImageRepository.saveAll(teacher);
+
+        lessonRepository.save(LessonFixture.create(1, 1, HOUSE, startDateTime.minusDays(5), endDateTime.minusDays(15), 1));
+        lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, startDateTime.minusDays(5), endDateTime.minusDays(3), 1));
+        lessonRepository.save(LessonFixture.create(1, 1, FEMALE_HIPHOP, startDateTime.minusDays(5), endDateTime.minusDays(3), 10));
+        lessonRepository.save(LessonFixture.create(1, 1, FEMALE_HIPHOP, startDateTime, endDateTime, 50));
+        lessonRepository.save(LessonFixture.create(1, 1, KPOP, startDateTime.plusDays(1), endDateTime.minusDays(1), 5));
+        lessonRepository.save(LessonFixture.create(1, 1, KPOP, startDateTime.plusDays(1), endDateTime.minusDays(1), 5));
+        lessonRepository.save(LessonFixture.create(1, 1, KPOP, startDateTime.plusDays(1), endDateTime.minusDays(1), 5));
+        lessonRepository.save(LessonFixture.create(1, 1, KPOP, startDateTime.plusDays(1), endDateTime.minusDays(1), 5));
+        lessonRepository.save(LessonFixture.create(1, 1, CHOREOGRAPHY, startDateTime.plusDays(1), endDateTime.minusDays(1), 3));
+        lessonRepository.save(LessonFixture.create(1, 1, CHOREOGRAPHY, startDateTime.plusDays(3), endDateTime.minusDays(1), 3));
+        lessonRepository.save(LessonFixture.create(1, 1, CHOREOGRAPHY, startDateTime.plusDays(2), endDateTime.minusDays(1), 3));
     }
 }

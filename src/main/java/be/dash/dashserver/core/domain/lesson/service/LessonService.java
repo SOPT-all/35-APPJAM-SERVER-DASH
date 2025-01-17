@@ -1,6 +1,7 @@
 package be.dash.dashserver.core.domain.lesson.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,5 +44,9 @@ public class LessonService {
 
     private boolean isGuest(Long memberId) {
         return Objects.isNull(memberId);
+    }
+
+    public List<Genre> getPopularGenres() {
+        return lessonRepository.popularGenres(LocalDateTime.now());
     }
 }
