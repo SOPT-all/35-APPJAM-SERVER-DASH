@@ -7,4 +7,6 @@ public interface TeacherRepository {
     void save(Teacher teacher);
 
     Teachers findTeachersSortByLessonCountsDesc();
+
+    void register(Teacher teacher);
 }
