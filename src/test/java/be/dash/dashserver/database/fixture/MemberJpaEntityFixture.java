@@ -33,4 +33,15 @@ public class MemberJpaEntityFixture {
                 .nickname(nickname)
                 .build();
     }
+
+    public static MemberJpaEntity createWithoutOnboarding() {
+        return MemberJpaEntity.builder()
+                .provider(SocialProvider.KAKAO)
+                .socialId("socialId")
+                .socialName("socialName")
+                .role(Role.TEACHER)
+                .email("email")
+                .build();
+
+    }
 }
