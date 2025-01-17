@@ -20,7 +20,7 @@ public class JwtTokenGenerator {
     private final JwtProperties jwtProperties;
     private final KeyGenerator keyGenerator;
 
-    String createAccessToken(String payload, Role role) {
+    public String createAccessToken(String payload, Role role) {
 
         Date now = new Date();
         Map<String, Object> claims = new HashMap<>();
@@ -37,7 +37,7 @@ public class JwtTokenGenerator {
                 .compact();
     }
 
-    String createRefreshToken(String payload, Role role) {
+    public String createRefreshToken(String payload, Role role) {
 
         Date now = new Date();
         Map<String, Object> claims = new HashMap<>();
