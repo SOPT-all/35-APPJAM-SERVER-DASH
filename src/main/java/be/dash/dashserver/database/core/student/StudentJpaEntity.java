@@ -15,6 +15,8 @@ import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.database.core.common.BaseTimeEntity;
 import be.dash.dashserver.database.core.member.MemberJpaEntity;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +24,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "student")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@AllArgsConstructor
 public class StudentJpaEntity extends BaseTimeEntity {
 
     @Id

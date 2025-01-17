@@ -112,4 +112,10 @@ public class MemberJpaEntity extends BaseTimeEntity {
                 .nickname(nickname)
                 .build();
     }
+
+    public void updateOnboardDetails(Member member) {
+        this.name = member.getName();
+        this.phoneNumber = member.getPhoneNumber();
+        this.nickname = member.getNickname();
+    }
 }

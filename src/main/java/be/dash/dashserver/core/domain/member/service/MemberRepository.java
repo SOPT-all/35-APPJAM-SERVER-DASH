@@ -9,4 +9,5 @@ public interface MemberRepository {
     AuthMember save(AuthMember authMember);
     void save(Member member);
     Member findById(long id);
+    void onboard(Member member);
 }

@@ -6,15 +6,16 @@ import lombok.Getter;
 @Getter
 public class Member {
 
-    private final Long id;
-    private final SocialProvider provider;
-    private final String socialId;
-    private final String socialName;
-    private final Role role;
-    private final String email;
-    private final String name;
-    private final String phoneNumber;
-    private final String nickname;
+    private Long id;
+    private SocialProvider provider;
+    private String socialId;
+    private String socialName;
+    private Role role;
+    private String email;
+    private String name;
+    private String phoneNumber;
+    private String nickname;
+    private Student student;
 
     @Builder
     public Member(
@@ -26,7 +27,8 @@ public class Member {
             String email,
             String name,
             String phoneNumber,
-            String nickname) {
+            String nickname,
+            Student student) {
         this.id = id;
         this.provider = provider;
         this.socialId = socialId;
@@ -36,6 +38,7 @@ public class Member {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.nickname = nickname;
+        this.student = student;
     }
 
     public boolean isOnboarded() {
