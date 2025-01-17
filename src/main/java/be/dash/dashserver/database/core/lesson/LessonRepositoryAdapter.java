@@ -24,9 +24,8 @@ public class LessonRepositoryAdapter implements LessonRepository {
         List<LessonJpaEntity> activeLessons = lessonJpaEntityRepository.findAll(LessonSpecifications.findActiveLessonsByFilters(genre, level, startDateTime, endDateTime, LocalDateTime.now()));
         return activeLessons.stream()
                 .map(lessonEntity -> {
-                    TeacherImageJpaEntity teacherImageJpaEntity = teacherImageJpaRepository.findFirstByTeacherId(lessonEntity.getTeacher()
-                            .getId()).orElseThrow(() -> new DashException("해당 수업에 일치하는 선생님이 없습니다."));
-                    return lessonEntity.toDomainWithTeacherImage(teacherImageJpaEntity);
+                    List<TeacherImageJpaEntity> allByTeacher = teacherImageJpaRepository.findAllByTeacherId(lessonEntity.getTeacher().getId());
+                    return lessonEntity.toDomainWithTeacherImage(allByTeacher);
                 })
                 .toList();
     }

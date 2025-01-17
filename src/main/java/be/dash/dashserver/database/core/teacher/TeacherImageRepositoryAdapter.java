@@ -1,5 +1,6 @@
 package be.dash.dashserver.database.core.teacher;
 
+import java.util.List;
 import org.springframework.stereotype.Repository;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.domain.teacher.service.TeacherImageRepository;
@@ -11,7 +12,9 @@ public class TeacherImageRepositoryAdapter implements TeacherImageRepository {
     private final TeacherImageJpaRepository teacherImageJpaRepository;
 
     @Override
-    public void save(Teacher teacher) {
-        teacherImageJpaRepository.save(new TeacherImageJpaEntity(new TeacherJpaEntity(teacher), teacher.getImageUrl()));
+    public void saveAll(Teacher teacher) {
+        List<TeacherImageJpaEntity> teacherImageJpaEntities = teacher.getImageUrls().stream()
+                .map(url -> new TeacherImageJpaEntity(new TeacherJpaEntity(teacher), url)).toList();
+        teacherImageJpaRepository.saveAll(teacherImageJpaEntities);
     }
 }

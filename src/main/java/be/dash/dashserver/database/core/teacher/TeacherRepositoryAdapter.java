@@ -2,7 +2,9 @@ package be.dash.dashserver.database.core.teacher;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 import org.springframework.stereotype.Repository;
+import be.dash.dashserver.core.domain.member.service.MemberRepository;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.domain.teacher.Teachers;
 import be.dash.dashserver.core.domain.teacher.projection.TeacherLessonCount;
@@ -20,7 +22,8 @@ public class TeacherRepositoryAdapter implements TeacherRepository {
 
     @Override
     public void save(Teacher teacher) {
-        teacherJpaRepository.save(new TeacherJpaEntity(teacher));
+        TeacherJpaEntity teacherJpaEntity = TeacherJpaEntity.fromDomain(teacher);
+        teacherJpaRepository.save(teacherJpaEntity);
     }
 
     @Override
@@ -28,14 +31,33 @@ public class TeacherRepositoryAdapter implements TeacherRepository {
         List<Teacher> teachers = new ArrayList<>();
         List<TeacherLessonCount> teacherLessonCounts = lessonJpaEntityRepository.findTeacherLessonCountsDesc();
         teacherLessonCounts.forEach(teacherLessonCount -> {
-            TeacherImageJpaEntity teacherImageJpaEntity = teacherImageJpaRepository.findFirstByTeacherId(teacherLessonCount.teacherId())
-                    .orElseThrow(() -> new DashException("등록된 선생님의 사진이 없습니다."));
+            List<TeacherImageJpaEntity> teacherImageJpaEntities = teacherImageJpaRepository
+                    .findAllByTeacherId(teacherLessonCount.teacherId());
             Teacher teacher = Teacher.builder()
                     .id(teacherLessonCount.teacherId())
-                    .imageUrl(teacherImageJpaEntity.getImageUrl())
+                    .imageUrls(teacherImageJpaEntities.stream().map(TeacherImageJpaEntity::getImageUrl).toList())//주호꺼
                     .lessonCount(teacherLessonCount.lessonCount()).build();
             teachers.add(teacher);
         });
         return new Teachers(teachers);
+    }
+
+    @Override
+    public void register(Teacher teacher) {
+        TeacherJpaEntity teacherJpaEntity = TeacherJpaEntity.fromDomain(teacher);
+        teacherJpaRepository.save(teacherJpaEntity);
+        List<TeacherImageJpaEntity> teacherImageJpaEntities = teacher.getImageUrls().stream()
+                .map(imageUrl -> TeacherImageJpaEntity.builder()
+                        .teacher(teacherJpaEntity)
+                        .imageUrl(imageUrl)
+                        .build()).toList();
+        teacherImageJpaRepository.saveAll(teacherImageJpaEntities);
+
+        List<TeacherVideoJpaEntity> teacherVideoJpaEntities = teacher.getVideoUrls().stream()
+                .map(videoUrl -> TeacherVideoJpaEntity.builder()
+                        .teacher(teacherJpaEntity)
+                        .videoUrl(videoUrl)
+                        .build()).toList();
+        teacherImageJpaRepository.saveAll(teacherImageJpaEntities);
     }
 }

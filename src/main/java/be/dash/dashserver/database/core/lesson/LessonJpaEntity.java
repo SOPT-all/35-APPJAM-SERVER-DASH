@@ -1,6 +1,7 @@
 package be.dash.dashserver.database.core.lesson;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -122,10 +123,10 @@ public class LessonJpaEntity extends BaseTimeEntity {
                 .build();
     }
 
-    public Lesson toDomainWithTeacherImage(TeacherImageJpaEntity teacherImageJpaEntity) {
+    public Lesson toDomainWithTeacherImage(List<TeacherImageJpaEntity> teacherImageJpaEntitys) {
         return Lesson.builder()
                 .id(id)
-                .teacher(teacher.toDomainWithTeacherImage(teacherImageJpaEntity))
+                .teacher(teacher.toDomainWithTeacherImage(teacherImageJpaEntitys))
                 .name(name)
                 .genre(genre)
                 .level(level)
