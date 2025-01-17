@@ -6,16 +6,16 @@ import lombok.Getter;
 @Getter
 public class Member {
 
-    private Long id;
-    private SocialProvider provider;
-    private String socialId;
-    private String socialName;
-    private Role role;
-    private String email;
-    private String name;
-    private String phoneNumber;
-    private String nickname;
-    private Student student;
+    private final Long id;
+    private final SocialProvider provider;
+    private final String socialId;
+    private final String socialName;
+    private final Role role;
+    private final String email;
+    private final String name;
+    private final String phoneNumber;
+    private final String nickname;
+    private final Student student;
 
     @Builder
     public Member(

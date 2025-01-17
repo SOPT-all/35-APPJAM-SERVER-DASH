@@ -53,7 +53,7 @@ public class TeacherService {
         teacherRepository.register(teacher);//선생님을 저장할 떄, 선생프로필, 선생이미지, 선생 비디오를 모두 저장해야한다.
 
         return new Token(jwtTokenGenerator.createAccessToken(String.valueOf(member.getId()), Role.TEACHER),
-        jwtTokenGenerator.createRefreshToken(String.valueOf(member.getId()), Role.TEACHER));
+                jwtTokenGenerator.createRefreshToken(String.valueOf(member.getId()), Role.TEACHER));
 
 
     }

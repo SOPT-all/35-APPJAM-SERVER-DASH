@@ -29,16 +29,16 @@ public class PermissionInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         HandlerMethod method = (HandlerMethod) handler;
         Permission permission = method.getMethodAnnotation(Permission.class);
-        if (permission == null) return true;
+        if (permission == null)
+            return true;
 
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         Role role;
         try {
             role = jwtTokenExtractor.getRole(tokenParser.getToken(token));
-        }catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             throw UnAuthorizedException.empty();
-        }
-        catch (ExpiredJwtException e) {
+        } catch (ExpiredJwtException e) {
             throw UnAuthorizedException.expired(token);
         } catch (JwtException | IllegalArgumentException e) {
             throw UnAuthorizedException.wrong(token);

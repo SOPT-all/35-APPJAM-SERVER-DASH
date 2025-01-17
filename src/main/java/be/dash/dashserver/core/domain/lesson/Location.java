@@ -8,8 +8,8 @@ import lombok.Getter;
 public class Location {
     private String title;
     /**
-    * 도로명 주소
-    **/
+     * 도로명 주소
+     **/
     private String roadAddress;
     /**
      * 지번 주소
