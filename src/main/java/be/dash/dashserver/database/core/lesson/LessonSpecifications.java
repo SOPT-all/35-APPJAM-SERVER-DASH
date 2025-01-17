@@ -62,4 +62,39 @@ public class LessonSpecifications {
             predicates.add(cb.equal(root.get("genre"), genre));
         }
     }
+
+    public static Specification<LessonJpaEntity> findActiveLessonsByGenreOrLevel(
+            LocalDateTime now,
+            List<Genre> genres,
+            List<Level> levels
+    ) {
+        return (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            checkExpiredDate(now, root, cb, predicates);
+            inGenres(genres, root, predicates);
+            inLevels(levels, root, predicates);
+            if (checkNoneMatch(cb, predicates))
+                return cb.conjunction();
+            return cb.or(predicates.toArray(new Predicate[0]));
+        };
+    }
+
+    private static boolean checkNoneMatch(CriteriaBuilder cb, List<Predicate> predicates) {
+        if (predicates.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    private static void inLevels(List<Level> levels, Root<LessonJpaEntity> root, List<Predicate> predicates) {
+        if (levels != null && !levels.isEmpty()) {
+            predicates.add(root.get("level").in(levels));
+        }
+    }
+
+    private static void inGenres(List<Genre> genres, Root<LessonJpaEntity> root, List<Predicate> predicates) {
+        if (genres != null && !genres.isEmpty()) {
+            predicates.add(root.get("genre").in(genres));
+        }
+    }
 }
