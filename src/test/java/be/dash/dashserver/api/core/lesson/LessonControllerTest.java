@@ -7,15 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpHeaders;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import be.dash.dashserver.api.config.TestConfig;
-import be.dash.dashserver.api.config.WebMvcConfig;
-import be.dash.dashserver.api.core.auth.AuthController;
 import be.dash.dashserver.core.auth.JwtTokenExtractor;
 import be.dash.dashserver.core.auth.TokenParser;
 import be.dash.dashserver.core.domain.common.Genre;
@@ -23,8 +17,10 @@ import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.LessonSortOption;
 import be.dash.dashserver.core.domain.lesson.Lessons;
 import be.dash.dashserver.core.domain.lesson.service.LessonService;
+import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.fixture.LessonFixture;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -72,16 +68,16 @@ class LessonControllerTest {
                 .andExpect(jsonPath("$.lessons[0].genre").value(lessons.lessons().get(0).getGenre().name()))
                 .andExpect(jsonPath("$.lessons[0].level").value(lessons.lessons().get(0).getLevel().name()))
                 .andExpect(jsonPath("$.lessons[0].name").value(lessons.lessons().get(0).getName()))
-                .andExpect(jsonPath("$.lessons[0].imageUrl").value(lessons.lessons().get(0).getImageUrl()));
+                .andExpect(jsonPath("$.lessons[0].imageUrl").value(lessons.lessons().get(0)
+                        .getRepresentativeImageUrl()));
     }
 
     @DisplayName("수업을 추천한다.")
     @Test
     void recommendation() throws Exception {
         Long memberId = 1L;
-        Lessons lessons = new Lessons(List.of(LessonFixture.createWithImage(memberId, 1, 1, HIPHOP, Level.BEGINNER, "image")));
-        when(tokenParser.getToken(anyString())).thenReturn("subject");
-        when(jwtTokenExtractor.getSubject(anyString())).thenReturn(String.valueOf(memberId));
+        Lessons lessons = new Lessons(List.of(LessonFixture.create(memberId, 1, 1, HIPHOP, Level.BEGINNER)));
+        mockingArgumentResolver(memberId);
         when(lessonService.getRecommendationLessons(any(Long.class), any(LessonSortOption.class))).thenReturn(lessons);
 
         mockMvc.perform(get("/api/v1/lessons/recommendations")
@@ -91,15 +87,24 @@ class LessonControllerTest {
                 .andExpect(jsonPath("$.lessons[0].genre").value(lessons.lessons().get(0).getGenre().name()))
                 .andExpect(jsonPath("$.lessons[0].level").value(lessons.lessons().get(0).getLevel().name()))
                 .andExpect(jsonPath("$.lessons[0].name").value(lessons.lessons().get(0).getName()))
-                .andExpect(jsonPath("$.lessons[0].imageUrl").value(lessons.lessons().get(0).getImageUrl()));
+                .andExpect(jsonPath("$.lessons[0].imageUrl").value(lessons.lessons().get(0)
+                        .getRepresentativeImageUrl()));
+    }
+
+    private void mockingArgumentResolver(Long memberId) {
+        when(tokenParser.getToken(anyString())).thenReturn("subject");
+        when(jwtTokenExtractor.getSubject(anyString())).thenReturn(String.valueOf(memberId));
     }
 
     @DisplayName("수업 생성 요청을 처리하고 올바른 응답을 반환한다.")
     @Test
     void create() throws Exception {
         String json = "{\"imageUrls\":[\"www.s3...\"],\"name\":\"수업이름\",\"detail\":\"수업 설명\",\"videoUrl\":[\"www.youtube.com, www.youtube.com\"],\"maxReservationCount\":15,\"genre\":\"HIPHOP\",\"level\":\"BEGINNER\",\"recommendation\":\"이런분들에게 추천합니다\",\"price\":500000,\"location\":\"건국개학교 산학 협동관\",\"streetAddress\":\"효령로 34길 79\",\"oldStreetAddress\":\"서울특별시 서초구 방배3동 1081-1\",\"detailedAddress\":\"2동 1005호\",\"times\":[{\"startTime\":\"2025-01-13T12:34:56Z\",\"endTime\":\"2025-01-13T12:34:56Z\"},{\"startTime\":\"2025-01-13T12:34:56Z\",\"endTime\":\"2025-01-13T12:34:56Z\"}]}";
+        mockingArgumentResolver(1L);
+        when(jwtTokenExtractor.getRole(anyString())).thenReturn(Role.TEACHER);
 
         mockMvc.perform(post("/api/v1/lessons")
+                        .header(HttpHeaders.AUTHORIZATION, "token")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isOk());
@@ -109,8 +114,11 @@ class LessonControllerTest {
     @Test
     void failCreate() throws Exception {
         String json = "{\"imageUrls\":null,\"name\":\"수업이름\",\"detail\":\"수업 설명\",\"videoUrl\":[\"www.youtube.com, www.youtube.com\"],\"maxReservationCount\":15,\"genre\":\"HIPHOP\",\"level\":\"BEGINNER\",\"recommendation\":\"이런분들에게 추천합니다\",\"price\":500000,\"location\":\"건국개학교 산학 협동관\",\"streetAddress\":\"효령로 34길 79\",\"oldStreetAddress\":\"서울특별시 서초구 방배3동 1081-1\",\"detailedAddress\":\"2동 1005호\",\"times\":[{\"startTime\":\"2025-01-13T12:34:56Z\",\"endTime\":\"2025-01-13T12:34:56Z\"},{\"startTime\":\"2025-01-13T12:34:56Z\",\"endTime\":\"2025-01-13T12:34:56Z\"}]}";
+        mockingArgumentResolver(1L);
+        when(jwtTokenExtractor.getRole(anyString())).thenReturn(Role.TEACHER);
 
         mockMvc.perform(post("/api/v1/lessons")
+                        .header(HttpHeaders.AUTHORIZATION, "token")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isBadRequest());
@@ -126,6 +134,7 @@ class LessonControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.genres[0]").value(HIPHOP.name()))
                 .andExpect(jsonPath("$.genres[1]").value(CHOREOGRAPHY.name()))
-                .andExpect(jsonPath("$.genres[2]").value(KPOP.name()));
+                .andExpect(jsonPath("$.genres[2]").value(KPOP.name()))
+                .andExpect(jsonPath("$.genres", hasSize(3)));
     }
 }

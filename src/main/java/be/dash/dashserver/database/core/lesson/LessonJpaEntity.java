@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
+import be.dash.dashserver.core.domain.lesson.LessonImages;
 import be.dash.dashserver.core.domain.lesson.Location;
 import be.dash.dashserver.core.domain.lesson.Round;
 import be.dash.dashserver.core.domain.lesson.Rounds;
@@ -132,7 +133,7 @@ public class LessonJpaEntity extends BaseTimeEntity {
                 .name(name)
                 .genre(genre)
                 .level(level)
-                .images(lessonImages)
+                .images(new LessonImages(lessonImages.stream().map(LessonImageJpaEntity::getImageUrl).toList()))
                 .rounds(new Rounds(List.of(new Round(startDateTime, endDateTime))))
                 .location(new Location(location, streetAddress, oldStreetAddress, detailedAddress))
                 .favoriteCount(favoriteCount)

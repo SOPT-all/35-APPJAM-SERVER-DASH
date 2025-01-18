@@ -20,6 +20,7 @@ public class LessonRepositoryAdapter implements LessonRepository {
     private final LessonRoundJpaRepository lessonRoundJpaRepository;
     private final LessonImageJpaRepository lessonImageJpaRepository;
     private final LessonVideoJpaRepository lessonVideoJpaRepository;
+
     @Override
     public List<Lesson> findActiveLessonsByFilters(Genre genre, Level level, LocalDateTime startDateTime, LocalDateTime endDateTime, LocalDateTime now) {
         List<LessonJpaEntity> activeLessons = lessonJpaEntityRepository.findAll(LessonSpecifications.findActiveLessonsByFilters(genre, level, startDateTime, endDateTime, now));
@@ -59,7 +60,7 @@ public class LessonRepositoryAdapter implements LessonRepository {
                 .map(lessonEntity -> {
                     List<TeacherImageJpaEntity> teacherImages = teacherImageJpaRepository.findAllByTeacherId(lessonEntity.getTeacher()
                             .getId());
-                    List<LessonImageJpaEntity> lessonImages = lessonImageJpaRepository.findAllByLesson_Id(lessonEntity.getId());
+                    List<LessonImageJpaEntity> lessonImages = lessonImageJpaRepository.findAllByLessonId(lessonEntity.getId());
                     return lessonEntity.toDomainWithImages(teacherImages, lessonImages);
                 })
                 .toList();

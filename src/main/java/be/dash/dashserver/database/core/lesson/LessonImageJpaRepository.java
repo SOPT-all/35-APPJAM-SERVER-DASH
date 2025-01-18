@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LessonImageJpaRepository extends JpaRepository<LessonImageJpaEntity, Long> {
 
-    List<LessonImageJpaEntity> findAllByLesson_Id(Long lessonId);
+    List<LessonImageJpaEntity> findAllByLessonId(Long lessonId);
 }

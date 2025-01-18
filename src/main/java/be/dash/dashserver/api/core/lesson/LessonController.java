@@ -1,7 +1,7 @@
 package be.dash.dashserver.api.core.lesson;
 
-import jakarta.validation.Valid;
 import java.util.List;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import be.dash.dashserver.api.core.lesson.dto.LessonFilterRequest;
 import be.dash.dashserver.api.core.lesson.dto.LessonResponses;
-import be.dash.dashserver.api.core.lesson.dto.createLessonRequest;
 import be.dash.dashserver.api.core.lesson.dto.PopularGenres;
+import be.dash.dashserver.api.core.lesson.dto.createLessonRequest;
 import be.dash.dashserver.api.support.MemberId;
 import be.dash.dashserver.api.support.Permission;
 import be.dash.dashserver.core.domain.common.Genre;
@@ -51,8 +51,7 @@ public class LessonController {
     }
 
     @GetMapping("/recommendations")
-    public ResponseEntity<LessonResponses> recommendation(@MemberId Long memberId,
-                                                          @RequestParam(defaultValue = "LATEST") LessonSortOption lessonSortOption) {
+    public ResponseEntity<LessonResponses> recommendation(@MemberId Long memberId, @RequestParam(required = false, defaultValue = "LATEST") LessonSortOption lessonSortOption) {
         Lessons lessons = lessonService.getRecommendationLessons(memberId, lessonSortOption);
         return ResponseEntity.ok(new LessonResponses(lessons));
     }
@@ -64,7 +63,7 @@ public class LessonController {
     }
 
     @GetMapping("/upcoming")
-    public ResponseEntity<LessonResponses> upcoming(@RequestParam(defaultValue = "UPCOMING") LessonSortOption lessonSortOption) {
+    public ResponseEntity<LessonResponses> upcoming(@RequestParam(required = false, defaultValue = "UPCOMING") LessonSortOption lessonSortOption) {
         Lessons searched = lessonService.searchBySortOption(lessonSortOption);
         return ResponseEntity.ok(new LessonResponses(searched));
     }
