@@ -74,7 +74,7 @@ class LessonControllerTest {
         Lessons lessons = new Lessons(List.of(LessonFixture.createWithImage(memberId, 1, 1, HIPHOP, Level.BEGINNER, "image")));
         when(tokenParser.getToken(anyString())).thenReturn("subject");
         when(jwtTokenExtractor.getSubject(anyString())).thenReturn(String.valueOf(memberId));
-        when(lessonService.getRecommendationLessons(any(Long.class))).thenReturn(lessons);
+        when(lessonService.getRecommendationLessons(any(Long.class), any(LessonSortOption.class))).thenReturn(lessons);
 
         mockMvc.perform(get("/api/v1/lessons/recommendations")
                         .header(HttpHeaders.AUTHORIZATION, "token"))
