@@ -17,8 +17,6 @@ import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
-import static be.dash.dashserver.core.domain.lesson.LessonSortOption.LATEST;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -42,16 +40,16 @@ public class LessonService {
         lessonRepository.save(lesson);
     }
 
-    public Lessons getRecommendationLessons(Long memberId) {
+    public Lessons getRecommendationLessons(Long memberId, LessonSortOption lessonSortOption) {
         if (isGuest(memberId)) {
             Lessons lessons = new Lessons(lessonRepository.findActiveLessons(LocalDateTime.now()));
-            return lessons.sort(LATEST);
+            return lessons.sort(lessonSortOption);
         }
         Student student = memberRepository.findStudentByMemberId(memberId);
         Lessons lessons = new Lessons(
                 lessonRepository.findActiveLessonsByGenreOrLevel(LocalDateTime.now(), student.getGenres(), student.getLevel())
         );
-        return lessons.sort(LATEST);
+        return lessons.sort(lessonSortOption);
     }
 
     private boolean isGuest(Long memberId) {
@@ -60,5 +58,10 @@ public class LessonService {
 
     public List<Genre> getPopularGenres() {
         return lessonRepository.popularGenres(LocalDateTime.now());
+    }
+
+    public Lessons searchBySortOption(LessonSortOption sortOption) {
+        Lessons lessons = new Lessons(lessonRepository.findActiveLessons(LocalDateTime.now()));
+        return lessons.sort(sortOption);
     }
 }

@@ -51,8 +51,9 @@ public class LessonController {
     }
 
     @GetMapping("/recommendations")
-    public ResponseEntity<LessonResponses> recommendation(@MemberId Long memberId) {
-        Lessons lessons = lessonService.getRecommendationLessons(memberId);
+    public ResponseEntity<LessonResponses> recommendation(@MemberId Long memberId,
+                                                          @RequestParam(defaultValue = "LATEST") LessonSortOption lessonSortOption) {
+        Lessons lessons = lessonService.getRecommendationLessons(memberId, lessonSortOption);
         return ResponseEntity.ok(new LessonResponses(lessons));
     }
 
@@ -63,8 +64,8 @@ public class LessonController {
     }
 
     @GetMapping("/upcoming")
-    public ResponseEntity<LessonResponses> upcoming() {
-        Lessons searched = lessonService.search(null, null, null, null, LessonSortOption.UPCOMING);
+    public ResponseEntity<LessonResponses> upcoming(@RequestParam(defaultValue = "UPCOMING") LessonSortOption lessonSortOption) {
+        Lessons searched = lessonService.searchBySortOption(lessonSortOption);
         return ResponseEntity.ok(new LessonResponses(searched));
     }
 }
