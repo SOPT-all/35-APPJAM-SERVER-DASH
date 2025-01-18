@@ -9,4 +9,6 @@ public interface TeacherRepository {
     Teachers findTeachersSortByLessonCountsDesc();
 
     void register(Teacher teacher);
+
+    Teacher findByMemberId(Long aLong);
 }
