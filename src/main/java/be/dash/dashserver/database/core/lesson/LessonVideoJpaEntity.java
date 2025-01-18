@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import be.dash.dashserver.database.core.common.BaseCreatedAtEntity;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,11 +26,14 @@ public class LessonVideoJpaEntity extends BaseCreatedAtEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lesson_id")
-    private LessonJpaEntity lesson;
+    @Column(nullable = false)
+    private Long lessonId;
 
     @Column(nullable = false)
     private String videoUrl;
 
+    public LessonVideoJpaEntity(Long lessonId, String videoUrl) {
+        this.lessonId = lessonId;
+        this.videoUrl = videoUrl;
+    }
 }

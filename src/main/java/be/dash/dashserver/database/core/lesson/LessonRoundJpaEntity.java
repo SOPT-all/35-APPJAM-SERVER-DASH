@@ -25,9 +25,8 @@ public class LessonRoundJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lesson_id")
-    private LessonJpaEntity lesson;
+    @Column(nullable = false)
+    private Long lessonId;
 
     @Column(nullable = false)
     private LocalDateTime startTime;
@@ -35,4 +34,9 @@ public class LessonRoundJpaEntity {
     @Column(nullable = false)
     private LocalDateTime endTime;
 
+    public LessonRoundJpaEntity(Long lessonId, LocalDateTime startTime, LocalDateTime endTime) {
+        this.lessonId = lessonId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 }

@@ -25,11 +25,15 @@ public class LessonImageJpaEntity extends BaseCreatedAtEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lesson_id")
-    private LessonJpaEntity lesson;
+
+    @Column(nullable = false)
+    private Long lessonId;
 
     @Column(nullable = false)
     private String imageUrl;
 
+    public LessonImageJpaEntity(Long lessonId, String imageUrl) {
+        this.lessonId = lessonId;
+        this.imageUrl = imageUrl;
+    }
 }
