@@ -20,16 +20,11 @@ public class LessonRepositoryAdapter implements LessonRepository {
     private final LessonRoundJpaRepository lessonRoundJpaRepository;
     private final LessonImageJpaRepository lessonImageJpaRepository;
     private final LessonVideoJpaRepository lessonVideoJpaRepository;
+
     @Override
     public List<Lesson> findActiveLessonsByFilters(Genre genre, Level level, LocalDateTime startDateTime, LocalDateTime endDateTime, LocalDateTime now) {
-        List<LessonJpaEntity> activeLessons = lessonJpaEntityRepository
-                .findAll(LessonSpecifications.findActiveLessonsByFilters(genre, level, startDateTime, endDateTime, LocalDateTime.now()));
-        return activeLessons.stream()
-                .map(lessonEntity -> {
-                    List<TeacherImageJpaEntity> allByTeacher = teacherImageJpaRepository.findAllByTeacherId(lessonEntity.getTeacher().getId());
-                    return lessonEntity.toDomainWithTeacherImage(allByTeacher);
-                })
-                .toList();
+        List<LessonJpaEntity> activeLessons = lessonJpaEntityRepository.findAll(LessonSpecifications.findActiveLessonsByFilters(genre, level, startDateTime, endDateTime, now));
+        return getLessons(activeLessons);
     }
 
     @Override
@@ -53,5 +48,32 @@ public class LessonRepositoryAdapter implements LessonRepository {
     @Override
     public List<Genre> findDistinctGenresByTeacherIdOrderByCountDesc(Long teacherId) {
         return lessonJpaEntityRepository.findDistinctGenresByTeacherIdOrderByCountDesc(teacherId);
+    }
+
+    @Override
+    public List<Lesson> findActiveLessons(LocalDateTime now) {
+        return getLessons(lessonJpaEntityRepository.findByStartDateTimeGreaterThan(now));
+    }
+
+    private List<Lesson> getLessons(List<LessonJpaEntity> activeLessons) {
+        return activeLessons.stream()
+                .map(lessonEntity -> {
+                    List<TeacherImageJpaEntity> teacherImages = teacherImageJpaRepository.findAllByTeacherId(lessonEntity.getTeacher()
+                            .getId());
+                    List<LessonImageJpaEntity> lessonImages = lessonImageJpaRepository.findAllByLessonId(lessonEntity.getId());
+                    return lessonEntity.toDomainWithImages(teacherImages, lessonImages);
+                })
+                .toList();
+    }
+
+    @Override
+    public List<Lesson> findActiveLessonsByGenreOrLevel(LocalDateTime now, List<Genre> genres, Level level) {
+        List<LessonJpaEntity> activeLessons = lessonJpaEntityRepository.findAll(LessonSpecifications.findActiveLessonsByGenreOrLevel(now, genres, List.of(level)));
+        return getLessons(activeLessons);
+    }
+
+    @Override
+    public List<Genre> popularGenres(LocalDateTime localDateTime) {
+        return lessonJpaEntityRepository.findPopularGenresByActiveLessons(localDateTime);
     }
 }

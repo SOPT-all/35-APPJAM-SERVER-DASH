@@ -14,5 +14,9 @@ public interface LessonRepository {
 
     List<Genre> findDistinctGenresByTeacherIdOrderByCountDesc(Long teacherId);
 
+    List<Lesson> findActiveLessons(LocalDateTime now);
 
+    List<Lesson> findActiveLessonsByGenreOrLevel(LocalDateTime localDateTime, List<Genre> genres, Level level);
+
+    List<Genre> popularGenres(LocalDateTime localDateTime);
 }

@@ -1,5 +1,6 @@
 package be.dash.dashserver.api.support;
 
+import java.util.Objects;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
@@ -33,6 +34,9 @@ public class MemberIdArgumentResolver implements HandlerMethodArgumentResolver {
 
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (Objects.isNull(token)) {
+            return null;
+        }
         String memberId;
         try {
             memberId = jwtTokenExtractor.getSubject(tokenParser.getToken(token));

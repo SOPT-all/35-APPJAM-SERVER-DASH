@@ -1,5 +1,6 @@
 package be.dash.dashserver.api.core.lesson;
 
+import java.util.List;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import be.dash.dashserver.api.core.lesson.dto.LessonFilterRequest;
 import be.dash.dashserver.api.core.lesson.dto.LessonResponses;
+import be.dash.dashserver.api.core.lesson.dto.PopularGenres;
 import be.dash.dashserver.api.core.lesson.dto.createLessonRequest;
 import be.dash.dashserver.api.support.MemberId;
 import be.dash.dashserver.api.support.Permission;
+import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.lesson.LessonSortOption;
 import be.dash.dashserver.core.domain.lesson.Lessons;
 import be.dash.dashserver.core.domain.lesson.service.LessonService;
@@ -45,5 +48,23 @@ public class LessonController {
         lessonService.createLesson(request.toCommand(memberId));
         return ResponseEntity.ok().build();
 
+    }
+
+    @GetMapping("/recommendations")
+    public ResponseEntity<LessonResponses> recommendation(@MemberId Long memberId, @RequestParam(required = false, defaultValue = "LATEST") LessonSortOption lessonSortOption) {
+        Lessons lessons = lessonService.getRecommendationLessons(memberId, lessonSortOption);
+        return ResponseEntity.ok(new LessonResponses(lessons));
+    }
+
+    @GetMapping("/popular-genres")
+    public ResponseEntity<PopularGenres> popularGenres() {
+        List<Genre> popularGenres = lessonService.getPopularGenres();
+        return ResponseEntity.ok(new PopularGenres(popularGenres));
+    }
+
+    @GetMapping("/upcoming")
+    public ResponseEntity<LessonResponses> upcoming(@RequestParam(required = false, defaultValue = "UPCOMING") LessonSortOption lessonSortOption) {
+        Lessons searched = lessonService.searchBySortOption(lessonSortOption);
+        return ResponseEntity.ok(new LessonResponses(searched));
     }
 }

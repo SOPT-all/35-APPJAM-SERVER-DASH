@@ -22,7 +22,6 @@ public class LessonImageJpaEntity extends BaseCreatedAtEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(nullable = false)
     private Long lessonId;
 
