@@ -38,7 +38,7 @@ public class LessonRepositoryAdapter implements LessonRepository {
 
     @Override
     public List<Lesson> findActiveLessons(LocalDateTime now) {
-        return getLessons(lessonJpaEntityRepository.findByEndDateTimeGreaterThan(now));
+        return getLessons(lessonJpaEntityRepository.findByStartDateTimeGreaterThan(now));
     }
 
     private List<Lesson> getLessons(List<LessonJpaEntity> activeLessons) {
