@@ -15,4 +15,5 @@ public class Location {
      * 지번 주소
      **/
     private String address;
+    private String detailedAddress;
 }
