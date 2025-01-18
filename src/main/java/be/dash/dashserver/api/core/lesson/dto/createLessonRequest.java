@@ -1,6 +1,5 @@
 package be.dash.dashserver.api.core.lesson.dto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

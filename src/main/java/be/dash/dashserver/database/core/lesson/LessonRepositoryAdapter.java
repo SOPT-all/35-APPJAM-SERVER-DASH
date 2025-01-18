@@ -6,8 +6,6 @@ import org.springframework.stereotype.Repository;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
-import be.dash.dashserver.core.domain.lesson.LessonImages;
-import be.dash.dashserver.core.domain.lesson.Rounds;
 import be.dash.dashserver.core.domain.lesson.service.LessonRepository;
 import be.dash.dashserver.database.core.teacher.TeacherImageJpaEntity;
 import be.dash.dashserver.database.core.teacher.TeacherImageJpaRepository;
