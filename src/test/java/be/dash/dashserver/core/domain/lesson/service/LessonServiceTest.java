@@ -27,6 +27,7 @@ import static be.dash.dashserver.core.domain.common.Genre.FEMALE_HIPHOP;
 import static be.dash.dashserver.core.domain.common.Genre.HIPHOP;
 import static be.dash.dashserver.core.domain.common.Genre.HOUSE;
 import static be.dash.dashserver.core.domain.common.Genre.KPOP;
+import static be.dash.dashserver.core.domain.lesson.LessonSortOption.LATEST;
 
 class LessonServiceTest extends ServiceSliceTest {
     @Autowired
@@ -47,10 +48,10 @@ class LessonServiceTest extends ServiceSliceTest {
         LocalDateTime endDateTime = LocalDateTime.now().plusDays(30);
         createLessons(startDateTime, endDateTime);
 
-        Lessons filter1 = lessonService.search(null, null, startDateTime.minusDays(4), endDateTime, LessonSortOption.LATEST);
-        Lessons filter2 = lessonService.search(null, null, startDateTime.plusHours(1), endDateTime, LessonSortOption.LATEST);
+        Lessons filter1 = lessonService.search(null, null, startDateTime.minusDays(4), endDateTime, LATEST);
+        Lessons filter2 = lessonService.search(null, null, startDateTime.plusHours(1), endDateTime, LATEST);
         Lessons filter3 = lessonService.search(null, null, startDateTime.plusDays(3)
-                .minusHours(1), endDateTime, LessonSortOption.LATEST);
+                .minusHours(1), endDateTime, LATEST);
 
         assertAll(
                 () -> assertThat(filter1.lessons().stream().map(Lesson::getId)
@@ -67,7 +68,7 @@ class LessonServiceTest extends ServiceSliceTest {
         LocalDateTime endDateTime = LocalDateTime.now().plusDays(30);
         createLessons(startDateTime, endDateTime);
 
-        Lessons lessonsLatest = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime.plusHours(1), endDateTime, LessonSortOption.LATEST);
+        Lessons lessonsLatest = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime.plusHours(1), endDateTime, LATEST);
         Lessons lessonsMostFavorite = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime.plusHours(1), endDateTime, LessonSortOption.MOST_FAVORITE);
         Lessons lessonsUpComing = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime.plusHours(1), endDateTime, LessonSortOption.UPCOMING);
 
@@ -116,7 +117,7 @@ class LessonServiceTest extends ServiceSliceTest {
         Member member = memberRepository.save(studentWithoutId);
         memberRepository.onboard(member);
 
-        Lessons recommendationLessons = lessonService.getRecommendationLessons(member.getId());
+        Lessons recommendationLessons = lessonService.getRecommendationLessons(member.getId(), LATEST);
 
         assertAll(
                 () -> assertThat(recommendationLessons.lessons().size()).isEqualTo(3),
@@ -154,8 +155,8 @@ class LessonServiceTest extends ServiceSliceTest {
     @DisplayName("예약이 가장 많은 순서대로 장르를 반환한다.")
     @Test
     void getPopularGenres() {
-        LocalDateTime startDateTime = LocalDateTime.now().minusDays(10);
-        LocalDateTime endDateTime = LocalDateTime.now().plusDays(10);
+        LocalDateTime startDateTime = LocalDateTime.now().plusDays(10);
+        LocalDateTime endDateTime = LocalDateTime.now().plusDays(20);
         createPopularGenreLessons(startDateTime, endDateTime);
 
         List<Genre> popularGenres = lessonService.getPopularGenres();
@@ -176,7 +177,7 @@ class LessonServiceTest extends ServiceSliceTest {
         Teacher teacher = TeacherFixture.create(1, 1);
         teacherImageRepository.saveAll(teacher);
 
-        lessonRepository.save(LessonFixture.create(1, 1, HOUSE, startDateTime.minusDays(5), endDateTime.minusDays(15), 1));
+        lessonRepository.save(LessonFixture.create(1, 1, HOUSE, startDateTime.minusDays(20), endDateTime.minusDays(15), 1));
         lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, startDateTime.minusDays(5), endDateTime.minusDays(3), 1));
         lessonRepository.save(LessonFixture.create(1, 1, FEMALE_HIPHOP, startDateTime.minusDays(5), endDateTime.minusDays(3), 10));
         lessonRepository.save(LessonFixture.create(1, 1, FEMALE_HIPHOP, startDateTime, endDateTime, 50));
