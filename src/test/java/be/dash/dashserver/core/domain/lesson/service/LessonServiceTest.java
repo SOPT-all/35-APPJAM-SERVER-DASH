@@ -40,16 +40,36 @@ class LessonServiceTest extends ServiceSliceTest {
     @Autowired
     private TeacherImageRepository teacherImageRepository;
 
-    @DisplayName("동적으로 필터에 해당하며, 마감기한이 지나지 않은 수업들을 정렬 조건에 맞게 정렬 후 조회한다.")
+    @DisplayName("동적으로 필터에 해당하며, 마감기한이 지나지 않은 수업들을 조회한다.")
     @Test
-    void search() {
-        LocalDateTime startDateTime = LocalDateTime.now().minusDays(10);
-        LocalDateTime endDateTime = LocalDateTime.now().plusDays(10);
+    void searchByFilterOption() {
+        LocalDateTime startDateTime = LocalDateTime.now().plusDays(10);
+        LocalDateTime endDateTime = LocalDateTime.now().plusDays(30);
         createLessons(startDateTime, endDateTime);
 
-        Lessons lessonsLatest = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime, endDateTime, LessonSortOption.LATEST);
-        Lessons lessonsMostFavorite = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime, endDateTime, LessonSortOption.MOST_FAVORITE);
-        Lessons lessonsUpComing = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime, endDateTime, LessonSortOption.UPCOMING);
+        Lessons filter1 = lessonService.search(null, null, startDateTime.minusDays(4), endDateTime, LessonSortOption.LATEST);
+        Lessons filter2 = lessonService.search(null, null, startDateTime.plusHours(1), endDateTime, LessonSortOption.LATEST);
+        Lessons filter3 = lessonService.search(null, null, startDateTime.plusDays(3)
+                .minusHours(1), endDateTime, LessonSortOption.LATEST);
+
+        assertAll(
+                () -> assertThat(filter1.lessons().stream().map(Lesson::getId)
+                        .toList()).containsExactly(6L, 5L, 4L, 3L),
+                () -> assertThat(filter2.lessons().stream().map(Lesson::getId).toList()).containsExactly(6L, 5L, 4L),
+                () -> assertThat(filter3.lessons().stream().map(Lesson::getId).toList()).containsExactly(5L)
+        );
+    }
+
+    @DisplayName("마감기한이 지나지 않은 수업들을 정렬 조건에 맞게 정렬 후 조회한다.")
+    @Test
+    void searchBysSortingOption() {
+        LocalDateTime startDateTime = LocalDateTime.now().plusDays(10);
+        LocalDateTime endDateTime = LocalDateTime.now().plusDays(30);
+        createLessons(startDateTime, endDateTime);
+
+        Lessons lessonsLatest = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime.plusHours(1), endDateTime, LessonSortOption.LATEST);
+        Lessons lessonsMostFavorite = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime.plusHours(1), endDateTime, LessonSortOption.MOST_FAVORITE);
+        Lessons lessonsUpComing = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime.plusHours(1), endDateTime, LessonSortOption.UPCOMING);
 
         assertAll(
                 () -> assertThat(lessonsLatest.lessons().stream().map(Lesson::getId)
@@ -81,13 +101,16 @@ class LessonServiceTest extends ServiceSliceTest {
                 startDateTime.plusDays(3), endDateTime.minusDays(1), 40));
         lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, Level.BEGINNER,
                 startDateTime.plusDays(2), endDateTime.minusDays(1), 30));
+
+        lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, Level.BEGINNER,
+                startDateTime.minusDays(20), endDateTime.minusDays(1), 30));
     }
 
     @DisplayName("회원의 경우 회원이 관심있어 하는 장르와 난이도에 따라 수업을 추천한다.")
     @Test
     void getRecommendationLessonsMember() {
-        LocalDateTime startDateTime = LocalDateTime.now().minusDays(10);
-        LocalDateTime endDateTime = LocalDateTime.now().plusDays(10);
+        LocalDateTime startDateTime = LocalDateTime.now().plusDays(10);
+        LocalDateTime endDateTime = LocalDateTime.now().plusDays(30);
         createRecommendationLessons(startDateTime, endDateTime);
         Member studentWithoutId = MemberFixture.createStudentWithoutId("nickname", Genre.POPPING, Level.BEGINNER, "010-3333-2222");
         Member member = memberRepository.save(studentWithoutId);
@@ -115,7 +138,7 @@ class LessonServiceTest extends ServiceSliceTest {
         teacherImageRepository.saveAll(teacher);
 
         lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, Level.BEGINNER,
-                startDateTime.minusDays(5), endDateTime.minusDays(15), 10));
+                startDateTime.minusDays(15), endDateTime.minusDays(15), 10));
         lessonRepository.save(LessonFixture.create(1, 1, HIPHOP, Level.INTERMEDIATE,
                 startDateTime.plusDays(1), endDateTime.minusDays(1), 50));
         lessonRepository.save(LessonFixture.create(1, 1, Genre.POPPING, Level.NOVICE,

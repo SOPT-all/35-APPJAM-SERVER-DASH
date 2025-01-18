@@ -28,33 +28,30 @@ public class TeacherService {
 
     public List<TeacherLessonGenres> search() {
         Teachers teachers = teacherRepository.findTeachersSortByLessonCountsDesc();
-        List<TeacherLessonGenres> teacherLessonGenres = new ArrayList<>();
+        List<TeacherLessonGenres> teacherGenres = getTeacherLessonGenres(teachers);
+        return teacherGenres;
+    }
+
+    private List<TeacherLessonGenres> getTeacherLessonGenres(Teachers teachers) {
+        List<TeacherLessonGenres> teacherGenres = new ArrayList<>();
         teachers.teachers().forEach(teacher -> {
             List<Genre> genres = lessonRepository.findDistinctGenresByTeacherIdOrderByCountDesc(teacher.getId());
-            teacherLessonGenres.add(new TeacherLessonGenres(teacher, genres));
+            teacherGenres.add(new TeacherLessonGenres(teacher, genres));
         });
-        return teacherLessonGenres;
+        return teacherGenres;
     }
 
     @Transactional
     public Token create(CreateTeacherCommand command) {
         Member member = memberRepository.findById(command.memberId());
-        //1. 선생님을 저장한다는 것이 사실
-        Teacher teacher = Teacher.builder()
-                .member(member)
-                .detail(command.detail())
-                .educations(command.educations())
-                .experiences(command.experiences())
-                .instagram(command.instagram())
-                .youtube(command.youtube())
-                .imageUrls(command.imageUrls())
-                .videoUrls(command.videoUrls())
-                .build();
-        teacherRepository.register(teacher);//선생님을 저장할 떄, 선생프로필, 선생이미지, 선생 비디오를 모두 저장해야한다.
+        Teacher teacher = command.toDomain(member);
+        teacherRepository.register(teacher);
 
         return new Token(jwtTokenGenerator.createAccessToken(String.valueOf(member.getId()), Role.TEACHER),
                 jwtTokenGenerator.createRefreshToken(String.valueOf(member.getId()), Role.TEACHER));
+    }
 
-
+    public List<TeacherLessonGenres> popular() {
+        return search();
     }
 }

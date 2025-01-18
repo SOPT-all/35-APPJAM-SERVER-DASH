@@ -48,17 +48,23 @@ class LessonRepositoryAdapterTest {
     @DisplayName("동적으로 필터에 해당하며, 마감기한이 지나지 않은 수업들을 조회한다.")
     @Test
     void findActiveLessonsByFilters() {
-        LocalDateTime startDateTime = LocalDateTime.of(2025, 1, 15, 3, 40, 50).minusDays(5);
-        LocalDateTime endDateTime = LocalDateTime.of(2025, 1, 15, 3, 40, 50).plusDays(10);
+        LocalDateTime startDateTime = LocalDateTime.of(2025, 1, 15, 3, 40, 50);
+        LocalDateTime endDateTime = LocalDateTime.of(2025, 1, 25, 3, 40, 50);
         TeacherJpaEntity teacher = createTeacher();
         createLessons(teacher, startDateTime, endDateTime);
-        LocalDateTime now = LocalDateTime.of(2025, 1, 15, 3, 40, 50);
 
-        List<Lesson> lessonsHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, now);
-        List<Lesson> lessonsFemaleHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.FEMALE_HIPHOP, Level.BEGINNER, startDateTime, endDateTime, now);
-        List<Lesson> lessonsFemaleHiphopAdvanced = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, Level.ADVANCED, startDateTime, endDateTime, now);
+        LocalDateTime now = startDateTime.minusDays(20);
+
+
+        List<Lesson> allLessons = lessonRepository.findActiveLessonsByFilters(null, null, null, null, now);
+        List<Lesson> lessonsHiphop = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, null, null, null, now);
+        List<Lesson> lessonsHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, Level.BEGINNER, startDateTime.minusDays(6), endDateTime, now);
+        List<Lesson> lessonsFemaleHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.FEMALE_HIPHOP, Level.BEGINNER, startDateTime.minusDays(6), endDateTime, now);
+        List<Lesson> lessonsFemaleHiphopAdvanced = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, Level.ADVANCED, startDateTime.minusDays(6), endDateTime, now);
 
         assertAll(
+                () -> assertThat(allLessons.size()).isEqualTo(6),
+                () -> assertThat(lessonsHiphop.size()).isEqualTo(5),
                 () -> assertThat(lessonsHiphopBeginners.size()).isEqualTo(3),
                 () -> assertThat(lessonsFemaleHiphopBeginners.size()).isEqualTo(1),
                 () -> assertThat(lessonsFemaleHiphopAdvanced.size()).isEqualTo(1)
@@ -67,23 +73,17 @@ class LessonRepositoryAdapterTest {
 
     private void createLessons(TeacherJpaEntity teacherJpaEntity, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember()
-                        .getId(), Genre.HIPHOP, Level.BEGINNER,
-                startDateTime.minusDays(5), endDateTime.minusDays(3), 10));
+                        .getId(), Genre.HIPHOP, Level.BEGINNER, startDateTime.minusDays(10), endDateTime.minusDays(3), 10));
         lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember()
-                        .getId(), Genre.HIPHOP, Level.BEGINNER,
-                startDateTime, endDateTime, 10));
+                        .getId(), Genre.HIPHOP, Level.BEGINNER, startDateTime, endDateTime, 10));
         lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember()
-                        .getId(), Genre.FEMALE_HIPHOP, Level.BEGINNER,
-                startDateTime, endDateTime, 10));
+                        .getId(), Genre.FEMALE_HIPHOP, Level.BEGINNER, startDateTime, endDateTime, 10));
         lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember()
-                        .getId(), Genre.HIPHOP, Level.ADVANCED,
-                startDateTime.plusDays(1), endDateTime.minusDays(1), 50));
+                        .getId(), Genre.HIPHOP, Level.ADVANCED, startDateTime.plusDays(1), endDateTime.minusDays(1), 50));
         lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember()
-                        .getId(), Genre.HIPHOP, Level.BEGINNER,
-                startDateTime.plusDays(3), endDateTime.minusDays(1), 40));
+                        .getId(), Genre.HIPHOP, Level.BEGINNER, startDateTime.plusDays(3), endDateTime.minusDays(1), 40));
         lessonRepository.save(LessonFixture.create(teacherJpaEntity.getId(), teacherJpaEntity.getMember()
-                        .getId(), Genre.HIPHOP, Level.BEGINNER,
-                startDateTime.plusDays(2), endDateTime.minusDays(1), 30));
+                        .getId(), Genre.HIPHOP, Level.BEGINNER, startDateTime.plusDays(2), endDateTime.minusDays(1), 30));
     }
 
     private TeacherJpaEntity createTeacher() {

@@ -35,19 +35,19 @@ public class LessonSpecifications {
 
     private static void checkExpiredDate(LocalDateTime now, Root<LessonJpaEntity> root, CriteriaBuilder cb, List<Predicate> predicates) {
         if (now != null) {
-            predicates.add(cb.greaterThan(root.get("endDateTime"), now));
+            predicates.add(cb.greaterThanOrEqualTo(root.get("startDateTime"), now));
         }
     }
 
-    private static void checkEndDateWithinRange(LocalDateTime endDateTime, Root<LessonJpaEntity> root, CriteriaBuilder cb, List<Predicate> predicates) {
-        if (endDateTime != null) {
-            predicates.add(cb.lessThanOrEqualTo(root.get("endDateTime"), endDateTime));
+    private static void checkStartDateWithinRange(LocalDateTime filterStartDateTime, Root<LessonJpaEntity> root, CriteriaBuilder cb, List<Predicate> predicates) {
+        if (filterStartDateTime != null) {
+            predicates.add(cb.greaterThanOrEqualTo(root.get("startDateTime"), filterStartDateTime));
         }
     }
 
-    private static void checkStartDateWithinRange(LocalDateTime startDateTime, Root<LessonJpaEntity> root, CriteriaBuilder cb, List<Predicate> predicates) {
-        if (startDateTime != null) {
-            predicates.add(cb.greaterThanOrEqualTo(root.get("startDateTime"), startDateTime));
+    private static void checkEndDateWithinRange(LocalDateTime filterEndDateTime, Root<LessonJpaEntity> root, CriteriaBuilder cb, List<Predicate> predicates) {
+        if (filterEndDateTime != null) {
+            predicates.add(cb.lessThanOrEqualTo(root.get("startDateTime"), filterEndDateTime));
         }
     }
 

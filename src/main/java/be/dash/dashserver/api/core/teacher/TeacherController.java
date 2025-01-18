@@ -37,4 +37,10 @@ public class TeacherController {
         return ResponseEntity.ok(CreateTeacherResponse.from(teacherService.create(request.toCommand(memberId))));
 
     }
+
+    @GetMapping("/popular")
+    public ResponseEntity<TeacherResponses> popular() {
+        List<TeacherLessonGenres> popular = teacherService.popular();
+        return ResponseEntity.ok(TeacherResponses.from(popular));
+    }
 }
