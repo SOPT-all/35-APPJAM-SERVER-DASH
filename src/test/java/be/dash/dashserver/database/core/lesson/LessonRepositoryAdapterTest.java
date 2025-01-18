@@ -104,10 +104,14 @@ class LessonRepositoryAdapterTest {
     @DisplayName("수업을 저장할 때, 수업 이미지, 비디오, 라운드 정보도 함께 저장한다.")
     @Test
     void save() {
+        // given
         TeacherJpaEntity teacher = createTeacher();
         Lesson lesson = LessonFixture.create(teacher.getId(), teacher.getMember().getId(), Genre.HIPHOP, Level.BEGINNER);
+
+        // when
         lessonRepository.save(lesson);
 
+        // then
         List<LessonImageJpaEntity> all = lessonImageJpaRepository.findAll();
         List<LessonRoundJpaEntity> all1 = lessonRoundJpaRepository.findAll();
         List<LessonVideoJpaEntity> all2 = lessonVideoJpaRepository.findAll();
