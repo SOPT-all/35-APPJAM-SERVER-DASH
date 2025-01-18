@@ -1,9 +1,15 @@
 package be.dash.dashserver.core.fixture;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
+import be.dash.dashserver.core.domain.lesson.LessonImages;
+import be.dash.dashserver.core.domain.lesson.LessonVideos;
+import be.dash.dashserver.core.domain.lesson.Location;
+import be.dash.dashserver.core.domain.lesson.Round;
+import be.dash.dashserver.core.domain.lesson.Rounds;
 
 public class LessonFixture {
     private LessonFixture() {
@@ -15,17 +21,16 @@ public class LessonFixture {
                 .name("박재연의 미친 웨이브")
                 .genre(genre)
                 .level(level)
-                .startDateTime(startDateTime)
-                .endDateTime(endDateTime)
-                .location("서울 광진구")
-                .streetAddress("서울 광진구 자양동")
-                .oldStreetAddress("서울 광진구 구 주소")
+                .images(new LessonImages(List.of("https://image.com/1", "https://image.com/2")))
+                .videos(new LessonVideos(List.of("https://video.com/1", "https://video.com/2")))
+                .rounds(new Rounds(List.of(new Round(startDateTime, endDateTime))))
+                .location(new Location("서울 광진구", "서울 광진구 자양동", "서울 광진구 구 주소", "2층 1호"))
                 .favoriteCount(100L)
                 .reservationCount(50L)
                 .maxReservationCount(100L)
                 .detail("수업에 대한 상세 설명")
                 .recommendation("수강 추천사")
-                .individualPrice(50000)
+                .price(50000)
                 .createdAt(LocalDateTime.now())
                 .build();
     }
@@ -37,17 +42,16 @@ public class LessonFixture {
                 .name("박재연의 미친 웨이브")
                 .genre(genre)
                 .level(level)
-                .startDateTime(LocalDateTime.now().minusDays(1))
-                .endDateTime(LocalDateTime.now().plusDays(5))
-                .location("서울 광진구")
-                .streetAddress("서울 광진구 자양동")
-                .oldStreetAddress("서울 광진구 구 주소")
+                .images(new LessonImages(List.of("https://image.com/1", "https://image.com/2")))
+                .videos(new LessonVideos(List.of("https://video.com/1", "https://video.com/2")))
+                .rounds(new Rounds(List.of(new Round(LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(5)))))
+                .location(new Location("서울 광진구", "서울 광진구 자양동", "서울 광진구 구 주소", "2층 1호"))
                 .favoriteCount(100L)
                 .reservationCount(50L)
                 .maxReservationCount(100L)
                 .detail("수업에 대한 상세 설명")
                 .recommendation("수강 추천사")
-                .individualPrice(50000)
+                .price(50000)
                 .createdAt(LocalDateTime.now())
                 .build();
     }
@@ -58,17 +62,16 @@ public class LessonFixture {
                 .name("박재연의 미친 웨이브")
                 .genre(genre)
                 .level(level)
-                .startDateTime(LocalDateTime.now().minusDays(1))
-                .endDateTime(LocalDateTime.now().plusDays(5))
-                .location("서울 광진구")
-                .streetAddress("서울 광진구 자양동")
-                .oldStreetAddress("서울 광진구 구 주소")
+                .images(new LessonImages(List.of("https://image.com/1", "https://image.com/2")))
+                .videos(new LessonVideos(List.of("https://video.com/1", "https://video.com/2")))
+                .rounds(new Rounds(List.of(new Round(LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(5)))))
+                .location(new Location("서울 광진구", "서울 광진구 자양동", "서울 광진구 구 주소", "2층 1호"))
                 .favoriteCount(100L)
                 .reservationCount(50L)
                 .maxReservationCount(100L)
                 .detail("수업에 대한 상세 설명")
                 .recommendation("수강 추천사")
-                .individualPrice(50000)
+                .price(50000)
                 .createdAt(LocalDateTime.now())
                 .build();
     }
@@ -80,17 +83,16 @@ public class LessonFixture {
                 .name("박재연의 미친 웨이브")
                 .genre(Genre.HIPHOP)
                 .level(Level.BEGINNER)
-                .startDateTime(startDateTime)
-                .endDateTime(LocalDateTime.now().plusDays(20))
-                .location("서울 광진구")
-                .streetAddress("서울 광진구 자양동")
-                .oldStreetAddress("서울 광진구 구 주소")
+                .images(new LessonImages(List.of("https://image.com/1", "https://image.com/2")))
+                .videos(new LessonVideos(List.of("https://video.com/1", "https://video.com/2")))
+                .rounds(new Rounds(List.of(new Round(startDateTime, LocalDateTime.now().plusDays(5)))))
+                .location(new Location("서울 광진구", "서울 광진구 자양동", "서울 광진구 구 주소", "2층 1호"))
                 .favoriteCount(favoriteCount)
                 .reservationCount(50L)
                 .maxReservationCount(100L)
                 .detail("수업에 대한 상세 설명")
                 .recommendation("수강 추천사")
-                .individualPrice(50000)
+                .price(50000)
                 .createdAt(LocalDateTime.now())
                 .build();
     }
@@ -101,17 +103,16 @@ public class LessonFixture {
                 .name("박재연의 미친 웨이브")
                 .genre(genre)
                 .level(level)
-                .startDateTime(startDateTime)
-                .endDateTime(endDateTime)
-                .location("서울 광진구")
-                .streetAddress("서울 광진구 자양동")
-                .oldStreetAddress("서울 광진구 구 주소")
+                .images(new LessonImages(List.of("https://image.com/1", "https://image.com/2")))
+                .videos(new LessonVideos(List.of("https://video.com/1", "https://video.com/2")))
+                .rounds(new Rounds(List.of(new Round(startDateTime, endDateTime))))
+                .location(new Location("서울 광진구", "서울 광진구 자양동", "서울 광진구 구 주소", "2층 1호"))
                 .favoriteCount(favoriteCount)
                 .reservationCount(50L)
                 .maxReservationCount(100L)
                 .detail("수업에 대한 상세 설명")
                 .recommendation("수강 추천사")
-                .individualPrice(50000)
+                .price(50000)
                 .createdAt(LocalDateTime.now())
                 .build();
     }
@@ -123,17 +124,16 @@ public class LessonFixture {
                 .name("박재연의 미친 웨이브")
                 .genre(Genre.HIPHOP)
                 .level(Level.BEGINNER)
-                .startDateTime(startDateTime)
-                .endDateTime(LocalDateTime.now().plusDays(20))
-                .location("서울 광진구")
-                .streetAddress("서울 광진구 자양동")
-                .oldStreetAddress("서울 광진구 구 주소")
+                .images(new LessonImages(List.of("https://image.com/1", "https://image.com/2")))
+                .videos(new LessonVideos(List.of("https://video.com/1", "https://video.com/2")))
+                .rounds(new Rounds(List.of(new Round(startDateTime, LocalDateTime.now().plusDays(20)))))
+                .location(new Location("서울 광진구", "서울 광진구 자양동", "서울 광진구 구 주소", "2층 1호"))
                 .favoriteCount(favoriteCount)
                 .reservationCount(50L)
                 .maxReservationCount(100L)
                 .detail("수업에 대한 상세 설명")
                 .recommendation("수강 추천사")
-                .individualPrice(50000)
+                .price(50000)
                 .createdAt(createdAt)
                 .build();
     }

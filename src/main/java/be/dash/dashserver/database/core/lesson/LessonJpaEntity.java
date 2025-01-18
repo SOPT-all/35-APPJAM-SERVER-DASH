@@ -16,6 +16,9 @@ import jakarta.persistence.Table;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
+import be.dash.dashserver.core.domain.lesson.Location;
+import be.dash.dashserver.core.domain.lesson.Round;
+import be.dash.dashserver.core.domain.lesson.Rounds;
 import be.dash.dashserver.database.core.common.BaseTimeEntity;
 import be.dash.dashserver.database.core.teacher.TeacherImageJpaEntity;
 import be.dash.dashserver.database.core.teacher.TeacherJpaEntity;
@@ -55,14 +58,17 @@ public class LessonJpaEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private LocalDateTime endDateTime;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String location;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String streetAddress;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String oldStreetAddress;
+
+    @Column(nullable = true)
+    private String detailedAddress;
 
     @Column(nullable = false)
     private Long favoriteCount;
@@ -80,25 +86,25 @@ public class LessonJpaEntity extends BaseTimeEntity {
     private String recommendation;
 
     @Column(nullable = false)
-    private Integer individualPrice;
+    private Integer price;
 
     public LessonJpaEntity(Lesson lesson) {
-        this.id = lesson.getId();
         this.teacher = new TeacherJpaEntity(lesson.getTeacher());
         this.name = lesson.getName();
         this.genre = lesson.getGenre();
         this.level = lesson.getLevel();
-        this.startDateTime = lesson.getStartDateTime();
-        this.endDateTime = lesson.getEndDateTime();
+        this.startDateTime = lesson.getStartTime();
+        this.endDateTime = lesson.getEndTime();
         this.location = lesson.getLocation().getTitle();
         this.streetAddress = lesson.getLocation().getRoadAddress();
         this.oldStreetAddress = lesson.getLocation().getAddress();
+        this.detailedAddress = lesson.getLocation().getDetailedAddress();
         this.favoriteCount = lesson.getFavoriteCount();
         this.reservationCount = lesson.getReservationCount();
         this.maxReservationCount = lesson.getMaxReservationCount();
         this.detail = lesson.getDetail();
         this.recommendation = lesson.getRecommendation();
-        this.individualPrice = lesson.getIndividualPrice();
+        this.price = lesson.getPrice();
     }
 
     public Lesson toDomain() {
@@ -108,39 +114,32 @@ public class LessonJpaEntity extends BaseTimeEntity {
                 .name(name)
                 .genre(genre)
                 .level(level)
-                .startDateTime(startDateTime)
-                .endDateTime(endDateTime)
-                .location(location)
-                .streetAddress(streetAddress)
-                .oldStreetAddress(oldStreetAddress)
+                .location(new Location(location, streetAddress, oldStreetAddress, detailedAddress))
                 .favoriteCount(favoriteCount)
                 .reservationCount(reservationCount)
                 .maxReservationCount(maxReservationCount)
                 .detail(detail)
                 .recommendation(recommendation)
-                .individualPrice(individualPrice)
+                .price(price)
                 .createdAt(getCreatedAt())
                 .build();
     }
 
-    public Lesson toDomainWithTeacherImage(List<TeacherImageJpaEntity> teacherImageJpaEntitys) {
+    public Lesson toDomainWithTeacherImage(List<TeacherImageJpaEntity> teacherImageJpaEntities) {
         return Lesson.builder()
                 .id(id)
-                .teacher(teacher.toDomainWithTeacherImage(teacherImageJpaEntitys))
+                .teacher(teacher.toDomainWithTeacherImage(teacherImageJpaEntities))
                 .name(name)
                 .genre(genre)
                 .level(level)
-                .startDateTime(startDateTime)
-                .endDateTime(endDateTime)
-                .location(location)
-                .streetAddress(streetAddress)
-                .oldStreetAddress(oldStreetAddress)
+                .rounds(new Rounds(List.of(new Round(startDateTime, endDateTime))))
+                .location(new Location(location, streetAddress, oldStreetAddress, detailedAddress))
                 .favoriteCount(favoriteCount)
                 .reservationCount(reservationCount)
                 .maxReservationCount(maxReservationCount)
                 .detail(detail)
                 .recommendation(recommendation)
-                .individualPrice(individualPrice)
+                .price(price)
                 .createdAt(getCreatedAt())
                 .build();
     }

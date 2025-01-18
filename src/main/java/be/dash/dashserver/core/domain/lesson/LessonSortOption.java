@@ -5,7 +5,7 @@ import java.util.Comparator;
 public enum LessonSortOption {
     LATEST(Comparator.comparing(Lesson::getCreatedAt).reversed()),
     MOST_FAVORITE(Comparator.comparing(Lesson::getFavoriteCount).reversed()),
-    UPCOMING(Comparator.comparing(Lesson::getStartDateTime));
+    UPCOMING(Comparator.comparing(Lesson::getStartTime));
 
     private final Comparator<Lesson> comparator;
 

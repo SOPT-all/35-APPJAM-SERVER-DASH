@@ -7,6 +7,7 @@ import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.domain.teacher.Teachers;
 import be.dash.dashserver.core.domain.teacher.projection.TeacherLessonCount;
 import be.dash.dashserver.core.domain.teacher.service.TeacherRepository;
+import be.dash.dashserver.core.exception.NotFoundException;
 import be.dash.dashserver.database.core.lesson.LessonJpaEntityRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +17,7 @@ public class TeacherRepositoryAdapter implements TeacherRepository {
     private final TeacherJpaRepository teacherJpaRepository;
     private final LessonJpaEntityRepository lessonJpaEntityRepository;
     private final TeacherImageJpaRepository teacherImageJpaRepository;
+    private final TeacherVideoJpaRepository teacherVideoJpaRepository;
 
     @Override
     public void save(Teacher teacher) {
@@ -32,7 +34,7 @@ public class TeacherRepositoryAdapter implements TeacherRepository {
                     .findAllByTeacherId(teacherLessonCount.teacherId());
             Teacher teacher = Teacher.builder()
                     .id(teacherLessonCount.teacherId())
-                    .imageUrls(teacherImageJpaEntities.stream().map(TeacherImageJpaEntity::getImageUrl).toList())//주호꺼
+                    .imageUrls(teacherImageJpaEntities.stream().map(TeacherImageJpaEntity::getImageUrl).toList())
                     .lessonCount(teacherLessonCount.lessonCount()).build();
             teachers.add(teacher);
         });
@@ -55,6 +57,13 @@ public class TeacherRepositoryAdapter implements TeacherRepository {
                         .teacher(teacherJpaEntity)
                         .videoUrl(videoUrl)
                         .build()).toList();
-        teacherImageJpaRepository.saveAll(teacherImageJpaEntities);
+        teacherVideoJpaRepository.saveAll(teacherVideoJpaEntities);
+    }
+
+    @Override
+    public Teacher findByMemberId(Long memberId) {
+        return teacherJpaRepository.findByMemberId(memberId)
+                .map(TeacherJpaEntity::toDomain)
+                .orElseThrow(() -> new NotFoundException("해당하는 선생님을 찾을 수 없습니다."));
     }
 }

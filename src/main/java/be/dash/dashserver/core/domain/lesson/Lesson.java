@@ -10,38 +10,53 @@ import lombok.Getter;
 @Getter
 public class Lesson {
 
-    private final Long id;
+    private final long id;
     private final Teacher teacher;
-    private final String name;
+    private final Rounds rounds;
+    private final Location location;
     private final Genre genre;
     private final Level level;
-    private final LocalDateTime startDateTime;
-    private final LocalDateTime endDateTime;
-    private final Location location;
+    private final LessonImages images;
+    private final LessonVideos videos;
+    private final String name;
     private final Long favoriteCount;
     private final Long reservationCount;
     private final Long maxReservationCount;
     private final String detail;
     private final String recommendation;
-    private final Integer individualPrice;
+    private final int price;
     private final LocalDateTime createdAt;
 
+
     @Builder
-    public Lesson(Long id, Teacher teacher, String name, Genre genre, Level level, LocalDateTime startDateTime, LocalDateTime endDateTime, String location, String streetAddress, String oldStreetAddress, Long favoriteCount, Long reservationCount, Long maxReservationCount, String detail, String recommendation, Integer individualPrice, LocalDateTime createdAt) {
+    public Lesson(long id, Teacher teacher, String name, Genre genre, Level level, Location location, Long favoriteCount, Long reservationCount, Long maxReservationCount, String detail, String recommendation, int price, LocalDateTime createdAt, LessonImages images, LessonVideos videos, Rounds rounds) {
         this.id = id;
         this.teacher = teacher;
         this.name = name;
         this.genre = genre;
         this.level = level;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
-        this.location = new Location(location, streetAddress, oldStreetAddress);
+        this.location = location;
         this.favoriteCount = favoriteCount;
         this.reservationCount = reservationCount;
         this.maxReservationCount = maxReservationCount;
         this.detail = detail;
         this.recommendation = recommendation;
-        this.individualPrice = individualPrice;
+        this.price = price;
         this.createdAt = createdAt;
+        this.images = images;
+        this.videos = videos;
+        this.rounds = rounds;
+    }
+
+    public String getRepresentativeImageUrl() {
+        return images.getFirstImage();
+    }
+
+    public LocalDateTime getStartTime() {
+        return rounds.getStartTime();
+    }
+
+    public LocalDateTime getEndTime() {
+        return rounds.getEndTime();
     }
 }

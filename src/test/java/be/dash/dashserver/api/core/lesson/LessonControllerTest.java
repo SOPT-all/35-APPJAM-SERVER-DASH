@@ -6,8 +6,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import be.dash.dashserver.api.config.TestConfig;
+import be.dash.dashserver.api.config.WebMvcConfig;
+import be.dash.dashserver.api.core.auth.AuthController;
 import be.dash.dashserver.core.auth.JwtTokenExtractor;
 import be.dash.dashserver.core.auth.TokenParser;
 import be.dash.dashserver.core.domain.common.Genre;
@@ -20,11 +27,15 @@ import be.dash.dashserver.core.fixture.LessonFixture;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-@WebMvcTest(LessonController.class)
+@WebMvcTest(value = LessonController.class,
+        excludeFilters = @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = WebMvcConfig.class))
+@Import(TestConfig.class)
 class LessonControllerTest {
 
     @MockitoBean
@@ -59,5 +70,27 @@ class LessonControllerTest {
                 .andExpect(jsonPath("$.lessons[0].genre").value(lessons.lessons().get(0).getGenre().name()))
                 .andExpect(jsonPath("$.lessons[0].level").value(lessons.lessons().get(0).getLevel().name()))
                 .andExpect(jsonPath("$.lessons[0].name").value(lessons.lessons().get(0).getName()));
+    }
+
+    @DisplayName("수업 생성 요청을 처리하고 올바른 응답을 반환한다.")
+    @Test
+    void create() throws Exception {
+        String json = "{\"imageUrls\":[\"www.s3...\"],\"name\":\"수업이름\",\"detail\":\"수업 설명\",\"videoUrl\":[\"www.youtube.com, www.youtube.com\"],\"maxReservationCount\":15,\"genre\":\"HIPHOP\",\"level\":\"BEGINNER\",\"recommendation\":\"이런분들에게 추천합니다\",\"price\":500000,\"location\":\"건국개학교 산학 협동관\",\"streetAddress\":\"효령로 34길 79\",\"oldStreetAddress\":\"서울특별시 서초구 방배3동 1081-1\",\"detailedAddress\":\"2동 1005호\",\"times\":[{\"startTime\":\"2025-01-13T12:34:56Z\",\"endTime\":\"2025-01-13T12:34:56Z\"},{\"startTime\":\"2025-01-13T12:34:56Z\",\"endTime\":\"2025-01-13T12:34:56Z\"}]}";
+
+        mockMvc.perform(post("/api/v1/lessons")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isOk());
+    }
+
+    @DisplayName("옳바르지 않은 수업 생성 요청에 대해 실패한다.")
+    @Test
+    void failCreate() throws Exception {
+        String json = "{\"imageUrls\":null,\"name\":\"수업이름\",\"detail\":\"수업 설명\",\"videoUrl\":[\"www.youtube.com, www.youtube.com\"],\"maxReservationCount\":15,\"genre\":\"HIPHOP\",\"level\":\"BEGINNER\",\"recommendation\":\"이런분들에게 추천합니다\",\"price\":500000,\"location\":\"건국개학교 산학 협동관\",\"streetAddress\":\"효령로 34길 79\",\"oldStreetAddress\":\"서울특별시 서초구 방배3동 1081-1\",\"detailedAddress\":\"2동 1005호\",\"times\":[{\"startTime\":\"2025-01-13T12:34:56Z\",\"endTime\":\"2025-01-13T12:34:56Z\"},{\"startTime\":\"2025-01-13T12:34:56Z\",\"endTime\":\"2025-01-13T12:34:56Z\"}]}";
+
+        mockMvc.perform(post("/api/v1/lessons")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isBadRequest());
     }
 }

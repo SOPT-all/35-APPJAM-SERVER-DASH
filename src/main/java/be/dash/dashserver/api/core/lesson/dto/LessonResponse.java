@@ -22,10 +22,10 @@ public record LessonResponse(
                 lesson.getName(),
                 lesson.getTeacher().getImageUrls().get(0),
                 lesson.getTeacher().getMember().getName(),
-                lesson.getStartDateTime().toString(),
-                lesson.getEndDateTime().toString(),
+                lesson.getStartTime().toString(),
+                lesson.getEndTime().toString(),
                 lesson.getLocation().getTitle(),
-                calculateRemainingDays(lesson.getStartDateTime())
+                calculateRemainingDays(lesson.getStartTime())
         );
     }
 

@@ -13,4 +13,6 @@ public interface LessonRepository {
     void save(Lesson lesson);
 
     List<Genre> findDistinctGenresByTeacherIdOrderByCountDesc(Long teacherId);
+
+
 }

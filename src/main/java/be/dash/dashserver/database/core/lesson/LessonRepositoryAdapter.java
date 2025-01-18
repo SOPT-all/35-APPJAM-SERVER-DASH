@@ -17,10 +17,13 @@ public class LessonRepositoryAdapter implements LessonRepository {
 
     private final LessonJpaEntityRepository lessonJpaEntityRepository;
     private final TeacherImageJpaRepository teacherImageJpaRepository;
-
+    private final LessonRoundJpaRepository lessonRoundJpaRepository;
+    private final LessonImageJpaRepository lessonImageJpaRepository;
+    private final LessonVideoJpaRepository lessonVideoJpaRepository;
     @Override
     public List<Lesson> findActiveLessonsByFilters(Genre genre, Level level, LocalDateTime startDateTime, LocalDateTime endDateTime, LocalDateTime now) {
-        List<LessonJpaEntity> activeLessons = lessonJpaEntityRepository.findAll(LessonSpecifications.findActiveLessonsByFilters(genre, level, startDateTime, endDateTime, LocalDateTime.now()));
+        List<LessonJpaEntity> activeLessons = lessonJpaEntityRepository
+                .findAll(LessonSpecifications.findActiveLessonsByFilters(genre, level, startDateTime, endDateTime, LocalDateTime.now()));
         return activeLessons.stream()
                 .map(lessonEntity -> {
                     List<TeacherImageJpaEntity> allByTeacher = teacherImageJpaRepository.findAllByTeacherId(lessonEntity.getTeacher().getId());
@@ -31,7 +34,20 @@ public class LessonRepositoryAdapter implements LessonRepository {
 
     @Override
     public void save(Lesson lesson) {
-        lessonJpaEntityRepository.save(new LessonJpaEntity(lesson));
+        LessonJpaEntity lessonJpaEntity = lessonJpaEntityRepository.save(new LessonJpaEntity(lesson));
+
+        List<LessonImageJpaEntity> lessonImageJpaEntities = lesson.getImages().getImageUrls().stream()
+                .map(imageUrl -> new LessonImageJpaEntity(lessonJpaEntity.getId(), imageUrl)).toList();
+        lessonImageJpaRepository.saveAll(lessonImageJpaEntities);
+
+        List<LessonVideoJpaEntity> lessonVideoJpaEntities = lesson.getVideos().getVideoUrls().stream()
+                .map(videoUrl -> new LessonVideoJpaEntity(lessonJpaEntity.getId(), videoUrl)).toList();
+        lessonVideoJpaRepository.saveAll(lessonVideoJpaEntities);
+
+        List<LessonRoundJpaEntity> lessonRoundJpaEntities = lesson.getRounds().getRounds().stream()
+                .map(lessonRound -> new LessonRoundJpaEntity(lessonJpaEntity.getId(), lessonRound.getStartTime(), lessonRound.getEndTime()))
+                .toList();
+        lessonRoundJpaRepository.saveAll(lessonRoundJpaEntities);
     }
 
     @Override

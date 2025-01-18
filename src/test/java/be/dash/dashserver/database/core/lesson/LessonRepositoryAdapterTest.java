@@ -2,6 +2,7 @@ package be.dash.dashserver.database.core.lesson;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,12 @@ class LessonRepositoryAdapterTest {
     private TeacherImageJpaRepository teacherImageJpaRepository;
     @Autowired
     private MemberJpaRepository memberJpaRepository;
+    @Autowired
+    private LessonRoundJpaRepository lessonRoundJpaRepository;
+    @Autowired
+    private LessonImageJpaRepository lessonImageJpaRepository;
+    @Autowired
+    private LessonVideoJpaRepository lessonVideoJpaRepository;
 
     @DisplayName("동적으로 필터에 해당하며, 마감기한이 지나지 않은 수업들을 조회한다.")
     @Test
@@ -92,5 +99,26 @@ class LessonRepositoryAdapterTest {
         lessonRepository.save(LessonFixture.create(teacher.getId(), 1, Genre.FEMALE_HIPHOP, Level.BEGINNER));
 
         assertThat(lessonRepository.findDistinctGenresByTeacherIdOrderByCountDesc(1L)).containsExactly(Genre.HIPHOP, Genre.FEMALE_HIPHOP);
+    }
+
+    @DisplayName("수업을 저장할 때, 수업 이미지, 비디오, 라운드 정보도 함께 저장한다.")
+    @Test
+    void save() {
+        // given
+        TeacherJpaEntity teacher = createTeacher();
+        Lesson lesson = LessonFixture.create(teacher.getId(), teacher.getMember().getId(), Genre.HIPHOP, Level.BEGINNER);
+
+        // when
+        lessonRepository.save(lesson);
+
+        // then
+        List<LessonImageJpaEntity> all = lessonImageJpaRepository.findAll();
+        List<LessonRoundJpaEntity> all1 = lessonRoundJpaRepository.findAll();
+        List<LessonVideoJpaEntity> all2 = lessonVideoJpaRepository.findAll();
+        Assertions.assertAll(
+                () -> assertThat(all.size()).isEqualTo(2),
+                () -> assertThat(all1.size()).isEqualTo(1),
+                () -> assertThat(all2.size()).isEqualTo(2)
+        );
     }
 }
