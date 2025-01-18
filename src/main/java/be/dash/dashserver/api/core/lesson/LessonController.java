@@ -61,4 +61,10 @@ public class LessonController {
         List<Genre> popularGenres = lessonService.getPopularGenres();
         return ResponseEntity.ok(new PopularGenres(popularGenres));
     }
+
+    @GetMapping("/upcoming")
+    public ResponseEntity<LessonResponses> upcoming() {
+        Lessons searched = lessonService.search(null, null, null, null, LessonSortOption.UPCOMING);
+        return ResponseEntity.ok(new LessonResponses(searched));
+    }
 }
