@@ -1,5 +1,6 @@
 package be.dash.dashserver.database.core.student;
 
+import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import be.dash.dashserver.core.domain.common.Level;
+import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.database.core.common.BaseTimeEntity;
 import be.dash.dashserver.database.core.member.MemberJpaEntity;
 import lombok.AccessLevel;
@@ -43,4 +45,13 @@ public class StudentJpaEntity extends BaseTimeEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Level level;
+
+    public Student toDomain(List<StudentGenreJpaEntity> studentGenreJpaEntityList) {
+        return Student.builder()
+                .id(id)
+                .level(level)
+                .profileImageUrl(profileImageUrl)
+                .genres(studentGenreJpaEntityList.stream().map(StudentGenreJpaEntity::getGenre).toList())
+                .build();
+    }
 }
