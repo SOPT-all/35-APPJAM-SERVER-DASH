@@ -61,15 +61,15 @@ class TeacherControllerTest {
                 .andExpect(jsonPath("$.teachers[0].id").value(teacherLessonGenres1.teacher().getId()))
                 .andExpect(jsonPath("$.teachers[0].nickname").value(teacherLessonGenres1.teacher().getMember()
                         .getNickname()))
-                .andExpect(jsonPath("$.teachers[0].profileImage").value(teacherLessonGenres1.teacher().getImageUrls()
-                        .get(0)))
+                .andExpect(jsonPath("$.teachers[0].profileImage").value(teacherLessonGenres1.teacher()
+                        .getRepresentativeImageUrl()))
                 .andExpect(jsonPath("$.teachers[0].genres[0]").value(teacherLessonGenres1.genres().get(0).name()))
                 .andExpect(jsonPath("$.teachers[0].genres[1]").value(teacherLessonGenres1.genres().get(1).name()))
                 .andExpect(jsonPath("$.teachers[1].id").value(teacherLessonGenres2.teacher().getId()))
                 .andExpect(jsonPath("$.teachers[1].nickname").value(teacherLessonGenres2.teacher().getMember()
                         .getNickname()))
-                .andExpect(jsonPath("$.teachers[1].profileImage").value(teacherLessonGenres2.teacher().getImageUrls()
-                        .get(0)))
+                .andExpect(jsonPath("$.teachers[1].profileImage").value(teacherLessonGenres2.teacher()
+                        .getRepresentativeImageUrl()))
                 .andExpect(jsonPath("$.teachers[1].genres").value(empty()));
     }
 

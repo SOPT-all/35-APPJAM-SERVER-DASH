@@ -66,4 +66,13 @@ public class TeacherRepositoryAdapter implements TeacherRepository {
                 .map(TeacherJpaEntity::toDomain)
                 .orElseThrow(() -> new NotFoundException("해당하는 선생님을 찾을 수 없습니다."));
     }
+
+    @Override
+    public Teacher findByTeacherId(Long teacherId) {
+        TeacherJpaEntity teacherJpaEntity = teacherJpaRepository.findById(teacherId)
+                .orElseThrow(() -> new NotFoundException("해당하는 선생님을 찾을 수 없습니다."));
+        List<TeacherVideoJpaEntity> videos = teacherVideoJpaRepository.findAllByTeacherId(teacherId);
+        List<TeacherImageJpaEntity> images = teacherImageJpaRepository.findAllByTeacherId(teacherId);
+        return teacherJpaEntity.toDomainWithImageAndVideo(images, videos);
+    }
 }
