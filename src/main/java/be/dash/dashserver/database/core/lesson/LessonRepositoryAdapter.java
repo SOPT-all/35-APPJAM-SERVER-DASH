@@ -6,7 +6,9 @@ import org.springframework.stereotype.Repository;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
+import be.dash.dashserver.core.domain.lesson.Lessons;
 import be.dash.dashserver.core.domain.lesson.service.LessonRepository;
+import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.database.core.teacher.TeacherImageJpaEntity;
 import be.dash.dashserver.database.core.teacher.TeacherImageJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -75,5 +77,11 @@ public class LessonRepositoryAdapter implements LessonRepository {
     @Override
     public List<Genre> popularGenres(LocalDateTime localDateTime) {
         return lessonJpaEntityRepository.findPopularGenresByActiveLessons(localDateTime);
+    }
+
+    @Override
+    public Lessons findLessonsByTeacher(Teacher teacher, LocalDateTime localDateTime) {
+        return new Lessons(lessonJpaEntityRepository.findByTeacherIdOrderByCreatedAtDesc(teacher.getId())
+                .stream().map(lessonJpaEntity -> lessonJpaEntity.toDomain(teacher)).toList());
     }
 }

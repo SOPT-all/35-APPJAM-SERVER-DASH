@@ -1,6 +1,5 @@
 package be.dash.dashserver.database.core.student;
 
-import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,10 +12,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import be.dash.dashserver.core.domain.common.Genre;
-import be.dash.dashserver.core.domain.member.Student;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -31,20 +30,14 @@ public class StudentGenreJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
     private StudentJpaEntity student;
 
     @Column(name = "genre")
     @Enumerated(value = EnumType.STRING)
+    @Getter
     private Genre genre;
 
-    public Student toStudent() {
-        return Student.builder()
-                .id(student.getId())
-                .profileImageUrl(student.getProfileImageUrl())
-                .level(student.getLevel())
-                .genres(List.of(genre))
-                .build();
-    }
 }

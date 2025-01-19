@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
+import be.dash.dashserver.core.domain.lesson.Images;
 import be.dash.dashserver.core.domain.lesson.Lesson;
-import be.dash.dashserver.core.domain.lesson.LessonImages;
-import be.dash.dashserver.core.domain.lesson.LessonVideos;
 import be.dash.dashserver.core.domain.lesson.Location;
 import be.dash.dashserver.core.domain.lesson.Round;
 import be.dash.dashserver.core.domain.lesson.Rounds;
+import be.dash.dashserver.core.domain.lesson.Videos;
 
 public class LessonFixture {
     private LessonFixture() {
@@ -21,8 +21,8 @@ public class LessonFixture {
                 .name("박재연의 미친 웨이브")
                 .genre(genre)
                 .level(level)
-                .images(new LessonImages(List.of("https://image.com/1", "https://image.com/2")))
-                .videos(new LessonVideos(List.of("https://video.com/1", "https://video.com/2")))
+                .images(new Images(List.of("https://image.com/1", "https://image.com/2")))
+                .videos(new Videos(List.of("https://video.com/1", "https://video.com/2")))
                 .rounds(new Rounds(List.of(new Round(startDateTime, endDateTime))))
                 .location(new Location("서울 광진구", "서울 광진구 자양동", "서울 광진구 구 주소", "2층 1호"))
                 .favoriteCount(100L)
@@ -42,8 +42,8 @@ public class LessonFixture {
                 .name("박재연의 미친 웨이브")
                 .genre(genre)
                 .level(level)
-                .images(new LessonImages(List.of("https://image.com/1", "https://image.com/2")))
-                .videos(new LessonVideos(List.of("https://video.com/1", "https://video.com/2")))
+                .images(new Images(List.of("https://image.com/1", "https://image.com/2")))
+                .videos(new Videos(List.of("https://video.com/1", "https://video.com/2")))
                 .rounds(new Rounds(List.of(new Round(LocalDateTime.now().minusDays(1), LocalDateTime.now()
                         .plusDays(5)))))
                 .location(new Location("서울 광진구", "서울 광진구 자양동", "서울 광진구 구 주소", "2층 1호"))
@@ -63,8 +63,8 @@ public class LessonFixture {
                 .name("박재연의 미친 웨이브")
                 .genre(genre)
                 .level(level)
-                .images(new LessonImages(List.of("https://image.com/1", "https://image.com/2")))
-                .videos(new LessonVideos(List.of("https://video.com/1", "https://video.com/2")))
+                .images(new Images(List.of("https://image.com/1", "https://image.com/2")))
+                .videos(new Videos(List.of("https://video.com/1", "https://video.com/2")))
                 .rounds(new Rounds(List.of(new Round(LocalDateTime.now().minusDays(1), LocalDateTime.now()
                         .plusDays(5)))))
                 .location(new Location("서울 광진구", "서울 광진구 자양동", "서울 광진구 구 주소", "2층 1호"))
@@ -85,8 +85,8 @@ public class LessonFixture {
                 .name("박재연의 미친 웨이브")
                 .genre(Genre.HIPHOP)
                 .level(Level.BEGINNER)
-                .images(new LessonImages(List.of("https://image.com/1", "https://image.com/2")))
-                .videos(new LessonVideos(List.of("https://video.com/1", "https://video.com/2")))
+                .images(new Images(List.of("https://image.com/1", "https://image.com/2")))
+                .videos(new Videos(List.of("https://video.com/1", "https://video.com/2")))
                 .rounds(new Rounds(List.of(new Round(startDateTime, LocalDateTime.now().plusDays(5)))))
                 .location(new Location("서울 광진구", "서울 광진구 자양동", "서울 광진구 구 주소", "2층 1호"))
                 .favoriteCount(favoriteCount)
@@ -105,8 +105,8 @@ public class LessonFixture {
                 .name("박재연의 미친 웨이브")
                 .genre(genre)
                 .level(level)
-                .images(new LessonImages(List.of("https://image.com/1", "https://image.com/2")))
-                .videos(new LessonVideos(List.of("https://video.com/1", "https://video.com/2")))
+                .images(new Images(List.of("https://image.com/1", "https://image.com/2")))
+                .videos(new Videos(List.of("https://video.com/1", "https://video.com/2")))
                 .rounds(new Rounds(List.of(new Round(startDateTime, endDateTime))))
                 .location(new Location("서울 광진구", "서울 광진구 자양동", "서울 광진구 구 주소", "2층 1호"))
                 .favoriteCount(favoriteCount)
@@ -126,8 +126,8 @@ public class LessonFixture {
                 .name("박재연의 미친 웨이브")
                 .genre(Genre.HIPHOP)
                 .level(Level.BEGINNER)
-                .images(new LessonImages(List.of("https://image.com/1", "https://image.com/2")))
-                .videos(new LessonVideos(List.of("https://video.com/1", "https://video.com/2")))
+                .images(new Images(List.of("https://image.com/1", "https://image.com/2")))
+                .videos(new Videos(List.of("https://video.com/1", "https://video.com/2")))
                 .rounds(new Rounds(List.of(new Round(startDateTime, LocalDateTime.now().plusDays(20)))))
                 .location(new Location("서울 광진구", "서울 광진구 자양동", "서울 광진구 구 주소", "2층 1호"))
                 .favoriteCount(favoriteCount)
@@ -146,8 +146,8 @@ public class LessonFixture {
                 .name("박재연의 미친 웨이브")
                 .genre(genre)
                 .level(Level.BEGINNER)
-                .images(new LessonImages(List.of("https://image.com/1", "https://image.com/2")))
-                .videos(new LessonVideos(List.of("https://video.com/1", "https://video.com/2")))
+                .images(new Images(List.of("https://image.com/1", "https://image.com/2")))
+                .videos(new Videos(List.of("https://video.com/1", "https://video.com/2")))
                 .location(new Location("서울 광진구", "서울 광진구 자양동", "서울 광진구 구 주소", "2층 1호"))
                 .favoriteCount(100L)
                 .rounds(new Rounds(List.of(new Round(startDateTime, endDateTime))))

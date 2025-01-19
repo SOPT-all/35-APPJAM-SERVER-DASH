@@ -5,6 +5,8 @@ import java.util.List;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
+import be.dash.dashserver.core.domain.lesson.Lessons;
+import be.dash.dashserver.core.domain.teacher.Teacher;
 
 public interface LessonRepository {
 
@@ -19,4 +21,6 @@ public interface LessonRepository {
     List<Lesson> findActiveLessonsByGenreOrLevel(LocalDateTime localDateTime, List<Genre> genres, Level level);
 
     List<Genre> popularGenres(LocalDateTime localDateTime);
+
+    Lessons findLessonsByTeacher(Teacher teacher, LocalDateTime localDateTime);
 }

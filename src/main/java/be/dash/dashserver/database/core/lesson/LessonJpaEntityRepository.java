@@ -33,4 +33,6 @@ public interface LessonJpaEntityRepository extends JpaRepository<LessonJpaEntity
             "group by l.genre " +
             "order by sum(l.reservationCount) desc")
     List<Genre> findPopularGenresByActiveLessons(@Param("now") LocalDateTime now);
+
+    List<LessonJpaEntity> findByTeacherIdOrderByCreatedAtDesc(Long teacherId);
 }

@@ -12,6 +12,7 @@ import be.dash.dashserver.database.core.common.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -30,6 +31,7 @@ public class TeacherVideoJpaEntity extends BaseTimeEntity {
     @JoinColumn(name = "teacher_id")
     private TeacherJpaEntity teacher;
 
+    @Getter
     @Column(nullable = false)
     private String videoUrl;
 

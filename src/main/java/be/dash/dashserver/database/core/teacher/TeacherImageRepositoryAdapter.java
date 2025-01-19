@@ -13,7 +13,7 @@ public class TeacherImageRepositoryAdapter implements TeacherImageRepository {
 
     @Override
     public void saveAll(Teacher teacher) {
-        List<TeacherImageJpaEntity> teacherImageJpaEntities = teacher.getImageUrls().stream()
+        List<TeacherImageJpaEntity> teacherImageJpaEntities = teacher.getImages().getImageUrls().stream()
                 .map(url -> new TeacherImageJpaEntity(new TeacherJpaEntity(teacher), url)).toList();
         teacherImageJpaRepository.saveAll(teacherImageJpaEntities);
     }
