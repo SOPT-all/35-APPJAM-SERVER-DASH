@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import be.dash.dashserver.api.core.external.dto.ImagePostResponse;
+import be.dash.dashserver.api.support.Permission;
+import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.image.ImageService;
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class ImageController {
     private final ImageService imageService;
 
+    @Permission(role = {Role.MEMBER, Role.TEACHER})
     @PostMapping
     public ResponseEntity<ImagePostResponse> createStore(@RequestPart final MultipartFile image) {
         String uploadUrl = imageService.upload(image);

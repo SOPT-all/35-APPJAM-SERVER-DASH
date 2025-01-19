@@ -2,10 +2,12 @@ package be.dash.dashserver.api.core.member;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import be.dash.dashserver.api.core.member.dto.MemberResponse;
 import be.dash.dashserver.api.core.member.dto.OnBoardRequest;
 import be.dash.dashserver.api.support.MemberId;
 import be.dash.dashserver.api.support.Permission;
@@ -35,6 +37,11 @@ public class MemberController {
                 request.genres(),
                 request.profileImageUrl()));
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<MemberResponse> getMemberInformation(@MemberId Long memberId) {
+        return ResponseEntity.ok(MemberResponse.from(memberService.getMemberInformation(memberId)));
     }
 
 }
