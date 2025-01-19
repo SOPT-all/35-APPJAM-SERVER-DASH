@@ -5,12 +5,12 @@ import java.util.List;
 import be.dash.dashserver.api.core.lesson.dto.RoundRequest;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
+import be.dash.dashserver.core.domain.lesson.Images;
 import be.dash.dashserver.core.domain.lesson.Lesson;
-import be.dash.dashserver.core.domain.lesson.LessonImages;
-import be.dash.dashserver.core.domain.lesson.LessonVideos;
 import be.dash.dashserver.core.domain.lesson.Location;
 import be.dash.dashserver.core.domain.lesson.Round;
 import be.dash.dashserver.core.domain.lesson.Rounds;
+import be.dash.dashserver.core.domain.lesson.Videos;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 
 public record CreateLessonCommand(List<String> imageUrls,
@@ -31,6 +31,7 @@ public record CreateLessonCommand(List<String> imageUrls,
     public LocalDateTime getStartTime() {
         return times.get(0).startTime();
     }
+
     public LocalDateTime getEndTime() {
         return times.get(times.size() - 1).endTime();
     }
@@ -42,8 +43,8 @@ public record CreateLessonCommand(List<String> imageUrls,
                 .genre(genre)
                 .level(level)
                 .location(new Location(location, streetAddress, oldStreetAddress, detailedAddress))
-                .images(new LessonImages(imageUrls))
-                .videos(new LessonVideos(videoUrls))
+                .images(new Images(imageUrls))
+                .videos(new Videos(videoUrls))
                 .favoriteCount(0L)
                 .reservationCount(0L)
                 .maxReservationCount(maxReservationCount)

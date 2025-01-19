@@ -4,14 +4,14 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class LessonImages {
+public class Images {
     private List<String> imageUrls;
 
-    public LessonImages(List<String> imageUrls) {
+    public Images(List<String> imageUrls) {
         this.imageUrls = imageUrls;
     }
 
-    String getFirstImage() {
+    public String getFirstImage() {
         return imageUrls.get(0);
     }
 }

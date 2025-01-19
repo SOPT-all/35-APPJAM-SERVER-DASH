@@ -23,7 +23,7 @@ public record LessonResponse(
                 lesson.getLevel().name(),
                 lesson.getName(),
                 lesson.getRepresentativeImageUrl(),
-                lesson.getTeacher().getImageUrls().get(0),
+                lesson.getTeacher().getImages().getFirstImage(),
                 lesson.getTeacher().getMember().getName(),
                 lesson.getStartTime().toString(),
                 lesson.getEndTime().toString(),
