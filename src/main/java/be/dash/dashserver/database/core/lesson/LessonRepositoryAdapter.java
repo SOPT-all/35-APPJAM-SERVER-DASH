@@ -124,4 +124,9 @@ public class LessonRepositoryAdapter implements LessonRepository {
 
         return lessonJpaEntity.toDomain(teacher, lessonImages, lessonVideos, lessonsRounds);
     }
+
+    @Override
+    public int getLessonCount(Long teacherId) {
+        return lessonJpaEntityRepository.countByTeacherId(teacherId);
+    }
 }

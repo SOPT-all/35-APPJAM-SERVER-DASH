@@ -7,6 +7,8 @@ import be.dash.dashserver.core.domain.member.SocialProvider;
 import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
 import be.dash.dashserver.core.exception.NotFoundException;
+import be.dash.dashserver.database.core.favorite.FavoriteJpaRepository;
+import be.dash.dashserver.database.core.reservation.ReservationJpaRepository;
 import be.dash.dashserver.database.core.student.StudentGenreJpaEntity;
 import be.dash.dashserver.database.core.student.StudentGenreJpaRepository;
 import be.dash.dashserver.database.core.student.StudentJpaEntity;
@@ -19,6 +21,8 @@ public class MemberRepositoryAdapter implements MemberRepository {
     private final MemberJpaRepository memberJpaRepository;
     private final StudentJpaRepository studentJpaRepository;
     private final StudentGenreJpaRepository studentGenreJpaRepository;
+    private final ReservationJpaRepository reservationJpaRepository;
+    private final FavoriteJpaRepository favoriteJpaRepository;
 
     @Override
     public AuthMember findBySocialIdAndProviderOrNull(String socialId, SocialProvider provider) {
@@ -78,5 +82,15 @@ public class MemberRepositoryAdapter implements MemberRepository {
                 .orElseThrow(() -> new NotFoundException("멤버를 찾을 수 없습니다."));
         List<StudentGenreJpaEntity> studentGenreJpaEntities = studentGenreJpaRepository.findAllStudentGenresWithStudent(studentJpaEntity.getId());
         return studentJpaEntity.toDomain(studentGenreJpaEntities);
+    }
+
+    @Override
+    public int getReservationCountByStudentId(Long studentId) {
+        return reservationJpaRepository.countByStudentId(studentId);
+    }
+
+    @Override
+    public int getFavoriteCountByStudentId(Long studentId) {
+        return favoriteJpaRepository.countByStudentId(studentId);
     }
 }

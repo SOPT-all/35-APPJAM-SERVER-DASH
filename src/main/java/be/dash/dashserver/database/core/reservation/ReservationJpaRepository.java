@@ -12,4 +12,6 @@ public interface ReservationJpaRepository extends JpaRepository<ReservationJpaEn
             "JOIN r.lesson l " +
             "WHERE s.member.id = :memberId AND l.id = :lessonId")
     boolean existsByMemberIdAndLessonId(@Param("memberId") Long memberId, @Param("lessonId") Long lessonId);
+
+    int countByStudentId(Long studentId);
 }
