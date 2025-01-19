@@ -25,4 +25,6 @@ public interface LessonRepository {
     Lessons findLessonsByTeacher(Teacher teacher, LocalDateTime localDateTime);
 
     Lesson findLessonsById(Long lessonId);
+
+    int getLessonCount(Long memberId);
 }

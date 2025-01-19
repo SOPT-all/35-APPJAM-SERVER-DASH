@@ -17,4 +17,8 @@ public interface MemberRepository {
     void onboard(Member member);
 
     Student findStudentByMemberId(long memberId);
+
+    int getReservationCountByStudentId(Long studentId);
+
+    int getFavoriteCountByStudentId(Long studentId);
 }
