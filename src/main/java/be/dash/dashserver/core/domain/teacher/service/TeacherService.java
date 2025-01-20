@@ -31,15 +31,15 @@ public class TeacherService {
 
     public List<TeacherLessonGenres> search() {
         Teachers teachers = teacherRepository.findTeachersSortByLessonCountsDesc();
-        List<TeacherLessonGenres> teacherGenres = getTeacherLessonGenres(teachers);
-        return teacherGenres;
+        return getTeacherLessonGenres(teachers);
     }
 
     private List<TeacherLessonGenres> getTeacherLessonGenres(Teachers teachers) {
         List<TeacherLessonGenres> teacherGenres = new ArrayList<>();
         teachers.teachers().forEach(teacher -> {
             List<Genre> genres = lessonRepository.findDistinctGenresByTeacherIdOrderByCountDesc(teacher.getId());
-            teacherGenres.add(new TeacherLessonGenres(teacher, genres));
+            TeacherLessonGenres teacherLessonGenres = new TeacherLessonGenres(teacher, genres);
+            teacherGenres.add(teacherLessonGenres);
         });
         return teacherGenres;
     }

@@ -74,8 +74,7 @@ public class LessonRepositoryAdapter implements LessonRepository {
     private List<Lesson> getLessons(List<LessonJpaEntity> activeLessons) {
         return activeLessons.stream()
                 .map(lessonEntity -> {
-                    List<TeacherImageJpaEntity> teacherImages = teacherImageJpaRepository.findAllByTeacherId(lessonEntity.getTeacher()
-                            .getId());
+                    List<TeacherImageJpaEntity> teacherImages = teacherImageJpaRepository.findAllByTeacherId(lessonEntity.getTeacher().getId());
                     List<LessonImageJpaEntity> lessonImages = lessonImageJpaRepository.findAllByLessonId(lessonEntity.getId());
                     return lessonEntity.toDomainWithImages(teacherImages, lessonImages);
                 })

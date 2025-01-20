@@ -30,12 +30,9 @@ public class TeacherRepositoryAdapter implements TeacherRepository {
         List<Teacher> teachers = new ArrayList<>();
         List<TeacherLessonCount> teacherLessonCounts = lessonJpaEntityRepository.findTeacherLessonCountsDesc();
         teacherLessonCounts.forEach(teacherLessonCount -> {
-            List<TeacherImageJpaEntity> teacherImageJpaEntities = teacherImageJpaRepository
-                    .findAllByTeacherId(teacherLessonCount.teacherId());
-            Teacher teacher = Teacher.builder()
-                    .id(teacherLessonCount.teacherId())
-                    .imageUrls(teacherImageJpaEntities.stream().map(TeacherImageJpaEntity::getImageUrl).toList())
-                    .lessonCount(teacherLessonCount.lessonCount()).build();
+            List<String> teacherImages = teacherImageJpaRepository.findAllByTeacherId(teacherLessonCount.teacherId())
+                    .stream().map(TeacherImageJpaEntity::getImageUrl).toList();
+            Teacher teacher = teacherLessonCount.toDomain(teacherImages);
             teachers.add(teacher);
         });
         return new Teachers(teachers);
