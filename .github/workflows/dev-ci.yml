@@ -1,9 +1,7 @@
-name: Backend CI
+name: DEV CI
 
 on:
   pull_request:
-    branches: [ "develop" ]
-  push:
     branches: [ "develop" ]
 
 permissions: write-all
@@ -16,11 +14,6 @@ jobs:
       run:
         shell: bash
 
-    env:
-      ACCESS_TOKEN_VALID_TIME: ${{ secrets.ACCESS_TOKEN_VALID_TIME }}
-      JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
-      KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
-      REFRESH_TOKEN_VALID_TIME: ${{ secrets.REFRESH_TOKEN_VALID_TIME }}
 
 
     steps:
@@ -30,6 +23,11 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      - name: create secret config file
+        run: |
+          cd src/main/resources
+          echo "${{ secrets.APPLICATION_YML_DEV }}" > ./application-dev.yml
 
       - name: Cache Gradle packages
         uses: actions/cache@v3
