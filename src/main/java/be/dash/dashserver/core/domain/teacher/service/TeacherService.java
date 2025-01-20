@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import be.dash.dashserver.core.auth.JwtTokenGenerator;
 import be.dash.dashserver.core.auth.Token;
 import be.dash.dashserver.core.domain.common.Genre;
+import be.dash.dashserver.core.domain.common.Keyword;
 import be.dash.dashserver.core.domain.lesson.Lessons;
 import be.dash.dashserver.core.domain.lesson.service.LessonRepository;
 import be.dash.dashserver.core.domain.member.Member;
@@ -20,6 +21,8 @@ import be.dash.dashserver.core.domain.teacher.command.CreateTeacherCommand;
 import be.dash.dashserver.core.domain.teacher.service.dto.TeacherDetailResult;
 import lombok.RequiredArgsConstructor;
 
+import static be.dash.dashserver.core.domain.common.Keyword.ANY;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -29,17 +32,17 @@ public class TeacherService {
     private final MemberRepository memberRepository;
     private final JwtTokenGenerator jwtTokenGenerator;
 
-    public List<TeacherLessonGenres> search() {
-        Teachers teachers = teacherRepository.findTeachersSortByLessonCountsDesc();
-        List<TeacherLessonGenres> teacherGenres = getTeacherLessonGenres(teachers);
-        return teacherGenres;
+    public List<TeacherLessonGenres> search(Keyword keyword) {
+        Teachers teachers = teacherRepository.findTeachersSortByLessonCountsDesc(keyword.getValue());
+        return getTeacherLessonGenres(teachers);
     }
 
     private List<TeacherLessonGenres> getTeacherLessonGenres(Teachers teachers) {
         List<TeacherLessonGenres> teacherGenres = new ArrayList<>();
         teachers.teachers().forEach(teacher -> {
             List<Genre> genres = lessonRepository.findDistinctGenresByTeacherIdOrderByCountDesc(teacher.getId());
-            teacherGenres.add(new TeacherLessonGenres(teacher, genres));
+            TeacherLessonGenres teacherLessonGenres = new TeacherLessonGenres(teacher, genres);
+            teacherGenres.add(teacherLessonGenres);
         });
         return teacherGenres;
     }
@@ -55,7 +58,8 @@ public class TeacherService {
     }
 
     public List<TeacherLessonGenres> popular() {
-        return search();
+        Teachers teachers = teacherRepository.findTeachersSortByLessonCountsDesc(ANY);
+        return getTeacherLessonGenres(teachers);
     }
 
     public TeacherDetailResult find(long teacherId) {

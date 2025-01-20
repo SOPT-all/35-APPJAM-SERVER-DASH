@@ -8,7 +8,7 @@ import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.command.CreateLessonCommand;
 
-public record createLessonRequest(
+public record CreateLessonRequest(
         @Size(min = 1) @NotNull List<@NotBlank String> imageUrls,
         @Size(max = 30) String name,
         @Size(max = 300) @NotBlank String detail,

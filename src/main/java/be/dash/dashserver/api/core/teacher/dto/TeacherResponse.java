@@ -5,6 +5,7 @@ import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.teacher.TeacherLessonGenres;
 
 public record TeacherResponse(long id, String nickname, String profileImage, List<Genre> genres) {
+
     private static final int MAX_GENRE_COUNT = 2;
 
     public TeacherResponse(TeacherLessonGenres teacherLessonGenres) {

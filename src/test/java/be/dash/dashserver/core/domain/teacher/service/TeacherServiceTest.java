@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import be.dash.dashserver.ServiceSliceTest;
 import be.dash.dashserver.core.domain.common.Genre;
+import be.dash.dashserver.core.domain.common.Keyword;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.service.LessonRepository;
 import be.dash.dashserver.core.domain.member.Member;
@@ -37,7 +38,7 @@ class TeacherServiceTest extends ServiceSliceTest {
     void search() {
         createLessons();
 
-        List<TeacherLessonGenres> searched = teacherService.search();
+        List<TeacherLessonGenres> searched = teacherService.search(new Keyword());
 
         assertAll(
                 () -> assertThat(searched.get(0).teacher().getId()).isEqualTo(1),

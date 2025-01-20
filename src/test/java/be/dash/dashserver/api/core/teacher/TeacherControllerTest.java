@@ -20,6 +20,7 @@ import be.dash.dashserver.core.auth.JwtTokenExtractor;
 import be.dash.dashserver.core.auth.Token;
 import be.dash.dashserver.core.auth.TokenParser;
 import be.dash.dashserver.core.domain.common.Genre;
+import be.dash.dashserver.core.domain.common.Keyword;
 import be.dash.dashserver.core.domain.teacher.TeacherLessonGenres;
 import be.dash.dashserver.core.domain.teacher.command.CreateTeacherCommand;
 import be.dash.dashserver.core.domain.teacher.service.TeacherService;
@@ -54,9 +55,10 @@ class TeacherControllerTest {
         TeacherLessonGenres teacherLessonGenres1 = new TeacherLessonGenres(TeacherFixture.create(1, 1), List.of(Genre.HIPHOP, Genre.FEMALE_HIPHOP));
         TeacherLessonGenres teacherLessonGenres2 = new TeacherLessonGenres(TeacherFixture.create(3, 3), List.of());
         List<TeacherLessonGenres> teacherLessonGenresList = List.of(teacherLessonGenres1, teacherLessonGenres2);
-        when(teacherService.search()).thenReturn(teacherLessonGenresList);
+        when(teacherService.search(any(Keyword.class))).thenReturn(teacherLessonGenresList);
 
-        mockMvc.perform(get("/api/v1/teachers"))
+        mockMvc.perform(get("/api/v1/teachers")
+                        .param("keyword", ""))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.teachers[0].id").value(teacherLessonGenres1.teacher().getId()))
                 .andExpect(jsonPath("$.teachers[0].nickname").value(teacherLessonGenres1.teacher().getMember()

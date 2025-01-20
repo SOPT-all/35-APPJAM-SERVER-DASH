@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import be.dash.dashserver.core.domain.common.Genre;
+import be.dash.dashserver.core.domain.common.Keyword;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.service.LessonRepository;
 import be.dash.dashserver.core.domain.teacher.Teacher;
@@ -53,7 +54,7 @@ class TeacherRepositoryAdapterTest {
         createLessons(teacher3, startDateTime, endDateTime);
         createLessons(teacher3, startDateTime, endDateTime);
 
-        Teachers teachersSortByLessonCountsDesc = teacherRepository.findTeachersSortByLessonCountsDesc();
+        Teachers teachersSortByLessonCountsDesc = teacherRepository.findTeachersSortByLessonCountsDesc(Keyword.ANY);
         List<Long> list = teachersSortByLessonCountsDesc.teachers().stream().map(Teacher::getId).toList();
 
         assertThat(list).containsExactly(3L, 1L, 2L);

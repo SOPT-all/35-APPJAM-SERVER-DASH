@@ -119,4 +119,19 @@ public class TeacherJpaEntity extends BaseTimeEntity {
                 .videoUrls(teacherVideoJpaEntities.stream().map(TeacherVideoJpaEntity::getVideoUrl).toList())
                 .build();
     }
+
+    public Teacher toDomainWithImageAndVideo(List<TeacherImageJpaEntity> teacherImageJpaEntities, List<TeacherVideoJpaEntity> teacherVideoJpaEntities, MemberJpaEntity memberJpaEntity) {
+        return Teacher.builder()
+                .id(id)
+                .member(member.toDomain())
+                .detail(detail)
+                .member(memberJpaEntity.toDomain())
+                .educations(Arrays.stream(education.split(",")).toList())
+                .experiences(Arrays.stream(experience.split(",")).toList())
+                .instagram(instagram)
+                .youtube(youtube)
+                .imageUrls(teacherImageJpaEntities.stream().map(TeacherImageJpaEntity::getImageUrl).toList())
+                .videoUrls(teacherVideoJpaEntities.stream().map(TeacherVideoJpaEntity::getVideoUrl).toList())
+                .build();
+    }
 }

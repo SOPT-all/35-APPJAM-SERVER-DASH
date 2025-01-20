@@ -20,6 +20,7 @@ public class LessonSpecifications {
             Level level,
             LocalDateTime startDateTime,
             LocalDateTime endDateTime,
+            String keyword,
             LocalDateTime now
     ) {
         return (root, query, cb) -> {
@@ -29,6 +30,7 @@ public class LessonSpecifications {
             checkStartDateWithinRange(startDateTime, root, cb, predicates);
             checkEndDateWithinRange(endDateTime, root, cb, predicates);
             checkExpiredDate(now, root, cb, predicates);
+            likeLessonKeyword(keyword, root, cb, predicates);
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }
@@ -60,6 +62,16 @@ public class LessonSpecifications {
     private static void equalGenre(Genre genre, Root<LessonJpaEntity> root, CriteriaBuilder cb, List<Predicate> predicates) {
         if (genre != null) {
             predicates.add(cb.equal(root.get("genre"), genre));
+        }
+    }
+
+    private static void likeLessonKeyword(String keyword, Root<LessonJpaEntity> root, CriteriaBuilder cb, List<Predicate> predicates) {
+        if (keyword != null && !keyword.isBlank()) {
+            String likePattern = "%" + keyword + "%";
+            predicates.add(cb.or(
+                    cb.like(root.get("name"), likePattern),
+                    cb.like(root.get("detail"), likePattern)
+            ));
         }
     }
 

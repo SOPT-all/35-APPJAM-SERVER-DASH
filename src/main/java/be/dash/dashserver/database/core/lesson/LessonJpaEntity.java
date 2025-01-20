@@ -15,11 +15,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
-import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.lesson.Images;
+import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.lesson.Location;
 import be.dash.dashserver.core.domain.lesson.Round;
 import be.dash.dashserver.core.domain.lesson.Rounds;
+import be.dash.dashserver.core.domain.lesson.Videos;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.database.core.common.BaseTimeEntity;
 import be.dash.dashserver.database.core.teacher.TeacherImageJpaEntity;
@@ -109,24 +110,6 @@ public class LessonJpaEntity extends BaseTimeEntity {
         this.price = lesson.getPrice();
     }
 
-    public Lesson toDomain() {
-        return Lesson.builder()
-                .id(id)
-                .teacher(teacher.toDomain())
-                .name(name)
-                .genre(genre)
-                .level(level)
-                .location(new Location(location, streetAddress, oldStreetAddress, detailedAddress))
-                .favoriteCount(favoriteCount)
-                .reservationCount(reservationCount)
-                .maxReservationCount(maxReservationCount)
-                .detail(detail)
-                .recommendation(recommendation)
-                .price(price)
-                .createdAt(getCreatedAt())
-                .build();
-    }
-
     public Lesson toDomainWithImages(List<TeacherImageJpaEntity> teacherImageJpaEntities, List<LessonImageJpaEntity> lessonImages) {
         return Lesson.builder()
                 .id(id)
@@ -138,6 +121,27 @@ public class LessonJpaEntity extends BaseTimeEntity {
                 .rounds(new Rounds(List.of(new Round(startDateTime, endDateTime))))
                 .location(new Location(location, streetAddress, oldStreetAddress, detailedAddress))
                 .favoriteCount(favoriteCount)
+                .reservationCount(reservationCount)
+                .maxReservationCount(maxReservationCount)
+                .detail(detail)
+                .recommendation(recommendation)
+                .price(price)
+                .createdAt(getCreatedAt())
+                .build();
+    }
+
+    public Lesson toDomain(Teacher teacher, Images images, Videos videos, Rounds rounds) {
+        return Lesson.builder()
+                .id(id)
+                .teacher(teacher)
+                .name(name)
+                .genre(genre)
+                .level(level)
+                .location(new Location(location, streetAddress, oldStreetAddress, detailedAddress))
+                .favoriteCount(favoriteCount)
+                .videos(videos)
+                .images(images)
+                .rounds(rounds)
                 .reservationCount(reservationCount)
                 .maxReservationCount(maxReservationCount)
                 .detail(detail)
