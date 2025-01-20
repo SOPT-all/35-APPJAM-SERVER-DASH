@@ -1,6 +1,7 @@
 package be.dash.dashserver.api.core.lesson.dto;
 
 import be.dash.dashserver.core.domain.common.Genre;
+import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
 
 import static be.dash.dashserver.api.core.lesson.dto.LessonRoundResponse.calculateRemainingDays;
@@ -8,7 +9,7 @@ import static be.dash.dashserver.api.core.lesson.dto.LessonRoundResponse.calcula
 public record LessonResponse(
         long id,
         Genre genre,
-        String level,
+        Level level,
         String name,
         String imageUrl,
         String teacherProfileImage,
@@ -21,7 +22,7 @@ public record LessonResponse(
     public LessonResponse(Lesson lesson) {
         this(lesson.getId(),
                 lesson.getGenre(),
-                LessonLevelResponse.from(lesson.getLevel()).getKorLevel(),
+                lesson.getLevel(),
                 lesson.getName(),
                 lesson.getRepresentativeImageUrl(),
                 lesson.getTeacher().getImages().getFirstImage(),

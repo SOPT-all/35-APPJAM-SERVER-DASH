@@ -16,4 +16,8 @@ public class MemberService {
         Member member = command.toMember();
         memberRepository.onboard(member);
     }
+
+    public Member findById(Long memberId) {
+        return memberRepository.findById(memberId);
+    }
 }

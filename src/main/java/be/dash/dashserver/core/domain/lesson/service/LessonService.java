@@ -66,7 +66,7 @@ public class LessonService {
         return lessons.sort(sortOption);
     }
 
-    public Lesson find(Long lessonId) {
+    public Lesson findById(Long lessonId) {
         return lessonRepository.findLessonsById(lessonId);
     }
 }
