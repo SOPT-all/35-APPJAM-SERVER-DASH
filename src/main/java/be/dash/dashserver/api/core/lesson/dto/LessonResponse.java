@@ -1,12 +1,13 @@
 package be.dash.dashserver.api.core.lesson.dto;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
+import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.lesson.Lesson;
+
+import static be.dash.dashserver.api.core.lesson.dto.LessonRoundResponse.calculateRemainingDays;
 
 public record LessonResponse(
         long id,
-        String genre,
+        Genre genre,
         String level,
         String name,
         String imageUrl,
@@ -19,8 +20,8 @@ public record LessonResponse(
 
     public LessonResponse(Lesson lesson) {
         this(lesson.getId(),
-                lesson.getGenre().name(),
-                lesson.getLevel().name(),
+                lesson.getGenre(),
+                LessonLevelResponse.from(lesson.getLevel()).getKorLevel(),
                 lesson.getName(),
                 lesson.getRepresentativeImageUrl(),
                 lesson.getTeacher().getImages().getFirstImage(),
@@ -30,10 +31,5 @@ public record LessonResponse(
                 lesson.getLocation().getTitle(),
                 calculateRemainingDays(lesson.getStartTime())
         );
-    }
-
-    private static long calculateRemainingDays(LocalDateTime startDateTime) {
-        Duration duration = Duration.between(LocalDateTime.now(), startDateTime);
-        return duration.toDays();
     }
 }

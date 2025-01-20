@@ -56,4 +56,8 @@ public class Teacher {
     public List<String> getVideoUrls() {
         return videos.getVideoUrls();
     }
+
+    public String getNickName() {
+        return member.getNickname();
+    }
 }

@@ -11,10 +11,10 @@ import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.lesson.LessonSortOption;
 import be.dash.dashserver.core.domain.lesson.Lessons;
 import be.dash.dashserver.core.domain.lesson.command.CreateLessonCommand;
-import be.dash.dashserver.core.domain.teacher.Teacher;
-import be.dash.dashserver.core.domain.teacher.service.TeacherRepository;
 import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
+import be.dash.dashserver.core.domain.teacher.Teacher;
+import be.dash.dashserver.core.domain.teacher.service.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -63,5 +63,9 @@ public class LessonService {
     public Lessons searchBySortOption(LessonSortOption sortOption) {
         Lessons lessons = new Lessons(lessonRepository.findActiveLessons(LocalDateTime.now()));
         return lessons.sort(sortOption);
+    }
+
+    public Lesson find(Long lessonId) {
+        return lessonRepository.findLessonsById(lessonId);
     }
 }
