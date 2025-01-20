@@ -6,7 +6,7 @@ import be.dash.dashserver.core.domain.teacher.Teachers;
 public interface TeacherRepository {
     void save(Teacher teacher);
 
-    Teachers findTeachersSortByLessonCountsDesc();
+    Teachers findTeachersSortByLessonCountsDesc(String keyword);
 
     void register(Teacher teacher);
 

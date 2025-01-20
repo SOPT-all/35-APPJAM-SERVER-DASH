@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import be.dash.dashserver.api.core.teacher.dto.CreateTeacherRequest;
 import be.dash.dashserver.api.core.teacher.dto.CreateTeacherResponse;
@@ -17,6 +18,7 @@ import be.dash.dashserver.api.core.teacher.dto.TeacherDetailResponse;
 import be.dash.dashserver.api.core.teacher.dto.TeacherResponses;
 import be.dash.dashserver.api.support.MemberId;
 import be.dash.dashserver.api.support.Permission;
+import be.dash.dashserver.core.domain.common.Keyword;
 import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.domain.teacher.TeacherLessonGenres;
 import be.dash.dashserver.core.domain.teacher.service.TeacherService;
@@ -31,8 +33,8 @@ public class TeacherController {
     private final TeacherService teacherService;
 
     @GetMapping
-    public ResponseEntity<TeacherResponses> search() {
-        List<TeacherLessonGenres> searched = teacherService.search();
+    public ResponseEntity<TeacherResponses> search(@RequestParam(required = false, defaultValue = Keyword.ANY) Keyword keyword) {
+        List<TeacherLessonGenres> searched = teacherService.search(keyword);
         return ResponseEntity.ok(TeacherResponses.from(searched));
     }
 

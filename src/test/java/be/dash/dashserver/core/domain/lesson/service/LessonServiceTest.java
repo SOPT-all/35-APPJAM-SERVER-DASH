@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import be.dash.dashserver.ServiceSliceTest;
 import be.dash.dashserver.core.domain.common.Genre;
+import be.dash.dashserver.core.domain.common.Keyword;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.lesson.LessonSortOption;
@@ -48,10 +49,10 @@ class LessonServiceTest extends ServiceSliceTest {
         LocalDateTime endDateTime = LocalDateTime.now().plusDays(30);
         createLessons(startDateTime, endDateTime);
 
-        Lessons filter1 = lessonService.search(null, null, startDateTime.minusDays(4), endDateTime, LATEST);
-        Lessons filter2 = lessonService.search(null, null, startDateTime.plusHours(1), endDateTime, LATEST);
+        Lessons filter1 = lessonService.search(null, null, startDateTime.minusDays(4), endDateTime, new Keyword("박재연"), LATEST);
+        Lessons filter2 = lessonService.search(null, null, startDateTime.plusHours(1), endDateTime, new Keyword("수업"), LATEST);
         Lessons filter3 = lessonService.search(null, null, startDateTime.plusDays(3)
-                .minusHours(1), endDateTime, LATEST);
+                .minusHours(1), endDateTime, new Keyword("상세"), LATEST);
 
         assertAll(
                 () -> assertThat(filter1.lessons().stream().map(Lesson::getId)
@@ -68,9 +69,9 @@ class LessonServiceTest extends ServiceSliceTest {
         LocalDateTime endDateTime = LocalDateTime.now().plusDays(30);
         createLessons(startDateTime, endDateTime);
 
-        Lessons lessonsLatest = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime.plusHours(1), endDateTime, LATEST);
-        Lessons lessonsMostFavorite = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime.plusHours(1), endDateTime, LessonSortOption.MOST_FAVORITE);
-        Lessons lessonsUpComing = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime.plusHours(1), endDateTime, LessonSortOption.UPCOMING);
+        Lessons lessonsLatest = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime.plusHours(1), endDateTime, new Keyword(), LATEST);
+        Lessons lessonsMostFavorite = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime.plusHours(1), endDateTime, new Keyword(), LessonSortOption.MOST_FAVORITE);
+        Lessons lessonsUpComing = lessonService.search(HIPHOP, Level.BEGINNER, startDateTime.plusHours(1), endDateTime, new Keyword(), LessonSortOption.UPCOMING);
 
         assertAll(
                 () -> assertThat(lessonsLatest.lessons().stream().map(Lesson::getId)

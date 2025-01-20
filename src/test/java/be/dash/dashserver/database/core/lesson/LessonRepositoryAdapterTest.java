@@ -59,11 +59,11 @@ class LessonRepositoryAdapterTest {
         LocalDateTime now = startDateTime.minusDays(20);
 
 
-        List<Lesson> allLessons = lessonRepository.findActiveLessonsByFilters(null, null, null, null, now);
-        List<Lesson> lessonsHiphop = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, null, null, null, now);
-        List<Lesson> lessonsHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, Level.BEGINNER, startDateTime.minusDays(6), endDateTime, now);
-        List<Lesson> lessonsFemaleHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.FEMALE_HIPHOP, Level.BEGINNER, startDateTime.minusDays(6), endDateTime, now);
-        List<Lesson> lessonsFemaleHiphopAdvanced = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, Level.ADVANCED, startDateTime.minusDays(6), endDateTime, now);
+        List<Lesson> allLessons = lessonRepository.findActiveLessonsByFilters(null, null, null, null, null, now);
+        List<Lesson> lessonsHiphop = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, null, null, null, null, now);
+        List<Lesson> lessonsHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, Level.BEGINNER, startDateTime.minusDays(6), endDateTime, null, now);
+        List<Lesson> lessonsFemaleHiphopBeginners = lessonRepository.findActiveLessonsByFilters(Genre.FEMALE_HIPHOP, Level.BEGINNER, startDateTime.minusDays(6), endDateTime, null, now);
+        List<Lesson> lessonsFemaleHiphopAdvanced = lessonRepository.findActiveLessonsByFilters(Genre.HIPHOP, Level.ADVANCED, startDateTime.minusDays(6), endDateTime, null, now);
 
         assertAll(
                 () -> assertThat(allLessons.size()).isEqualTo(6),

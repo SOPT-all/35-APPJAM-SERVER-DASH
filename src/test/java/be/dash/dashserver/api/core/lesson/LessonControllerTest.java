@@ -14,6 +14,7 @@ import be.dash.dashserver.api.core.lesson.dto.LessonLevelResponse;
 import be.dash.dashserver.core.auth.JwtTokenExtractor;
 import be.dash.dashserver.core.auth.TokenParser;
 import be.dash.dashserver.core.domain.common.Genre;
+import be.dash.dashserver.core.domain.common.Keyword;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.LessonSortOption;
 import be.dash.dashserver.core.domain.lesson.Lessons;
@@ -58,6 +59,7 @@ class LessonControllerTest {
                 any(Level.class),
                 any(LocalDateTime.class),
                 any(LocalDateTime.class),
+                any(Keyword.class),
                 any(LessonSortOption.class)
         )).thenReturn(lessons);
 
@@ -66,11 +68,13 @@ class LessonControllerTest {
                         .param("level", "BEGINNER")
                         .param("startDate", "2025-01-13T18:26:27")
                         .param("endDate", "2025-01-15T18:26:27")
-                        .param("sortOption", "LATEST"))
+                        .param("sortOption", "LATEST")
+                        .param("keyword", "박재"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.lessons[0].id").value(lessons.lessons().get(0).getId()))
                 .andExpect(jsonPath("$.lessons[0].genre").value(lessons.lessons().get(0).getGenre().name()))
-                .andExpect(jsonPath("$.lessons[0].level").value(LessonLevelResponse.from(lessons.lessons().get(0).getLevel()).getKorLevel()))
+                .andExpect(jsonPath("$.lessons[0].level").value(LessonLevelResponse.from(lessons.lessons().get(0)
+                        .getLevel()).getKorLevel()))
                 .andExpect(jsonPath("$.lessons[0].name").value(lessons.lessons().get(0).getName()))
                 .andExpect(jsonPath("$.lessons[0].imageUrl").value(lessons.lessons().get(0)
                         .getRepresentativeImageUrl()));
@@ -89,7 +93,8 @@ class LessonControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.lessons[0].id").value(lessons.lessons().get(0).getId()))
                 .andExpect(jsonPath("$.lessons[0].genre").value(lessons.lessons().get(0).getGenre().name()))
-                .andExpect(jsonPath("$.lessons[0].level").value(LessonLevelResponse.from(lessons.lessons().get(0).getLevel()).getKorLevel()))
+                .andExpect(jsonPath("$.lessons[0].level").value(LessonLevelResponse.from(lessons.lessons().get(0)
+                        .getLevel()).getKorLevel()))
                 .andExpect(jsonPath("$.lessons[0].name").value(lessons.lessons().get(0).getName()))
                 .andExpect(jsonPath("$.lessons[0].imageUrl").value(lessons.lessons().get(0)
                         .getRepresentativeImageUrl()));

@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import be.dash.dashserver.core.domain.common.Genre;
+import be.dash.dashserver.core.domain.common.Keyword;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.lesson.LessonSortOption;
@@ -26,9 +27,9 @@ public class LessonService {
     private final TeacherRepository teacherRepository;
     private final MemberRepository memberRepository;
 
-    public Lessons search(Genre genre, Level level, LocalDateTime startDateTime, LocalDateTime endDateTime, LessonSortOption sortOption) {
+    public Lessons search(Genre genre, Level level, LocalDateTime startDateTime, LocalDateTime endDateTime, Keyword keyword, LessonSortOption sortOption) {
         Lessons lessons = new Lessons(
-                lessonRepository.findActiveLessonsByFilters(genre, level, startDateTime, endDateTime, LocalDateTime.now())
+                lessonRepository.findActiveLessonsByFilters(genre, level, startDateTime, endDateTime, keyword.getValue(), LocalDateTime.now())
         );
         return lessons.sort(sortOption);
     }

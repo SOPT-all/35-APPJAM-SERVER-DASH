@@ -10,7 +10,7 @@ import be.dash.dashserver.core.domain.teacher.Teacher;
 
 public interface LessonRepository {
 
-    List<Lesson> findActiveLessonsByFilters(Genre genre, Level level, LocalDateTime startDateTime, LocalDateTime endDateTime, LocalDateTime now);
+    List<Lesson> findActiveLessonsByFilters(Genre genre, Level level, LocalDateTime startDateTime, LocalDateTime endDateTime, String keyword, LocalDateTime now);
 
     void save(Lesson lesson);
 

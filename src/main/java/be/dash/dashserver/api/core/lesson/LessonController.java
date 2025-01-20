@@ -20,6 +20,7 @@ import be.dash.dashserver.api.core.lesson.dto.PopularGenres;
 import be.dash.dashserver.api.support.MemberId;
 import be.dash.dashserver.api.support.Permission;
 import be.dash.dashserver.core.domain.common.Genre;
+import be.dash.dashserver.core.domain.common.Keyword;
 import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.lesson.LessonSortOption;
 import be.dash.dashserver.core.domain.lesson.Lessons;
@@ -38,11 +39,13 @@ public class LessonController {
 
     @GetMapping
     public ResponseEntity<LessonResponses> search(@ModelAttribute LessonFilterRequest lessonFilterRequest,
-                                                  @RequestParam LessonSortOption sortOption) {
+                                                  @RequestParam(required = false, defaultValue = "LATEST") LessonSortOption sortOption,
+                                                  @RequestParam(required = false, defaultValue = Keyword.ANY) Keyword keyword) {
         Lessons searched = lessonService.search(lessonFilterRequest.genre(),
                 lessonFilterRequest.level(),
                 lessonFilterRequest.startDate(),
                 lessonFilterRequest.endDate(),
+                keyword,
                 sortOption);
         return ResponseEntity.ok(new LessonResponses(searched));
     }
