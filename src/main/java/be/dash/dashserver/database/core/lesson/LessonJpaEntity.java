@@ -151,7 +151,7 @@ public class LessonJpaEntity extends BaseTimeEntity {
                 .build();
     }
 
-    public Lesson toDomain(Teacher teacher) {
+    public Lesson toDomain(Teacher teacher, List<LessonImageJpaEntity> images) {
         return Lesson.builder()
                 .id(id)
                 .teacher(teacher)
@@ -162,6 +162,8 @@ public class LessonJpaEntity extends BaseTimeEntity {
                 .favoriteCount(favoriteCount)
                 .reservationCount(reservationCount)
                 .maxReservationCount(maxReservationCount)
+                .rounds(new Rounds(List.of(new Round(startDateTime, endDateTime))))
+                .images(new Images(images.stream().map(LessonImageJpaEntity::getImageUrl).toList()))
                 .detail(detail)
                 .recommendation(recommendation)
                 .price(price)
