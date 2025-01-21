@@ -16,6 +16,7 @@ import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.domain.teacher.service.TeacherRepository;
+import be.dash.dashserver.core.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -36,7 +37,9 @@ public class LessonService {
 
     @Transactional
     public void createLesson(CreateLessonCommand command) {
-        Teacher teacher = teacherRepository.findByMemberId(command.memberId());
+        Teacher teacher = teacherRepository.findByMemberId(command.memberId())
+                .orElseThrow(() -> new NotFoundException("해당하는 선생님을 찾을 수 없습니다."));
+
         Lesson lesson = command.toDomainWith(teacher);
         lessonRepository.save(lesson);
     }
@@ -68,5 +71,9 @@ public class LessonService {
 
     public Lesson findById(Long lessonId) {
         return lessonRepository.findLessonsById(lessonId);
+    }
+
+    public List<Lesson> findAllByTeacherId(long teacherId) {
+        return lessonRepository.findAllByTeacherIdOrderByStartDateTime(teacherId);
     }
 }

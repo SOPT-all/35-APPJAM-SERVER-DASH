@@ -1,5 +1,6 @@
 package be.dash.dashserver.core.domain.teacher.service;
 
+import java.util.Optional;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.domain.teacher.Teachers;
 
@@ -10,7 +11,7 @@ public interface TeacherRepository {
 
     void register(Teacher teacher);
 
-    Teacher findByMemberId(Long aLong);
+    Optional<Teacher> findByMemberId(Long aLong);
 
     Teacher findByTeacherId(Long teacherId);
 }

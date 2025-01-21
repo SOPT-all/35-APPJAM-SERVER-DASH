@@ -2,6 +2,7 @@ package be.dash.dashserver.database.core.teacher;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Repository;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.domain.teacher.Teachers;
@@ -58,10 +59,10 @@ public class TeacherRepositoryAdapter implements TeacherRepository {
     }
 
     @Override
-    public Teacher findByMemberId(Long memberId) {
+    public Optional<Teacher> findByMemberId(Long memberId) {
         return teacherJpaRepository.findByMemberId(memberId)
-                .map(TeacherJpaEntity::toDomain)
-                .orElseThrow(() -> new NotFoundException("해당하는 선생님을 찾을 수 없습니다."));
+                .map(TeacherJpaEntity::toDomain);
+
     }
 
     @Override

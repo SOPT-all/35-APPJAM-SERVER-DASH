@@ -1,6 +1,7 @@
 package be.dash.dashserver.core.domain.member.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,10 @@ import be.dash.dashserver.core.domain.member.command.OnboardCommand;
 import be.dash.dashserver.core.domain.reservation.Reservation;
 import be.dash.dashserver.core.domain.reservation.Reservations;
 import be.dash.dashserver.core.domain.reservation.service.ReservationRepository;
+import be.dash.dashserver.core.domain.teacher.Teacher;
+import be.dash.dashserver.core.domain.teacher.service.TeacherRepository;
+import be.dash.dashserver.core.exception.ForbiddenException;
+import be.dash.dashserver.core.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -20,6 +25,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final LessonRepository lessonRepository;
     private final ReservationRepository reservationRepository;
+    private final TeacherRepository teacherRepository;
 
 
     @Transactional
@@ -62,5 +68,10 @@ public class MemberService {
         return myLessons.stream()
                 .map(lesson -> ReservationResult.of(lesson, reservations))
                 .toList();
+    }
+
+    public Teacher findTeacherByMemberId(Long memberId) {
+        return teacherRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new ForbiddenException("해당하는 선생님을 찾을 수 없습니다."));
     }
 }
