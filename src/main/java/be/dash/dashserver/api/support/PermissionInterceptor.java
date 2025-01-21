@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import be.dash.dashserver.core.auth.JwtTokenExtractor;
 import be.dash.dashserver.core.auth.TokenParser;
 import be.dash.dashserver.core.auth.UnAuthorizedException;
@@ -27,6 +28,8 @@ public class PermissionInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if (handler instanceof ResourceHttpRequestHandler)
+            return true;
         HandlerMethod method = (HandlerMethod) handler;
         Permission permission = method.getMethodAnnotation(Permission.class);
         if (permission == null)

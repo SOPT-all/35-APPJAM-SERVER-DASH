@@ -2,6 +2,7 @@ package be.dash.dashserver.core.domain.member.service;
 
 import be.dash.dashserver.core.domain.member.AuthMember;
 import be.dash.dashserver.core.domain.member.Member;
+import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.domain.member.SocialProvider;
 import be.dash.dashserver.core.domain.member.Student;
 
@@ -17,4 +18,10 @@ public interface MemberRepository {
     void onboard(Member member);
 
     Student findStudentByMemberId(long memberId);
+
+    int getReservationCountByStudentId(Long studentId);
+
+    int getFavoriteCountByStudentId(Long studentId);
+
+    void updateRole(Long id, Role role);
 }

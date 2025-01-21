@@ -1,5 +1,6 @@
 package be.dash.dashserver.api.core.lesson;
 
+import java.net.URI;
 import java.util.List;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -91,12 +92,20 @@ public class LessonController {
         return ResponseEntity.ok(new LessonDetailResponse(lesson, booked));
     }
 
-    @GetMapping("/{lessonId}/reservations")
-    public ResponseEntity<LessonReservationResponse> reservation(
+    @GetMapping("/{lessonId}/reserve-progress")
+    public ResponseEntity<LessonReservationResponse> reserveProgress(
             @MemberId Long memberId,
             @PathVariable @Min(value = 1L, message = "수업의 식별자는 양수로 이루어져야 합니다.") long lessonId) {
         Lesson lesson = lessonService.findById(lessonId);
         Member member = memberService.findById(memberId);
         return ResponseEntity.ok(new LessonReservationResponse(lesson, member));
+    }
+
+    @PostMapping("/{lessonId}/reservations")
+    public ResponseEntity<Void> createReservation(
+            @MemberId Long memberId,
+            @PathVariable @Min(value = 1L, message = "수업의 식별자는 양수로 이루어져야 합니다.") long lessonId) {
+        long reservationId = reservationService.reserve(memberId, lessonId);
+        return ResponseEntity.created(URI.create("/reservations/" + reservationId)).build();
     }
 }

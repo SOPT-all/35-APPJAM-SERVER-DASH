@@ -2,6 +2,7 @@ package be.dash.dashserver.core.domain.lesson.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
@@ -25,4 +26,8 @@ public interface LessonRepository {
     Lessons findLessonsByTeacher(Teacher teacher, LocalDateTime localDateTime);
 
     Lesson findLessonsById(Long lessonId);
+
+    int getLessonCount(Long memberId);
+
+    List<Lesson> findAllByIdsOrderByStartDate(Set<Long> lessonIds);
 }

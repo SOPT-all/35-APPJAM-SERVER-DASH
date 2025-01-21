@@ -34,6 +34,8 @@ class MemberControllerTest {
     @MockitoBean
     private MemberService memberService;
     @MockitoBean
+    private MemberFacade memberFacade;
+    @MockitoBean
     private JwtTokenExtractor jwtTokenExtractor;
     @MockitoBean
     private TokenParser tokenParser;

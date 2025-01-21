@@ -2,6 +2,7 @@ package be.dash.dashserver.database.core.lesson;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Repository;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
@@ -123,5 +124,15 @@ public class LessonRepositoryAdapter implements LessonRepository {
         Teacher teacher = teacherJpaEntity.toDomainWithImageAndVideo(teacherImages, teacherVideos, memberJpaEntity);
 
         return lessonJpaEntity.toDomain(teacher, lessonImages, lessonVideos, lessonsRounds);
+    }
+
+    @Override
+    public int getLessonCount(Long teacherId) {
+        return lessonJpaEntityRepository.countByTeacherId(teacherId);
+    }
+
+    @Override
+    public List<Lesson> findAllByIdsOrderByStartDate(Set<Long> lessonIds) {
+        return getLessons(lessonJpaEntityRepository.findAllByIdsOOrderByStartDateTime(lessonIds));
     }
 }

@@ -1,11 +1,11 @@
 package be.dash.dashserver.database.core.reservation;
 
+import java.util.Optional;
 import org.springframework.stereotype.Repository;
+import be.dash.dashserver.core.domain.reservation.Reservation;
+import be.dash.dashserver.core.domain.reservation.Reservations;
 import be.dash.dashserver.core.domain.reservation.service.ReservationRepository;
-import be.dash.dashserver.core.exception.DashException;
-import be.dash.dashserver.database.core.lesson.LessonJpaEntity;
 import be.dash.dashserver.database.core.lesson.LessonJpaEntityRepository;
-import be.dash.dashserver.database.core.student.StudentJpaEntity;
 import be.dash.dashserver.database.core.student.StudentJpaRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -20,15 +20,23 @@ public class ReservationRepositoryAdapter implements ReservationRepository {
     @Override
     public boolean existsByMemberIdAndLessonId(long memberId, long lessonId) {
         return reservationJpaRepository.existsByMemberIdAndLessonId(memberId, lessonId);
+
+    }
+
+    @Override
+    public Reservations findAllByStudentId(long studentId) {
+        return new Reservations(reservationJpaRepository.findAllByStudentId(studentId).stream()
+                .map(ReservationJpaEntity::toDomain).toList());
+    }
+
+    @Override
+    public Optional<Reservation> findById(long reservationId) {
+        return reservationJpaRepository.findById(reservationId).map(ReservationJpaEntity::toDomain);
     }
 
     @Override
     public long save(long memberId, long lessonId) {
-        LessonJpaEntity lessonJpaEntity = lessonJpaEntityRepository.findById(lessonId)
-                .orElseThrow(() -> new DashException("일치하는 수업이 존재하지 않습니다."));
-        StudentJpaEntity studentJpaEntity = studentJpaRepository.findById(memberId)
-                .orElseThrow(() -> new DashException("일치하는 학생이 존재하지 않습니다."));
-        ReservationJpaEntity reservationJpaEntity = new ReservationJpaEntity(lessonJpaEntity, studentJpaEntity);
+        ReservationJpaEntity reservationJpaEntity = new ReservationJpaEntity(lessonId, memberId);
         reservationJpaRepository.save(reservationJpaEntity);
         return reservationJpaEntity.getId();
     }

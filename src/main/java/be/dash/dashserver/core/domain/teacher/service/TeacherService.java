@@ -52,6 +52,7 @@ public class TeacherService {
         Member member = memberRepository.findById(command.memberId());
         Teacher teacher = command.toDomain(member);
         teacherRepository.register(teacher);
+        memberRepository.updateRole(member.getId(), Role.TEACHER);
 
         return new Token(jwtTokenGenerator.createAccessToken(String.valueOf(member.getId()), Role.TEACHER),
                 jwtTokenGenerator.createRefreshToken(String.valueOf(member.getId()), Role.TEACHER));
