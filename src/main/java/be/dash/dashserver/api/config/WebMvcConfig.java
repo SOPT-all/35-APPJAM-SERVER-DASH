@@ -42,6 +42,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(permissionInterceptor);
+        registry.addInterceptor(permissionInterceptor)
+                .addPathPatterns("/api/**");
     }
 }
