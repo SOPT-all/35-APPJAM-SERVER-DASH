@@ -31,6 +31,6 @@ public class ReservationJpaEntity extends BaseCreatedAtEntity {
     private Long studentId;
 
     public Reservation toDomain() {
-        return new Reservation(id, lessonId, studentId);
+        return new Reservation(id, lessonId, studentId, getCreatedAt());
     }
 }

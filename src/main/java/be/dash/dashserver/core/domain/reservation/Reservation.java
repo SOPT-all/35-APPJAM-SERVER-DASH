@@ -1,5 +1,6 @@
 package be.dash.dashserver.core.domain.reservation;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,5 +9,6 @@ import lombok.Getter;
 public class Reservation {
     private final long id;
     private final long lessonId;
-    private final long reservationId;
+    private final long studentId;
+    private final LocalDateTime createdAt;
 }

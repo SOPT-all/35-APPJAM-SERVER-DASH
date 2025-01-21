@@ -68,6 +68,10 @@ public class Lesson {
         return location.getTitle();
     }
 
+    public String getDetailedAddress() {
+        return location.getDetailedAddress();
+    }
+
     public int calculateDDay() {
         return getStartTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
     }

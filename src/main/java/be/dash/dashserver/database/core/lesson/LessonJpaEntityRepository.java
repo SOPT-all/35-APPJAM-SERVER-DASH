@@ -2,6 +2,7 @@ package be.dash.dashserver.database.core.lesson;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -41,7 +42,7 @@ public interface LessonJpaEntityRepository extends JpaRepository<LessonJpaEntity
             "from LessonJpaEntity l " +
             "where l.id in :lessonIds " +
             "order by l.startDateTime")
-    List<LessonJpaEntity> findAllByIdsOOrderByStartDateTime(List<Long> lessonIds);
+    List<LessonJpaEntity> findAllByIdsOOrderByStartDateTime(Set<Long> lessonIds);
 
     List<LessonJpaEntity> findByTeacherIdOrderByCreatedAtDesc(Long teacherId);
 }

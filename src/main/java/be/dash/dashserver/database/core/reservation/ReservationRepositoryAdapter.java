@@ -1,6 +1,10 @@
 package be.dash.dashserver.database.core.reservation;
 
+import java.util.Optional;
 import org.springframework.stereotype.Repository;
+import be.dash.dashserver.core.domain.reservation.Reservation;
+import be.dash.dashserver.core.domain.reservation.ReservationRepository;
+import be.dash.dashserver.core.domain.reservation.Reservations;
 import be.dash.dashserver.core.domain.reservation.service.ReservationRepository;
 import be.dash.dashserver.core.exception.DashException;
 import be.dash.dashserver.database.core.lesson.LessonJpaEntity;
@@ -20,11 +24,18 @@ public class ReservationRepositoryAdapter implements ReservationRepository {
     @Override
     public boolean existsByMemberIdAndLessonId(long memberId, long lessonId) {
         return reservationJpaRepository.existsByMemberIdAndLessonId(memberId, lessonId);
+
+    }
+
     @Override
     public Reservations findAllByStudentId(long studentId) {
         return new Reservations(reservationJpaRepository.findAllByStudentId(studentId).stream()
-                .map(ReservationJpaEntity::toDomain)
-                .collect.toList());
+                .map(ReservationJpaEntity::toDomain).toList());
+    }
+
+    @Override
+    public Optional<Reservation> findById(long reservationId) {
+        return reservationJpaRepository.findById(reservationId).map(ReservationJpaEntity::toDomain);
     }
 
     @Override

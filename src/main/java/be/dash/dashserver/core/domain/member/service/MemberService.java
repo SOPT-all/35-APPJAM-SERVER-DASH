@@ -1,6 +1,7 @@
 package be.dash.dashserver.core.domain.member.service;
 
 import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import be.dash.dashserver.core.domain.lesson.Lesson;
@@ -48,7 +49,15 @@ public class MemberService {
     public List<ReservationResult> getMemberReservations(Long memberId) {
         long studentId = memberRepository.findStudentByMemberId(memberId).getId();
         Reservations reservations = reservationRepository.findAllByStudentId(studentId);
-        List<Long> lessonIds = reservations.getReservations().stream().map(Reservation::getLessonId).toList();
+        List<Long> list = reservations.getReservations().stream().map(Reservation::getId).toList();
+        Set<Long> lessonIds1 = reservations.getLessonIds();
+        for (long l : list) {
+            System.out.println(l);
+        }
+        for (long l : lessonIds1) {
+            System.out.println(l);
+        }
+        Set<Long> lessonIds = reservations.getLessonIds();
         List<Lesson> myLessons = lessonRepository.findAllByIdsOrderByStartDate(lessonIds);
         return myLessons.stream()
                 .map(lesson -> ReservationResult.of(lesson, reservations))
