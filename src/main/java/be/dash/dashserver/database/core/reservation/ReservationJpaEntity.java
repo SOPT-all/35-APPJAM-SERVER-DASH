@@ -13,6 +13,7 @@ import be.dash.dashserver.database.core.common.BaseCreatedAtEntity;
 import be.dash.dashserver.database.core.lesson.LessonJpaEntity;
 import be.dash.dashserver.database.core.student.StudentJpaEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,4 +36,9 @@ public class ReservationJpaEntity extends BaseCreatedAtEntity {
     @JoinColumn(name = "student_id")
     private StudentJpaEntity student;
 
+    @Builder
+    public ReservationJpaEntity(LessonJpaEntity lesson, StudentJpaEntity student) {
+        this.lesson = lesson;
+        this.student = student;
+    }
 }
