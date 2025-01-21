@@ -20,6 +20,11 @@ public class ReservationRepositoryAdapter implements ReservationRepository {
     @Override
     public boolean existsByMemberIdAndLessonId(long memberId, long lessonId) {
         return reservationJpaRepository.existsByMemberIdAndLessonId(memberId, lessonId);
+    @Override
+    public Reservations findAllByStudentId(long studentId) {
+        return new Reservations(reservationJpaRepository.findAllByStudentId(studentId).stream()
+                .map(ReservationJpaEntity::toDomain)
+                .collect.toList());
     }
 
     @Override
