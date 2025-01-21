@@ -2,16 +2,12 @@ package be.dash.dashserver.database.core.reservation;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import be.dash.dashserver.core.domain.reservation.Reservation;
 import be.dash.dashserver.database.core.common.BaseCreatedAtEntity;
-import be.dash.dashserver.database.core.lesson.LessonJpaEntity;
-import be.dash.dashserver.database.core.student.StudentJpaEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,17 +24,13 @@ public class ReservationJpaEntity extends BaseCreatedAtEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lesson_id")
-    private LessonJpaEntity lesson;
+    @Column(name = "lesson_id")
+    private Long lessonId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id")
-    private StudentJpaEntity student;
+    @Column(name = "student_id")
+    private Long studentId;
 
-    @Builder
-    public ReservationJpaEntity(LessonJpaEntity lesson, StudentJpaEntity student) {
-        this.lesson = lesson;
-        this.student = student;
+    public Reservation toDomain() {
+        return new Reservation(id, lessonId, studentId);
     }
 }
