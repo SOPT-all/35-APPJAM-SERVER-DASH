@@ -9,7 +9,6 @@ import jakarta.persistence.Table;
 import be.dash.dashserver.core.domain.reservation.Reservation;
 import be.dash.dashserver.database.core.common.BaseCreatedAtEntity;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

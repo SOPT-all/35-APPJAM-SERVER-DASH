@@ -5,10 +5,7 @@ import org.springframework.stereotype.Repository;
 import be.dash.dashserver.core.domain.reservation.Reservation;
 import be.dash.dashserver.core.domain.reservation.Reservations;
 import be.dash.dashserver.core.domain.reservation.service.ReservationRepository;
-import be.dash.dashserver.core.exception.DashException;
-import be.dash.dashserver.database.core.lesson.LessonJpaEntity;
 import be.dash.dashserver.database.core.lesson.LessonJpaEntityRepository;
-import be.dash.dashserver.database.core.student.StudentJpaEntity;
 import be.dash.dashserver.database.core.student.StudentJpaRepository;
 import lombok.RequiredArgsConstructor;
 

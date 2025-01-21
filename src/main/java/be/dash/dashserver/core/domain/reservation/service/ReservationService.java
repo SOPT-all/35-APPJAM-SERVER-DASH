@@ -2,9 +2,9 @@ package be.dash.dashserver.core.domain.reservation.service;
 
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import be.dash.dashserver.core.domain.reservation.Reservation;
 import be.dash.dashserver.core.exception.NotFoundException;
-import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service

@@ -15,12 +15,10 @@ import be.dash.dashserver.api.core.member.dto.ReservationDetailedResponse;
 import be.dash.dashserver.api.core.member.dto.ReservationsResponse;
 import be.dash.dashserver.api.support.MemberId;
 import be.dash.dashserver.api.support.Permission;
-import be.dash.dashserver.core.domain.lesson.service.LessonService;
 import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.domain.member.command.OnboardCommand;
 import be.dash.dashserver.core.domain.member.service.MemberService;
 import be.dash.dashserver.core.domain.member.service.ReservationResult;
-import be.dash.dashserver.core.domain.reservation.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -31,8 +29,6 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberFacade memberFacade;
 
-    // 선생님은 온보딩 하지 못함
-    // 멤버만 온보딩 가능
     @Permission(role = Role.MEMBER)
     @PostMapping("/onboard")
     public ResponseEntity<Void> onboard(@MemberId Long memberId,

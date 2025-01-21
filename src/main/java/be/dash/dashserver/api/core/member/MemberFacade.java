@@ -1,6 +1,5 @@
 package be.dash.dashserver.api.core.member;
 
-import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import be.dash.dashserver.api.core.member.dto.ReservationDetailedResponse;
@@ -8,7 +7,6 @@ import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.lesson.service.LessonService;
 import be.dash.dashserver.core.domain.member.Member;
 import be.dash.dashserver.core.domain.member.service.MemberService;
-import be.dash.dashserver.core.domain.member.service.ReservationResult;
 import be.dash.dashserver.core.domain.reservation.Reservation;
 import be.dash.dashserver.core.domain.reservation.service.ReservationService;
 import lombok.RequiredArgsConstructor;
