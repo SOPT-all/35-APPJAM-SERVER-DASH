@@ -9,8 +9,10 @@ import be.dash.dashserver.api.core.external.dto.LocationsResponse;
 import be.dash.dashserver.api.support.Permission;
 import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.external.LocationSearchService;
+import be.dash.dashserver.core.log.annotation.Trace;
 import lombok.RequiredArgsConstructor;
 
+@Trace
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")

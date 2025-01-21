@@ -12,10 +12,13 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import be.dash.dashserver.core.auth.JwtTokenExtractor;
 import be.dash.dashserver.core.auth.TokenParser;
 import be.dash.dashserver.core.auth.UnAuthorizedException;
+import be.dash.dashserver.core.log.LogForm;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class MemberIdArgumentResolver implements HandlerMethodArgumentResolver {
@@ -45,6 +48,8 @@ public class MemberIdArgumentResolver implements HandlerMethodArgumentResolver {
         } catch (JwtException | IllegalArgumentException e) {
             throw UnAuthorizedException.wrong(token);
         }
-        return Long.valueOf(memberId);
+        Long id = Long.valueOf(memberId);
+        log.info(LogForm.LOGIN_MEMBER_FORM, id);
+        return id;
     }
 }

@@ -23,8 +23,10 @@ import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.domain.teacher.TeacherLessonGenres;
 import be.dash.dashserver.core.domain.teacher.service.TeacherService;
 import be.dash.dashserver.core.domain.teacher.service.dto.TeacherDetailResult;
+import be.dash.dashserver.core.log.annotation.Trace;
 import lombok.RequiredArgsConstructor;
 
+@Trace
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/teachers")

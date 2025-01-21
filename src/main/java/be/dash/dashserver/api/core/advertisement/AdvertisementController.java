@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import be.dash.dashserver.api.core.advertisement.dto.AdvertisementResponses;
 import be.dash.dashserver.core.domain.advertisement.Advertisement;
 import be.dash.dashserver.core.domain.advertisement.service.AdvertisementService;
+import be.dash.dashserver.core.log.annotation.Trace;
 import lombok.RequiredArgsConstructor;
 
+@Trace
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/advertisements")

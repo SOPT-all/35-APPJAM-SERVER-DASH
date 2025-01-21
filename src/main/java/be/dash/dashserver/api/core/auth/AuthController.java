@@ -21,8 +21,10 @@ import be.dash.dashserver.core.auth.TokenService;
 import be.dash.dashserver.core.auth.command.LoginCommand;
 import be.dash.dashserver.core.auth.dto.LoginResult;
 import be.dash.dashserver.core.domain.member.Role;
+import be.dash.dashserver.core.log.annotation.Trace;
 import lombok.RequiredArgsConstructor;
 
+@Trace
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
