@@ -12,6 +12,7 @@ public record LessonReservationResponse(
         String detail,
         Level level,
         String location,
+        String locationDetail,
         LessonRoundResponses lessonRound,
         String studentName
 ) {
@@ -24,6 +25,7 @@ public record LessonReservationResponse(
                 lesson.getDetail(),
                 lesson.getLevel(),
                 lesson.getLocation().getTitle(),
+                lesson.getLocation().getDetailedAddress(),
                 LessonRoundResponses.from(lesson.getRounds()),
                 member.getName()
         );
