@@ -10,8 +10,8 @@ import be.dash.dashserver.core.domain.member.Member;
 import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.command.OnboardCommand;
 import be.dash.dashserver.core.domain.reservation.Reservation;
-import be.dash.dashserver.core.domain.reservation.ReservationRepository;
 import be.dash.dashserver.core.domain.reservation.Reservations;
+import be.dash.dashserver.core.domain.reservation.service.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service

@@ -30,6 +30,11 @@ public class ReservationJpaEntity extends BaseCreatedAtEntity {
     @Column(name = "student_id")
     private Long studentId;
 
+    public ReservationJpaEntity(Long lessonId, Long studentId) {
+        this.lessonId = lessonId;
+        this.studentId = studentId;
+    }
+
     public Reservation toDomain() {
         return new Reservation(id, lessonId, studentId, getCreatedAt());
     }
