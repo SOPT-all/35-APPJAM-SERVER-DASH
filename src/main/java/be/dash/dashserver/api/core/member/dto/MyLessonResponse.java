@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
-import be.dash.dashserver.core.domain.member.service.ReservationResult;
-import be.dash.dashserver.core.domain.teacher.Teacher;
 
 public record MyLessonResponse(long lessonId,
                                String lessonName,

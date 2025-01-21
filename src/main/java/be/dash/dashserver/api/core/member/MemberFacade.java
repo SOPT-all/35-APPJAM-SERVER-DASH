@@ -10,11 +10,9 @@ import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.lesson.service.LessonService;
 import be.dash.dashserver.core.domain.member.Member;
 import be.dash.dashserver.core.domain.member.service.MemberService;
-import be.dash.dashserver.core.domain.member.service.ReservationResult;
 import be.dash.dashserver.core.domain.reservation.Reservation;
 import be.dash.dashserver.core.domain.reservation.service.ReservationService;
 import be.dash.dashserver.core.domain.teacher.Teacher;
-import be.dash.dashserver.core.domain.teacher.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 
 @Component
