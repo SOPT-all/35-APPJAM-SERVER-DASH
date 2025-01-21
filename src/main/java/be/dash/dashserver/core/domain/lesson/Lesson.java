@@ -59,4 +59,16 @@ public class Lesson {
     public LocalDateTime getEndTime() {
         return rounds.getEndTime();
     }
+
+    public String getTeacherNickName() {
+        return teacher.getNickname();
+    }
+
+    public String getLocationName() {
+        return location.getTitle();
+    }
+
+    public int calculateDDay() {
+        return getStartTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
+    }
 }

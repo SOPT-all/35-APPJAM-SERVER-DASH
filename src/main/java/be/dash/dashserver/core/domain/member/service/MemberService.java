@@ -1,11 +1,16 @@
 package be.dash.dashserver.core.domain.member.service;
 
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.lesson.service.LessonRepository;
 import be.dash.dashserver.core.domain.member.Member;
 import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.command.OnboardCommand;
+import be.dash.dashserver.core.domain.reservation.Reservation;
+import be.dash.dashserver.core.domain.reservation.ReservationRepository;
+import be.dash.dashserver.core.domain.reservation.Reservations;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -13,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final LessonRepository lessonRepository;
+    private final ReservationRepository reservationRepository;
+
 
     @Transactional
     public void onboard(OnboardCommand command) {
@@ -35,5 +42,16 @@ public class MemberService {
 
     public Member findById(Long memberId) {
         return memberRepository.findById(memberId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ReservationResult> getMemberReservations(Long memberId) {
+        long studentId = memberRepository.findStudentByMemberId(memberId).getId();
+        Reservations reservations = reservationRepository.findAllByStudentId(studentId);
+        List<Long> lessonIds = reservations.getReservations().stream().map(Reservation::getLessonId).toList();
+        List<Lesson> myLessons = lessonRepository.findAllByIdsOrderByStartDate(lessonIds);
+        return myLessons.stream()
+                .map(lesson -> ReservationResult.of(lesson, reservations))
+                .toList();
     }
 }

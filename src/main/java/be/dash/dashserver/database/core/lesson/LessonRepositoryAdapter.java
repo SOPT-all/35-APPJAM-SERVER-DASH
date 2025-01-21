@@ -129,4 +129,9 @@ public class LessonRepositoryAdapter implements LessonRepository {
     public int getLessonCount(Long teacherId) {
         return lessonJpaEntityRepository.countByTeacherId(teacherId);
     }
+
+    @Override
+    public List<Lesson> findAllByIdsOrderByStartDate(List<Long> lessonIds) {
+        return getLessons(lessonJpaEntityRepository.findAllByIdsOOrderByStartDateTime(lessonIds));
+    }
 }

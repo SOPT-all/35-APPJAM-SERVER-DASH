@@ -170,4 +170,23 @@ public class LessonJpaEntity extends BaseTimeEntity {
                 .createdAt(getCreatedAt())
                 .build();
     }
+
+    public Lesson toDomainWithRounds(List<LessonRoundJpaEntity> rounds) {
+        return Lesson.builder()
+                .id(id)
+                .teacher(teacher.toDomain())
+                .name(name)
+                .genre(genre)
+                .level(level)
+                .rounds(new Rounds(rounds.stream().map(lessonRound -> new Round(lessonRound.getStartTime(), lessonRound.getEndTime())).toList()))
+                .location(new Location(location, streetAddress, oldStreetAddress, detailedAddress))
+                .favoriteCount(favoriteCount)
+                .reservationCount(reservationCount)
+                .maxReservationCount(maxReservationCount)
+                .detail(detail)
+                .recommendation(recommendation)
+                .price(price)
+                .createdAt(getCreatedAt())
+                .build();
+    }
 }
