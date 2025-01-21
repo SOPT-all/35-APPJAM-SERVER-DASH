@@ -5,6 +5,8 @@ import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.teacher.service.dto.TeacherDetailResult;
 
 public record TeacherDetailResponse(
+        String instagram,
+        String youtube,
         String nickname,
         String profileImage,
         List<Genre> genres,
@@ -16,7 +18,9 @@ public record TeacherDetailResponse(
         List<LessonSummary> lessons
 ) {
     public TeacherDetailResponse(TeacherDetailResult teacherDetailResult) {
-        this(teacherDetailResult.nickname(),
+        this(teacherDetailResult.teacherLessonGenres().teacher().getInstagram(),
+                teacherDetailResult.teacherLessonGenres().teacher().getYoutube(),
+                teacherDetailResult.nickname(),
                 teacherDetailResult.teacherLessonGenres().teacher().getRepresentativeImageUrl(),
                 teacherDetailResult.teacherLessonGenres().genres(),
                 teacherDetailResult.teacherLessonGenres().teacher().getEducations(),
