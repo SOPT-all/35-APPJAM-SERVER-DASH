@@ -1,8 +1,10 @@
 package be.dash.dashserver.database.core.member;
+
 import java.util.List;
 import org.springframework.stereotype.Component;
 import be.dash.dashserver.core.domain.member.AuthMember;
 import be.dash.dashserver.core.domain.member.Member;
+import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.domain.member.SocialProvider;
 import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
@@ -92,5 +94,10 @@ public class MemberRepositoryAdapter implements MemberRepository {
     @Override
     public int getFavoriteCountByStudentId(Long studentId) {
         return favoriteJpaRepository.countByStudentId(studentId);
+    }
+
+    @Override
+    public void updateRole(Long id, Role role) {
+        memberJpaRepository.updateRole(id, role);
     }
 }
