@@ -60,4 +60,8 @@ public class Teacher {
     public String getNickName() {
         return member.getNickname();
     }
+
+    public String getNickname() {
+        return member.getNickname();
+    }
 }
