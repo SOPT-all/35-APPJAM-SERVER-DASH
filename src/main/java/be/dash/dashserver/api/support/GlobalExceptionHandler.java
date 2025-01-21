@@ -16,6 +16,7 @@ import be.dash.dashserver.core.auth.UnAuthorizedException;
 import be.dash.dashserver.core.exception.BadRequestException;
 import be.dash.dashserver.core.exception.ForbiddenException;
 import be.dash.dashserver.core.exception.NotFoundException;
+import be.dash.dashserver.core.log.LogForm;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -23,73 +24,75 @@ import lombok.extern.slf4j.Slf4j;
 public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorMessage> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
-        log.info("handleHttpMessageNotReadableException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        log.warn("handleHttpMessageNotReadableException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
         return ResponseEntity.badRequest().body(new ErrorMessage(e.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        log.info("handleMethodArgumentNotValidException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        log.warn("handleMethodArgumentNotValidException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
         return ResponseEntity.badRequest().body(new ErrorMessage(e.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorMessage> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
-        log.info("handleMethodArgumentTypeMismatchException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        log.warn("handleMethodArgumentTypeMismatchException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
         return ResponseEntity.badRequest().body(new ErrorMessage(e.getMessage()));
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<ErrorMessage> handleMethodMissingServletRequestParameterException(MissingServletRequestParameterException e) {
-        log.info("handleMissingServletRequestParameterException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        log.warn("handleMissingServletRequestParameterException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
         return ResponseEntity.badRequest().body(new ErrorMessage(e.getMessage()));
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ErrorMessage> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        log.info("handleHttpRequestMethodNotSupportedException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
-        return ResponseEntity.badRequest().body(new ErrorMessage(e.getMessage()));
+        log.warn("handleHttpRequestMethodNotSupportedException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(new ErrorMessage(e.getMessage()));
     }
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorMessage> handleBadRequestException(BadRequestException e) {
-        log.info("handleBadRequestException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        log.warn("handleBadRequestException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
         return ResponseEntity.badRequest().body(new ErrorMessage(e.getMessage()));
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<ErrorMessage> handleNoResourceFoundException(NoResourceFoundException e) {
-        log.info("handleNoResourceFoundException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        log.warn("handleNoResourceFoundException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorMessage(e.getMessage()));
     }
 
     @ExceptionHandler(UnAuthorizedException.class)
     public ResponseEntity<ErrorMessage> handleUnAuthorizedException(UnAuthorizedException e) {
-        log.info("handleUnAuthorizedException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        log.warn("handleUnAuthorizedException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorMessage(e.getMessage()));
     }
 
     @ExceptionHandler(ForbiddenException.class)
     public ResponseEntity<ErrorMessage> handleForbiddenException(ForbiddenException e) {
-        log.info("handleForbiddenException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        log.warn("handleForbiddenException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorMessage(e.getMessage()));
     }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorMessage> handleNotFoundException(NotFoundException e) {
-        log.info("handleNotFoundException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        log.warn("handleNotFoundException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorMessage(e.getMessage()));
     }
 
     @ExceptionHandler(DashApiException.class)
     public ResponseEntity<ErrorMessage> handleDashApiException(DashApiException e) {
-        log.info("handleDashApiException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        log.warn("handleDashApiException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
         return ResponseEntity.badRequest().body(new ErrorMessage(e.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> handleException(Exception e) {
-        log.error("handleException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        log.error(LogForm.ERROR_LOGGING_FORM, e.getClass(), e.getMessage(), e.getStackTrace());
         return ResponseEntity.internalServerError().body(new ErrorMessage(e.getMessage()));
     }
 }

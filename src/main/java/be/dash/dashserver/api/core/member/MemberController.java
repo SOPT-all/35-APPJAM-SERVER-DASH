@@ -19,8 +19,10 @@ import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.domain.member.command.OnboardCommand;
 import be.dash.dashserver.core.domain.member.service.MemberService;
 import be.dash.dashserver.core.domain.member.service.ReservationResult;
+import be.dash.dashserver.core.log.annotation.Trace;
 import lombok.RequiredArgsConstructor;
 
+@Trace
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/members")
