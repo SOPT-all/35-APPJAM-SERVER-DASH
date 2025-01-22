@@ -5,15 +5,15 @@ import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
 
-public record MyLessonResponse(long lessonId,
-                               String lessonName,
-                               String lessonImageUrl,
-                               Genre lessonGenre,
-                               Level lessonLevel,
-                               String lessonLocation,
+public record MyLessonResponse(long id,
+                               String name,
+                               String imageUrl,
+                               Genre genre,
+                               Level level,
+                               String location,
                                String detailedAddress,
-                               LocalDateTime lessonStartDateTime,
-                               LocalDateTime lessonEndDateTime,
+                               LocalDateTime startDateTime,
+                               LocalDateTime endDateTime,
                                APPLYSTATUS applyStatus) {
     public static MyLessonResponse from(Lesson lesson) {
         return new MyLessonResponse(
