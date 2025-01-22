@@ -6,7 +6,6 @@ import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.member.Member;
-import be.dash.dashserver.core.domain.reservation.Reservations;
 
 public record MyLessonDetailedResponse(long lessonId,
                                        String lessonName,
