@@ -1,6 +1,5 @@
 package be.dash.dashserver.core.domain.teacher.service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -68,8 +67,7 @@ public class TeacherService {
     public TeacherDetailResult find(long teacherId) {
         Teacher teacher = teacherRepository.findByTeacherId(teacherId);
         List<Genre> genres = lessonRepository.findDistinctGenresByTeacherIdOrderByCountDesc(teacher.getId());
-        Lessons activeLessonsByTeacher = lessonRepository.findLessonsByTeacher(teacher, LocalDateTime.now());
-        // TODO: TeacherEntity가 현재는 member를 가지지만 memberId로 뺄것이기 대문에 지연로딩을 이용하지 않겠다. (memberId는 리팩터링 후에도 Teacher가 가지고 있다.)
+        Lessons activeLessonsByTeacher = lessonRepository.findLessonsByTeacher(teacher);
         Member member = memberRepository.findById(teacher.getMember().getId());
         return new TeacherDetailResult(new TeacherLessonGenres(teacher, genres), member.getNickname(), activeLessonsByTeacher);
     }
