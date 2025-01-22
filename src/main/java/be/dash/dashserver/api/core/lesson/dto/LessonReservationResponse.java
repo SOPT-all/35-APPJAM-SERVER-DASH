@@ -14,7 +14,8 @@ public record LessonReservationResponse(
         String location,
         String locationDetail,
         LessonRoundResponses lessonRound,
-        String studentName
+        String studentName,
+        String studentPhoneNumber
 ) {
     public LessonReservationResponse(Lesson lesson, Member member) {
         this(
@@ -27,7 +28,8 @@ public record LessonReservationResponse(
                 lesson.getLocation().getTitle(),
                 lesson.getLocation().getDetailedAddress(),
                 LessonRoundResponses.from(lesson.getRounds()),
-                member.getName()
+                member.getName(),
+                member.getPhoneNumber()
         );
     }
 
