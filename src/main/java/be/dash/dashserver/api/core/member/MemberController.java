@@ -72,10 +72,4 @@ public class MemberController {
     public ResponseEntity<MyLessonDetailedResponse> getMemberLesson(@MemberId Long memberId, @PathVariable Long lessonId) {
         return ResponseEntity.ok(memberFacade.getMyLesson(memberId, lessonId));
     }
-
-    @Permission(role = Role.TEACHER)
-    @GetMapping("/me/lessons/{lessonId}")
-    public ResponseEntity<MyLessonDetailedResponse> getMemberLesson(@MemberId Long memberId, @PathVariable Long lessonId) {
-        return ResponseEntity.ok(memberFacade.getMyLesson(memberId, lessonId));
-    }
 }

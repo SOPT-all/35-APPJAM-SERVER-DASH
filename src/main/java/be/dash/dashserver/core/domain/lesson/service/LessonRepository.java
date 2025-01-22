@@ -34,6 +34,4 @@ public interface LessonRepository {
     boolean existsByTeacherIdAndLessonId(long teacherId, long lessonId);
 
     List<Lesson> findAllByTeacherIdOrderByStartDateTime(long teacherId);
-
-    boolean existsByTeacherIdAndLessonId(long teacherId, long lessonId);
 }
