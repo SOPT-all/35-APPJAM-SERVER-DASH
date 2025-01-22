@@ -16,10 +16,12 @@ import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.domain.teacher.service.TeacherRepository;
+import be.dash.dashserver.core.log.annotation.Trace;
 import be.dash.dashserver.core.exception.ForbiddenException;
 import be.dash.dashserver.core.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
+@Trace
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

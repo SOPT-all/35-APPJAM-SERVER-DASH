@@ -10,8 +10,10 @@ import be.dash.dashserver.api.core.external.dto.ImagePostResponse;
 import be.dash.dashserver.api.support.Permission;
 import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.image.ImageService;
+import be.dash.dashserver.core.log.annotation.Trace;
 import lombok.RequiredArgsConstructor;
 
+@Trace
 @RestController
 @RequestMapping("/api/v1/images")
 @RequiredArgsConstructor

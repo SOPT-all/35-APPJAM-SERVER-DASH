@@ -19,10 +19,12 @@ import be.dash.dashserver.core.domain.teacher.TeacherLessonGenres;
 import be.dash.dashserver.core.domain.teacher.Teachers;
 import be.dash.dashserver.core.domain.teacher.command.CreateTeacherCommand;
 import be.dash.dashserver.core.domain.teacher.service.dto.TeacherDetailResult;
+import be.dash.dashserver.core.log.annotation.Trace;
 import lombok.RequiredArgsConstructor;
 
 import static be.dash.dashserver.core.domain.common.Keyword.ANY;
 
+@Trace
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

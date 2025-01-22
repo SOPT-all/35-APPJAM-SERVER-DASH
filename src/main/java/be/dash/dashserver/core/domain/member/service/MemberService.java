@@ -12,11 +12,13 @@ import be.dash.dashserver.core.domain.member.command.OnboardCommand;
 import be.dash.dashserver.core.domain.reservation.Reservation;
 import be.dash.dashserver.core.domain.reservation.Reservations;
 import be.dash.dashserver.core.domain.reservation.service.ReservationRepository;
+import be.dash.dashserver.core.log.annotation.Trace;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.domain.teacher.service.TeacherRepository;
 import be.dash.dashserver.core.exception.ForbiddenException;
 import lombok.RequiredArgsConstructor;
 
+@Trace
 @Service
 @RequiredArgsConstructor
 public class MemberService {

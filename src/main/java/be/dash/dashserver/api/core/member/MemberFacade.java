@@ -16,9 +16,11 @@ import be.dash.dashserver.core.domain.member.service.StudentService;
 import be.dash.dashserver.core.domain.reservation.Reservation;
 import be.dash.dashserver.core.domain.reservation.Reservations;
 import be.dash.dashserver.core.domain.reservation.service.ReservationService;
+import be.dash.dashserver.core.log.annotation.Trace;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import lombok.RequiredArgsConstructor;
 
+@Trace
 @Component
 @RequiredArgsConstructor
 public class MemberFacade {
