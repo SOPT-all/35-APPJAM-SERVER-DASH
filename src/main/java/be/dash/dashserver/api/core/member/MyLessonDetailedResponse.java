@@ -7,15 +7,15 @@ import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.member.Member;
 
-public record MyLessonDetailedResponse(long lessonId,
-                                       String lessonName,
-                                       String lessonImageUrl,
-                                       Genre lessonGenre,
-                                       Level lessonLevel,
-                                       String lessonLocation,
+public record MyLessonDetailedResponse(long id,
+                                       String name,
+                                       String imageUrl,
+                                       Genre genre,
+                                       Level level,
+                                       String location,
                                        String detailedAddress,
-                                       LocalDateTime lessonStartDateTime,
-                                       LocalDateTime lessonEndDateTime,
+                                       LocalDateTime startDateTime,
+                                       LocalDateTime endDateTime,
                                        APPLYSTATUS applyStatus,
                                        List<MemberReservationResponse> students,
                                        int studentCount
