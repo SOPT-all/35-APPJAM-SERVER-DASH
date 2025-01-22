@@ -4,6 +4,7 @@ package be.dash.dashserver.core.domain.reservation.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import be.dash.dashserver.core.domain.reservation.Reservation;
+import be.dash.dashserver.core.domain.reservation.Reservations;
 import be.dash.dashserver.core.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -24,5 +25,9 @@ public class ReservationService {
 
     public long reserve(long memberId, long lessonId) {
         return reservationRepository.save(memberId, lessonId);
+    }
+
+    public Reservations findAllByLessonIdOrderByCreatedAtDesc(Long lessonId) {
+        return reservationRepository.findAllByLessonIdOrderByCreatedAtDesc(lessonId);
     }
 }

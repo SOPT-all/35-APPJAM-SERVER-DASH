@@ -30,4 +30,8 @@ public interface LessonRepository {
     int getLessonCount(Long memberId);
 
     List<Lesson> findAllByIdsOrderByStartDate(Set<Long> lessonIds);
+
+    boolean existsByTeacherIdAndLessonId(long teacherId, long lessonId);
+
+    List<Lesson> findAllByTeacherIdOrderByStartDateTime(long teacherId);
 }

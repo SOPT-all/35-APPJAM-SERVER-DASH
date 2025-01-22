@@ -8,12 +8,15 @@ spring:
     console:
       enabled: true
   datasource:
-    url: jdbc:h2:mem:dash
+    url: jdbc:mysql://localhost:3306/dash?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: wodus050&
+
 
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true

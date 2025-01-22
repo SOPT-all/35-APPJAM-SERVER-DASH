@@ -16,6 +16,8 @@ import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.domain.teacher.service.TeacherRepository;
+import be.dash.dashserver.core.exception.ForbiddenException;
+import be.dash.dashserver.core.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -36,12 +38,14 @@ public class LessonService {
 
     @Transactional
     public void createLesson(CreateLessonCommand command) {
-        Teacher teacher = teacherRepository.findByMemberId(command.memberId());
+        Teacher teacher = teacherRepository.findByMemberId(command.memberId())
+                .orElseThrow(() -> new NotFoundException("해당하는 선생님을 찾을 수 없습니다."));
+
         Lesson lesson = command.toDomainWith(teacher);
         lessonRepository.save(lesson);
     }
 
-    public Lessons getRecommendationLessons(Long memberId, LessonSortOption lessonSortOption) {
+    public Lessons getRecommendationLessons(long memberId, LessonSortOption lessonSortOption) {
         if (isGuest(memberId)) {
             Lessons lessons = new Lessons(lessonRepository.findActiveLessons(LocalDateTime.now()));
             return lessons.sort(lessonSortOption);
@@ -53,7 +57,7 @@ public class LessonService {
         return lessons.sort(lessonSortOption);
     }
 
-    private boolean isGuest(Long memberId) {
+    private boolean isGuest(long memberId) {
         return Objects.isNull(memberId);
     }
 
@@ -66,7 +70,17 @@ public class LessonService {
         return lessons.sort(sortOption);
     }
 
-    public Lesson findById(Long lessonId) {
+    public Lesson findById(long lessonId) {
         return lessonRepository.findLessonsById(lessonId);
+    }
+
+    public List<Lesson> findAllByTeacherId(long teacherId) {
+        return lessonRepository.findAllByTeacherIdOrderByStartDateTime(teacherId);
+    }
+
+    public void validateOwner(long teacherId, long lessonId) {
+        if (!lessonRepository.existsByTeacherIdAndLessonId(teacherId, lessonId)) {
+            throw new ForbiddenException("해당하는 수업에 대한 권한이 없습니다.");
+        }
     }
 }

@@ -1,5 +1,6 @@
 package be.dash.dashserver.core.domain.member.service;
 
+import java.util.List;
 import be.dash.dashserver.core.domain.member.AuthMember;
 import be.dash.dashserver.core.domain.member.Member;
 import be.dash.dashserver.core.domain.member.Role;
@@ -24,4 +25,6 @@ public interface MemberRepository {
     int getFavoriteCountByStudentId(Long studentId);
 
     void updateRole(Long id, Role role);
+
+    List<Member> findAllByIds(List<Long> memberIds);
 }

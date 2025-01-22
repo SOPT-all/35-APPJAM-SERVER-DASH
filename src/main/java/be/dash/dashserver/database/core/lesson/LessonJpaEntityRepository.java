@@ -45,4 +45,12 @@ public interface LessonJpaEntityRepository extends JpaRepository<LessonJpaEntity
     List<LessonJpaEntity> findAllByIdsOOrderByStartDateTime(Set<Long> lessonIds);
 
     List<LessonJpaEntity> findByTeacherIdOrderByCreatedAtDesc(Long teacherId);
+
+    @Query("select l " +
+            "from LessonJpaEntity l " +
+            "where l.teacher.id = :teacherId " +
+            "order by l.startDateTime")
+    List<LessonJpaEntity> findAllByTeacherIdOOrderByStartDateTime(Long teacherId);
+
+    boolean existsByTeacherIdAndId(long teacherId, long lessonId);
 }

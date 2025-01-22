@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import be.dash.dashserver.api.core.member.dto.MemberResponse;
+import be.dash.dashserver.api.core.member.dto.MyLessonDetailedResponse;
+import be.dash.dashserver.api.core.member.dto.MyLessonsResponse;
 import be.dash.dashserver.api.core.member.dto.OnBoardRequest;
 import be.dash.dashserver.api.core.member.dto.ReservationDetailedResponse;
 import be.dash.dashserver.api.core.member.dto.ReservationsResponse;
@@ -59,4 +61,15 @@ public class MemberController {
         return ResponseEntity.ok(memberFacade.getMemberReservation(memberId, reservationId));
     }
 
+    @Permission(role = Role.TEACHER)
+    @GetMapping("/me/lessons")
+    public ResponseEntity<MyLessonsResponse> getMemberLessons(@MemberId Long memberId) {
+        return ResponseEntity.ok(memberFacade.getMemberLessons(memberId));
+    }
+
+    @Permission(role = Role.TEACHER)
+    @GetMapping("/me/lessons/{lessonId}")
+    public ResponseEntity<MyLessonDetailedResponse> getMemberLesson(@MemberId Long memberId, @PathVariable Long lessonId) {
+        return ResponseEntity.ok(memberFacade.getMyLesson(memberId, lessonId));
+    }
 }

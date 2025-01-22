@@ -13,4 +13,6 @@ public interface ReservationRepository {
     Reservations findAllByStudentId(long studentId);
 
     Optional<Reservation> findById(long reservationId);
+
+    Reservations findAllByLessonIdOrderByCreatedAtDesc(Long lessonId);
 }

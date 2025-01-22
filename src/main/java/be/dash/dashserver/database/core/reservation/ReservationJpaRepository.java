@@ -17,4 +17,6 @@ public interface ReservationJpaRepository extends JpaRepository<ReservationJpaEn
     int countByStudentId(Long studentId);
 
     List<ReservationJpaEntity> findAllByStudentId(long studentId);
+
+    List<ReservationJpaEntity> findAllByLessonIdOrderByCreatedAtDesc(Long lessonId);
 }

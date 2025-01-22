@@ -35,6 +35,12 @@ public class ReservationRepositoryAdapter implements ReservationRepository {
     }
 
     @Override
+    public Reservations findAllByLessonIdOrderByCreatedAtDesc(Long lessonId) {
+        return new Reservations(reservationJpaRepository.findAllByLessonIdOrderByCreatedAtDesc(lessonId).stream()
+                .map(ReservationJpaEntity::toDomain).toList());
+    }
+
+    @Override
     public long save(long memberId, long lessonId) {
         ReservationJpaEntity reservationJpaEntity = new ReservationJpaEntity(lessonId, memberId);
         reservationJpaRepository.save(reservationJpaEntity);
