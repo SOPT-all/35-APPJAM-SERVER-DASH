@@ -1,6 +1,7 @@
 package be.dash.dashserver.api.core.member;
 
 import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import be.dash.dashserver.api.core.member.dto.MyLessonDetailedResponse;
