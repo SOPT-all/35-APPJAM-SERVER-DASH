@@ -9,7 +9,8 @@ import be.dash.dashserver.core.domain.reservation.Reservation;
 
 import static java.util.stream.Collectors.toList;
 
-public record ReservationDetailedResponse(String lessonName,
+public record ReservationDetailedResponse(int dDay,
+                                          String lessonName,
                                           String nickname,
                                           List<RoundResponse> rounds,
                                           String location,
@@ -17,10 +18,9 @@ public record ReservationDetailedResponse(String lessonName,
                                           Level level,
                                           String name,
                                           String phoneNumber,
-                                          LocalDateTime reservationTime,
-                                          int price) {
+                                          LocalDateTime reservationDateTime) {
     public static ReservationDetailedResponse from(Member member, Reservation reservation, Lesson lesson) {
-        return new ReservationDetailedResponse(
+        return new ReservationDetailedResponse(lesson.calculateDDay(),
                 lesson.getName(),
                 lesson.getTeacherNickName(),
                 lesson.getRounds().getRounds().stream().map(RoundResponse::from).collect(toList()),
@@ -29,10 +29,7 @@ public record ReservationDetailedResponse(String lessonName,
                 lesson.getLevel(),
                 member.getName(),
                 member.getPhoneNumber(),
-                reservation.getCreatedAt(),
-                lesson.getPrice()
-
+                reservation.getCreatedAt()
         );
     }
-
 }
