@@ -40,7 +40,8 @@ public class AuthMember {
                                           SocialProvider socialProvider,
                                           String socialId,
                                           String email,
-                                          String socialName) {
-        return new AuthMember(id, socialProvider, socialId, email, socialName, Role.MEMBER);
+                                          String socialName,
+                                          Role role) {
+        return new AuthMember(id, socialProvider, socialId, email, socialName, role);
     }
 }
