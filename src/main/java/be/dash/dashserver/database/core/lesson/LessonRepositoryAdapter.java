@@ -95,7 +95,7 @@ public class LessonRepositoryAdapter implements LessonRepository {
     }
 
     @Override
-    public Lessons findLessonsByTeacher(Teacher teacher, LocalDateTime localDateTime) {
+    public Lessons findLessonsByTeacher(Teacher teacher) {
         return new Lessons(lessonJpaEntityRepository.findByTeacherIdOrderByCreatedAtDesc(teacher.getId())
                 .stream().map(lessonJpaEntity -> {
                     List<LessonImageJpaEntity> images = lessonImageJpaRepository.findAllByLessonId(lessonJpaEntity.getId());

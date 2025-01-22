@@ -46,8 +46,8 @@ public class LessonController {
 
     @GetMapping
     public ResponseEntity<LessonResponses> search(@ModelAttribute LessonFilterRequest lessonFilterRequest,
-                                                  @RequestParam(required = false, defaultValue = "LATEST") LessonSortOption sortOption,
-                                                  @RequestParam(required = false, defaultValue = Keyword.ANY) Keyword keyword) {
+                                                  @RequestParam(required = false, defaultValue = "LATEST", name = "sortOption") LessonSortOption sortOption,
+                                                  @RequestParam(required = false, defaultValue = Keyword.ANY, name = "keyword") Keyword keyword) {
         Lessons searched = lessonService.search(lessonFilterRequest.genre(),
                 lessonFilterRequest.level(),
                 lessonFilterRequest.startDate(),
@@ -67,8 +67,8 @@ public class LessonController {
     }
 
     @GetMapping("/recommendations")
-    public ResponseEntity<LessonResponses> recommendation(@MemberId Long memberId, @RequestParam(required = false, defaultValue = "LATEST") LessonSortOption lessonSortOption) {
-        Lessons lessons = lessonService.getRecommendationLessons(memberId, lessonSortOption);
+    public ResponseEntity<LessonResponses> recommendation(@MemberId Long memberId, @RequestParam(required = false, defaultValue = "LATEST", name = "sortOption") LessonSortOption sortOption) {
+        Lessons lessons = lessonService.getRecommendationLessons(memberId, sortOption);
         return ResponseEntity.ok(new LessonResponses(lessons));
     }
 
@@ -79,8 +79,8 @@ public class LessonController {
     }
 
     @GetMapping("/upcoming")
-    public ResponseEntity<LessonResponses> upcoming(@RequestParam(required = false, defaultValue = "UPCOMING") LessonSortOption lessonSortOption) {
-        Lessons searched = lessonService.searchBySortOption(lessonSortOption);
+    public ResponseEntity<LessonResponses> upcoming() {
+        Lessons searched = lessonService.searchBySortOption(LessonSortOption.UPCOMING);
         return ResponseEntity.ok(new LessonResponses(searched));
     }
 

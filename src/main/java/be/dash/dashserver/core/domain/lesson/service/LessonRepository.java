@@ -23,7 +23,7 @@ public interface LessonRepository {
 
     List<Genre> popularGenres(LocalDateTime localDateTime);
 
-    Lessons findLessonsByTeacher(Teacher teacher, LocalDateTime localDateTime);
+    Lessons findLessonsByTeacher(Teacher teacher);
 
     Lesson findLessonsById(Long lessonId);
 

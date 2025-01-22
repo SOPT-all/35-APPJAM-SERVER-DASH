@@ -35,7 +35,7 @@ public class TeacherController {
     private final TeacherService teacherService;
 
     @GetMapping
-    public ResponseEntity<TeacherResponses> search(@RequestParam(required = false, defaultValue = Keyword.ANY) Keyword keyword) {
+    public ResponseEntity<TeacherResponses> search(@RequestParam(required = false, defaultValue = Keyword.ANY, name = "keyword") Keyword keyword) {
         List<TeacherLessonGenres> searched = teacherService.search(keyword);
         return ResponseEntity.ok(TeacherResponses.from(searched));
     }
