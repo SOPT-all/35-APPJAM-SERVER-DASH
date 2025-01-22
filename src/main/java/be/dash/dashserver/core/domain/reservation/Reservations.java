@@ -23,4 +23,8 @@ public class Reservations {
     public Set<Long> getLessonIds() {
         return reservations.stream().map(Reservation::getLessonId).collect(Collectors.toSet());
     }
+
+    public List<Long> getStudentIds() {
+        return reservations.stream().map(Reservation::getStudentId).toList();
+    }
 }

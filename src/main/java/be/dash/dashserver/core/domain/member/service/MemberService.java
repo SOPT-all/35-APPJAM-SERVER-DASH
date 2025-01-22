@@ -25,7 +25,6 @@ public class MemberService {
     private final ReservationRepository reservationRepository;
     private final TeacherRepository teacherRepository;
 
-
     @Transactional
     public void onboard(OnboardCommand command) {
         Member member = command.toMember();
@@ -71,5 +70,9 @@ public class MemberService {
     public Teacher findTeacherByMemberId(Long memberId) {
         return teacherRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new ForbiddenException("해당하는 선생님을 찾을 수 없습니다."));
+    }
+
+    public List<Member> findAllByIds(List<Long> memberIds) {
+        return memberRepository.findAllByIds(memberIds);
     }
 }

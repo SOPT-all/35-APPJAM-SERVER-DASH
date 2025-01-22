@@ -1,6 +1,7 @@
 package be.dash.dashserver.database.core.reservation;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +18,6 @@ public interface ReservationJpaRepository extends JpaRepository<ReservationJpaEn
     int countByStudentId(Long studentId);
 
     List<ReservationJpaEntity> findAllByStudentId(long studentId);
+
+    List<ReservationJpaEntity> findAllByLessonIdOrderByCreatedAtDesc(Long lessonId);
 }

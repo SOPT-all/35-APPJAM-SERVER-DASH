@@ -54,4 +54,12 @@ public class StudentJpaEntity extends BaseTimeEntity {
                 .genres(studentGenreJpaEntityList.stream().map(StudentGenreJpaEntity::getGenre).toList())
                 .build();
     }
+
+    public Student toDomain() {
+        return Student.builder()
+                .id(id)
+                .level(level)
+                .profileImageUrl(profileImageUrl)
+                .build();
+    }
 }

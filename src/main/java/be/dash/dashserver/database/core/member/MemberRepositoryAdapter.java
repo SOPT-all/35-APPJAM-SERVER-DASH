@@ -100,4 +100,9 @@ public class MemberRepositoryAdapter implements MemberRepository {
     public void updateRole(Long id, Role role) {
         memberJpaRepository.updateRole(id, role);
     }
+
+    @Override
+    public List<Member> findAllByIds(List<Long> memberIds) {
+        return memberJpaRepository.findAllById(memberIds).stream().map(MemberJpaEntity::toDomain).toList();
+    }
 }
