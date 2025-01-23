@@ -29,7 +29,7 @@ public class TeacherRepositoryAdapter implements TeacherRepository {
     @Override
     public Teachers findTeachersSortByLessonCountsDesc(String keyword) {
         List<Teacher> teachers = new ArrayList<>();
-        List<TeacherLessonCount> teacherLessonCounts = lessonJpaEntityRepository.findTeacherLessonCountsDesc(keyword);
+        List<TeacherLessonCount> teacherLessonCounts = teacherJpaRepository.findTeacherLessonCountsDesc(keyword);
         teacherLessonCounts.forEach(teacherLessonCount -> {
             List<String> teacherImages = teacherImageJpaRepository.findAllByTeacherId(teacherLessonCount.teacherId())
                     .stream().map(TeacherImageJpaEntity::getImageUrl).toList();
