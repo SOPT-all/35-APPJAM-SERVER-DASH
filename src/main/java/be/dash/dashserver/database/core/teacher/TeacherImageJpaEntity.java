@@ -30,7 +30,7 @@ public class TeacherImageJpaEntity extends BaseCreatedAtEntity {
     @JoinColumn(name = "teacher_id")
     private TeacherJpaEntity teacher;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String imageUrl;
 
     @Builder
