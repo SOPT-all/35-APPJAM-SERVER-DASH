@@ -25,7 +25,9 @@ public class ReservationService {
         return reservationRepository.existsByMemberIdAndLessonId(memberId, lessonId);
     }
 
+    @Transactional
     public long reserve(long memberId, long lessonId) {
+
         return reservationRepository.save(memberId, lessonId);
     }
 

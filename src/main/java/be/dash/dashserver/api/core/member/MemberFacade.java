@@ -1,9 +1,10 @@
 package be.dash.dashserver.api.core.member;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import be.dash.dashserver.api.core.member.dto.MyLessonDetailedResponse;
+
 import be.dash.dashserver.api.core.member.dto.MyLessonResponse;
 import be.dash.dashserver.api.core.member.dto.MyLessonsResponse;
 import be.dash.dashserver.api.core.member.dto.ReservationDetailedResponse;
@@ -16,8 +17,8 @@ import be.dash.dashserver.core.domain.member.service.StudentService;
 import be.dash.dashserver.core.domain.reservation.Reservation;
 import be.dash.dashserver.core.domain.reservation.Reservations;
 import be.dash.dashserver.core.domain.reservation.service.ReservationService;
-import be.dash.dashserver.core.log.annotation.Trace;
 import be.dash.dashserver.core.domain.teacher.Teacher;
+import be.dash.dashserver.core.log.annotation.Trace;
 import lombok.RequiredArgsConstructor;
 
 @Trace
@@ -50,8 +51,11 @@ public class MemberFacade {
         lessonService.validateOwner(teacher.getId(), lessonId);
         Lesson lesson = lessonService.findById(lessonId);
         Reservations reservations = reservationService.findAllByLessonIdOrderByCreatedAtDesc(lessonId);
-        List<Long> memberIds = studentsService.findAllByIds(reservations.getStudentIds()).stream().map(Student::getId).toList();
-        List<Member> members = memberService.findAllByIds(memberIds);
-        return MyLessonDetailedResponse.from(lesson, members);
+        List<Long> studentIds = studentsService.findAllByIds(reservations.getStudentIds()).stream()
+                .map(Student::getId)
+                .toList();
+        List<LocalDateTime> reservationDateTimes = reservations.getCreatedAt();
+        List<Member> members = memberService.findAllByIds(studentIds);
+        return MyLessonDetailedResponse.from(lesson, members, reservationDateTimes);
     }
 }

@@ -1,7 +1,10 @@
-package be.dash.dashserver.api.core.member.dto;
+package be.dash.dashserver.api.core.member;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.IntStream;
+import be.dash.dashserver.api.core.member.dto.ApplyStatus;
+import be.dash.dashserver.api.core.member.dto.MemberReservationResponse;
 import be.dash.dashserver.core.domain.common.Genre;
 import be.dash.dashserver.core.domain.common.Level;
 import be.dash.dashserver.core.domain.lesson.Lesson;
@@ -16,11 +19,11 @@ public record MyLessonDetailedResponse(long id,
                                        String detailedAddress,
                                        LocalDateTime startDateTime,
                                        LocalDateTime endDateTime,
-                                       APPLYSTATUS applyStatus,
+                                       ApplyStatus applyStatus,
                                        List<MemberReservationResponse> students,
                                        int studentCount
-                                       ) {
-    public static MyLessonDetailedResponse from(Lesson lesson, List<Member> members) {
+) {
+    public static MyLessonDetailedResponse from(Lesson lesson, List<Member> members, List<LocalDateTime> reservationDateTimes) {
         return new MyLessonDetailedResponse(
                 lesson.getId(),
                 lesson.getName(),
@@ -31,8 +34,10 @@ public record MyLessonDetailedResponse(long id,
                 lesson.getDetailedAddress(),
                 lesson.getRounds().getStartTime(),
                 lesson.getRounds().getEndTime(),
-                APPLYSTATUS.calculate(lesson.getStartTime(), lesson.getReservationCount(), lesson.getMaxReservationCount()),
-                members.stream().map(MemberReservationResponse::from).toList(),
+                ApplyStatus.calculate(lesson.getStartTime(), lesson.getReservationCount(), lesson.getMaxReservationCount()),
+                IntStream.range(0, members.size())
+                        .mapToObj(i -> MemberReservationResponse.from(members.get(i), reservationDateTimes.get(i)))
+                        .toList(),
                 members.size()
         );
     }
