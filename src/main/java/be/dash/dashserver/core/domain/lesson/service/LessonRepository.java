@@ -27,7 +27,7 @@ public interface LessonRepository {
 
     Lesson findLessonsById(Long lessonId);
 
-    int getLessonCount(Long memberId);
+    int getLessonCount(Long teacherId);
 
     List<Lesson> findAllByIdsOrderByStartDate(Set<Long> lessonIds);
 

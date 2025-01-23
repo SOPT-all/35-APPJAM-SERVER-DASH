@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.lesson.service.LessonRepository;
 import be.dash.dashserver.core.domain.member.Member;
+import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.command.OnboardCommand;
 import be.dash.dashserver.core.domain.reservation.Reservation;
@@ -37,14 +38,27 @@ public class MemberService {
     public MemberInformationResult getMemberInformation(Long memberId) {
         Member member = memberRepository.findById(memberId);
         Student student = memberRepository.findStudentByMemberId(memberId);
-        return new MemberInformationResult(
-                member.getNickname(),
-                student.getProfileImageUrl(),
-                memberRepository.getReservationCountByStudentId(student.getId()),
-                memberRepository.getFavoriteCountByStudentId(memberId),
-                lessonRepository.getLessonCount(memberId)
+
+        return teacherRepository.findByMemberId(memberId).map(teacher ->
+                new MemberInformationResult(
+                        member.getNickname(),
+                        student.getProfileImageUrl(),
+                        memberRepository.getReservationCountByStudentId(student.getId()),
+                        memberRepository.getFavoriteCountByStudentId(student.getId()),
+                        lessonRepository.getLessonCount(teacher.getId())
+                )
+        ).orElseGet(() ->
+                new MemberInformationResult(
+                        member.getNickname(),
+                        student.getProfileImageUrl(),
+                        memberRepository.getReservationCountByStudentId(student.getId()),
+                        memberRepository.getFavoriteCountByStudentId(student.getId()),
+                        0
+                )
         );
     }
+
+
 
     public Member findById(Long memberId) {
         return memberRepository.findById(memberId);
@@ -54,14 +68,6 @@ public class MemberService {
     public List<ReservationResult> getMemberReservations(Long memberId) {
         long studentId = memberRepository.findStudentByMemberId(memberId).getId();
         Reservations reservations = reservationRepository.findAllByStudentId(studentId);
-        List<Long> list = reservations.getReservations().stream().map(Reservation::getId).toList();
-        Set<Long> lessonIds1 = reservations.getLessonIds();
-        for (long l : list) {
-            System.out.println(l);
-        }
-        for (long l : lessonIds1) {
-            System.out.println(l);
-        }
         Set<Long> lessonIds = reservations.getLessonIds();
         List<Lesson> myLessons = lessonRepository.findAllByIdsOrderByStartDate(lessonIds);
         return myLessons.stream()

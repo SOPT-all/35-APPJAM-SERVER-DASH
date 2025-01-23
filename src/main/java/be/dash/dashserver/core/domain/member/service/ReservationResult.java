@@ -22,7 +22,7 @@ public record ReservationResult(
         return new ReservationResult(//첫번째 레슨과 reservations에 대해 다음을 한다.
                 lesson.getId(),
                 reservations.findReservationIdByLessonId(lesson.getId()),
-                lesson.getTeacherNickName(),
+                lesson.getName(),
                 lesson.getRepresentativeImageUrl(),
                 lesson.getGenre().name(),
                 lesson.getLevel().name(),
