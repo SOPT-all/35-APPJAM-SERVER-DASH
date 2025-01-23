@@ -16,9 +16,9 @@ import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.domain.teacher.service.TeacherRepository;
-import be.dash.dashserver.core.log.annotation.Trace;
 import be.dash.dashserver.core.exception.ForbiddenException;
 import be.dash.dashserver.core.exception.NotFoundException;
+import be.dash.dashserver.core.log.annotation.Trace;
 import lombok.RequiredArgsConstructor;
 
 @Trace
@@ -47,7 +47,7 @@ public class LessonService {
         lessonRepository.save(lesson);
     }
 
-    public Lessons getRecommendationLessons(long memberId, LessonSortOption lessonSortOption) {
+    public Lessons getRecommendationLessons(Long memberId, LessonSortOption lessonSortOption) {
         if (isGuest(memberId)) {
             Lessons lessons = new Lessons(lessonRepository.findActiveLessons(LocalDateTime.now()));
             return lessons.sort(lessonSortOption);
@@ -59,7 +59,7 @@ public class LessonService {
         return lessons.sort(lessonSortOption);
     }
 
-    private boolean isGuest(long memberId) {
+    private boolean isGuest(Long memberId) {
         return Objects.isNull(memberId);
     }
 

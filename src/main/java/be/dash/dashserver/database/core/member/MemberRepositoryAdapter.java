@@ -102,7 +102,10 @@ public class MemberRepositoryAdapter implements MemberRepository {
     }
 
     @Override
-    public List<Member> findAllByIds(List<Long> memberIds) {
+    public List<Member> findAllByStudentIds(List<Long> studentIds) {
+        List<Long> memberIds = studentJpaRepository.findAllById(studentIds).stream()
+                .map(studentJpaEntity -> studentJpaEntity.getMember().getId())
+                .toList();
         return memberJpaRepository.findAllById(memberIds).stream().map(MemberJpaEntity::toDomain).toList();
     }
 }
