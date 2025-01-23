@@ -84,7 +84,7 @@ public class LessonController {
         return ResponseEntity.ok(new LessonResponses(searched));
     }
 
-    @Permission(role = Role.MEMBER)
+    @Permission(role = {Role.MEMBER, Role.TEACHER})
     @GetMapping("/{lessonId}")
     public ResponseEntity<LessonDetailResponse> findById(
             @MemberId Long memberId,
