@@ -33,7 +33,7 @@ public class TeacherVideoJpaEntity extends BaseTimeEntity {
     private TeacherJpaEntity teacher;
 
     @Getter
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String videoUrl;
 
 }

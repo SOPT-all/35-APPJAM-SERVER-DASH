@@ -44,10 +44,10 @@ public class TeacherJpaEntity extends BaseTimeEntity {
     @Column(nullable = true)
     private String experience;
 
-    @Column(nullable = true, unique = true)
+    @Column(nullable = true, unique = true, columnDefinition = "TEXT")
     private String instagram;
 
-    @Column(nullable = true, unique = true)
+    @Column(nullable = true, unique = true, columnDefinition = "TEXT")
     private String youtube;
 
     @Builder

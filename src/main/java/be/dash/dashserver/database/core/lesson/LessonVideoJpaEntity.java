@@ -25,7 +25,7 @@ public class LessonVideoJpaEntity extends BaseCreatedAtEntity {
     @Column(nullable = false)
     private Long lessonId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String videoUrl;
 
     public LessonVideoJpaEntity(Long lessonId, String videoUrl) {

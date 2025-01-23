@@ -25,7 +25,7 @@ public class LessonImageJpaEntity extends BaseCreatedAtEntity {
     @Column(nullable = false)
     private Long lessonId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String imageUrl;
 
     public LessonImageJpaEntity(Long lessonId, String imageUrl) {

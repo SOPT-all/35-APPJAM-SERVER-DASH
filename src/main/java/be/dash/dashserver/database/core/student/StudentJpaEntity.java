@@ -39,7 +39,7 @@ public class StudentJpaEntity extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private MemberJpaEntity member;
 
-    @Column(nullable = false)
+    @Column(nullable = false,  columnDefinition = "TEXT")
     private String profileImageUrl;
 
     @Column(nullable = false)
