@@ -41,8 +41,8 @@ public class ReservationRepositoryAdapter implements ReservationRepository {
     }
 
     @Override
-    public long save(long memberId, long lessonId) {
-        ReservationJpaEntity reservationJpaEntity = new ReservationJpaEntity(lessonId, memberId);
+    public long save(long studentId, long lessonId) {
+        ReservationJpaEntity reservationJpaEntity = new ReservationJpaEntity(lessonId, studentId);
         reservationJpaRepository.save(reservationJpaEntity);
         return reservationJpaEntity.getId();
     }
