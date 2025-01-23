@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import be.dash.dashserver.core.domain.reservation.Reservation;
 import be.dash.dashserver.database.core.common.BaseCreatedAtEntity;
 import lombok.AccessLevel;
@@ -14,7 +15,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "reservation")
+@Table(name = "reservation",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"lessonId", "studentId"}))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReservationJpaEntity extends BaseCreatedAtEntity {
 
