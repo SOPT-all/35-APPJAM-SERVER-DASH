@@ -68,14 +68,6 @@ public class MemberService {
     public List<ReservationResult> getMemberReservations(Long memberId) {
         long studentId = memberRepository.findStudentByMemberId(memberId).getId();
         Reservations reservations = reservationRepository.findAllByStudentId(studentId);
-        List<Long> list = reservations.getReservations().stream().map(Reservation::getId).toList();
-        Set<Long> lessonIds1 = reservations.getLessonIds();
-        for (long l : list) {
-            System.out.println(l);
-        }
-        for (long l : lessonIds1) {
-            System.out.println(l);
-        }
         Set<Long> lessonIds = reservations.getLessonIds();
         List<Lesson> myLessons = lessonRepository.findAllByIdsOrderByStartDate(lessonIds);
         return myLessons.stream()
