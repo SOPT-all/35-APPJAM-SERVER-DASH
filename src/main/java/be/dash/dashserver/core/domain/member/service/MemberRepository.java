@@ -26,5 +26,5 @@ public interface MemberRepository {
 
     void updateRole(Long id, Role role);
 
-    List<Member> findAllByIds(List<Long> memberIds);
+    List<Member> findAllByStudentIds(List<Long> studentIds);
 }

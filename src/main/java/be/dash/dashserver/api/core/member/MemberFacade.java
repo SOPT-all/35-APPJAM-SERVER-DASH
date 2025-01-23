@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import be.dash.dashserver.api.core.member.dto.MyLessonResponse;
 import be.dash.dashserver.api.core.member.dto.MyLessonsResponse;
 import be.dash.dashserver.api.core.member.dto.ReservationDetailedResponse;
@@ -55,7 +54,7 @@ public class MemberFacade {
                 .map(Student::getId)
                 .toList();
         List<LocalDateTime> reservationDateTimes = reservations.getCreatedAt();
-        List<Member> members = memberService.findAllByIds(studentIds);
+        List<Member> members = memberService.findAllByStudentIds(studentIds);
         return MyLessonDetailedResponse.from(lesson, members, reservationDateTimes);
     }
 }

@@ -74,7 +74,7 @@ public class MemberService {
                 .orElseThrow(() -> new ForbiddenException("해당하는 선생님을 찾을 수 없습니다."));
     }
 
-    public List<Member> findAllByIds(List<Long> memberIds) {
-        return memberRepository.findAllByIds(memberIds);
+    public List<Member> findAllByStudentIds(List<Long> studentIds) {
+        return memberRepository.findAllByStudentIds(studentIds);
     }
 }
