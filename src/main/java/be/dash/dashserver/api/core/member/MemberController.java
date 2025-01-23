@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import be.dash.dashserver.api.core.member.dto.MemberResponse;
-import be.dash.dashserver.api.core.member.dto.MyLessonDetailedResponse;
 import be.dash.dashserver.api.core.member.dto.MyLessonsResponse;
 import be.dash.dashserver.api.core.member.dto.OnBoardRequest;
 import be.dash.dashserver.api.core.member.dto.ReservationDetailedResponse;

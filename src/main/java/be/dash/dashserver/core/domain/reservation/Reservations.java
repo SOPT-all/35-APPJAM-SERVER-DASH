@@ -1,5 +1,6 @@
 package be.dash.dashserver.core.domain.reservation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,5 +27,11 @@ public class Reservations {
 
     public List<Long> getStudentIds() {
         return reservations.stream().map(Reservation::getStudentId).toList();
+    }
+
+    public List<LocalDateTime> getCreatedAt() {
+        return reservations.stream()
+                .map(Reservation::getCreatedAt)
+                .toList();
     }
 }
