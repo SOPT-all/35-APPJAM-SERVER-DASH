@@ -20,7 +20,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 public class S3ImageUploader implements ImageUploader {
     private final S3Properties s3Properties;
     private final S3Config s3Config;
-    private static final List<String> IMAGE_EXTENSIONS = Arrays.asList("image/jpeg", "image/png", "image/jpg", "image/webp");
+    private static final List<String> IMAGE_EXTENSIONS = Arrays.asList("image/jpeg", "image/png", "image/jpg", "image/webp", "image/heic", "image/heif");
 
     @Override
     public String uploadImage(MultipartFile image) throws IOException {
@@ -49,7 +49,7 @@ public class S3ImageUploader implements ImageUploader {
     private void validateExtension(MultipartFile image) {
         String contentType = image.getContentType();
         if (!IMAGE_EXTENSIONS.contains(contentType)) {
-            throw new BadRequestException("이미지 확장자는 jpg, png, webp만 가능합니다.");
+            throw new BadRequestException("이미지 확장자는 jpg, png, webp, heic, heif만 가능합니다.");
         }
     }
 }
