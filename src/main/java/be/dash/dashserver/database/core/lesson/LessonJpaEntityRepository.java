@@ -8,17 +8,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import be.dash.dashserver.core.domain.common.Genre;
-import be.dash.dashserver.database.core.teacher.projection.TeacherLessonCount;
 
 public interface LessonJpaEntityRepository extends JpaRepository<LessonJpaEntity, Long>, JpaSpecificationExecutor<LessonJpaEntity> {
-
-    @Query("select new be.dash.dashserver.database.core.teacher.projection.TeacherLessonCount(t.id, t.member.nickname, count(l)) " +
-            "from LessonJpaEntity l " +
-            "join l.teacher t " +
-            "where t.member.nickname like %:keyword% " +
-            "group by t.member.nickname " +
-            "order by count(l) desc")
-    List<TeacherLessonCount> findTeacherLessonCountsDesc(@Param("keyword") String keyword);
 
     @Query("select l.genre " +
             "from LessonJpaEntity l " +
