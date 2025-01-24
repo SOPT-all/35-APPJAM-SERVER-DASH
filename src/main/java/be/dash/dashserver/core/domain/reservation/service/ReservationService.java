@@ -1,7 +1,6 @@
 package be.dash.dashserver.core.domain.reservation.service;
 
 
-import javax.print.DocFlavor.STRING;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +8,6 @@ import be.dash.dashserver.core.domain.lesson.service.LessonRepository;
 import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.service.MemberRepository;
 import be.dash.dashserver.core.domain.payment.PaymentClientApi;
-import be.dash.dashserver.core.domain.payment.dto.PaymentResult;
 import be.dash.dashserver.core.domain.reservation.Reservation;
 import be.dash.dashserver.core.domain.reservation.Reservations;
 import be.dash.dashserver.core.domain.reservation.command.CreateReservationCommand;

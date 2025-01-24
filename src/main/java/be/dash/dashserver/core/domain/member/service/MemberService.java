@@ -7,16 +7,14 @@ import org.springframework.transaction.annotation.Transactional;
 import be.dash.dashserver.core.domain.lesson.Lesson;
 import be.dash.dashserver.core.domain.lesson.service.LessonRepository;
 import be.dash.dashserver.core.domain.member.Member;
-import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.domain.member.Student;
 import be.dash.dashserver.core.domain.member.command.OnboardCommand;
-import be.dash.dashserver.core.domain.reservation.Reservation;
 import be.dash.dashserver.core.domain.reservation.Reservations;
 import be.dash.dashserver.core.domain.reservation.service.ReservationRepository;
-import be.dash.dashserver.core.log.annotation.Trace;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.domain.teacher.service.TeacherRepository;
 import be.dash.dashserver.core.exception.ForbiddenException;
+import be.dash.dashserver.core.log.annotation.Trace;
 import lombok.RequiredArgsConstructor;
 
 @Trace

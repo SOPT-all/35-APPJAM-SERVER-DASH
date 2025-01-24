@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestClient;
 import be.dash.dashserver.core.domain.payment.PaymentClientApi;
-import be.dash.dashserver.core.domain.payment.dto.PaymentInformation;
 import be.dash.dashserver.core.domain.payment.dto.CancelReason;
+import be.dash.dashserver.core.domain.payment.dto.PaymentInformation;
 import be.dash.dashserver.core.domain.payment.dto.PaymentResult;
 import be.dash.dashserver.external.config.payment.TossProperties;
 
