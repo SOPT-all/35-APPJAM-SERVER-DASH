@@ -1,7 +1,7 @@
 package be.dash.dashserver.core.domain.reservation.command;
 
 import java.math.BigDecimal;
-import be.dash.dashserver.core.domain.payment.PaymentInformation;
+import be.dash.dashserver.core.domain.payment.dto.PaymentInformation;
 
 public record CreateReservationCommand(String paymentKey,
                                        String orderId,

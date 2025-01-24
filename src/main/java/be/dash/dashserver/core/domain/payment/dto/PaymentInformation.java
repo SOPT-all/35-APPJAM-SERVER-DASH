@@ -1,4 +1,4 @@
-package be.dash.dashserver.core.domain.payment;
+package be.dash.dashserver.core.domain.payment.dto;
 
 import java.math.BigDecimal;
 
