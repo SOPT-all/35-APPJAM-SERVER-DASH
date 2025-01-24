@@ -49,7 +49,7 @@ public class ReservationService {
             reservationId = reservationRepository.save(student.getId(), command.lessonId());
         } catch (DataIntegrityViolationException e) {
             paymentClientApi.cancelByInternalError(command.paymentKey());
-            throw new ConflictException("이미 예약된 수업입니다ㅋ.");
+            throw new ConflictException("이미 예약된 수업입니다.");
         }
         lessonRepository.increaseReservationCount(command.lessonId());
         return reservationId;
