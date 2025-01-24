@@ -8,9 +8,7 @@ spring:
     console:
       enabled: true
   datasource:
-    url: jdbc:mysql://localhost:3306/dash?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: wodus050&
+    url: jdbc:h2:mem:dash
 
 
   jpa:
@@ -40,3 +38,13 @@ s3:
 naver:
   client-id: ${CLIENT_ID}
   client-secret: ${CLIENT_SECRET}
+
+toss:
+  client_id: ${TOSS_CLIENT_ID}
+  payment_uri: ${TOSS_PAYMENT_URI}
+  connection-timeout: ${CONNECTION_TIMEOUT}
+  read-timeout: ${READ_TIMEOUT}
+  socket-timeout: ${SOCKET_TIMEOUT}
+  cancel-uri: ${TOSS_CANCEL_URI}
+
+
