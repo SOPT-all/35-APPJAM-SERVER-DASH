@@ -8,9 +8,12 @@ public record LocationResponse(
         String oldStreetAddress) {
     public static LocationResponse from(Location location) {
         return new LocationResponse(
-                location.getTitle(),
+                trim(location.getTitle()),
                 location.getRoadAddress(),
                 location.getAddress()
         );
+    }
+    private static String trim(String string) {
+        return string.replaceAll("<[^>]*>", "");
     }
 }
