@@ -37,3 +37,12 @@ s3:
 naver:
   client-id: 1234
   client-secret: 1234
+
+toss:
+  client_id: 1234
+  payment_uri: 1234
+  connection-timeout: 1234
+  read-timeout: 1234
+  socket-timeout: 1234
+  cancel-uri: 1234
+
