@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import be.dash.dashserver.core.domain.common.Genre;
@@ -44,4 +45,10 @@ public interface LessonJpaEntityRepository extends JpaRepository<LessonJpaEntity
     List<LessonJpaEntity> findAllByTeacherIdOOrderByStartDateTime(Long teacherId);
 
     boolean existsByTeacherIdAndId(long teacherId, long lessonId);
+
+    @Modifying
+    @Query("update LessonJpaEntity l " +
+            "set l.reservationCount = l.reservationCount + 1 " +
+            "where l.id = :lessonId")
+    void increaseReservationCount(long lessonId);
 }

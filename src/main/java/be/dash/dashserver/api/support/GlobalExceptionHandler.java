@@ -15,8 +15,10 @@ import be.dash.dashserver.api.exception.DashApiException;
 import be.dash.dashserver.api.exception.ErrorMessage;
 import be.dash.dashserver.core.auth.UnAuthorizedException;
 import be.dash.dashserver.core.exception.BadRequestException;
+import be.dash.dashserver.core.exception.ConflictException;
 import be.dash.dashserver.core.exception.ForbiddenException;
 import be.dash.dashserver.core.exception.NotFoundException;
+import be.dash.dashserver.core.exception.PaymentClientException;
 import be.dash.dashserver.core.log.LogForm;
 import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.services.s3.model.S3Exception;
@@ -95,6 +97,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(S3Exception.class)
     public ResponseEntity<ErrorMessage> handleS3Exception(S3Exception e) {
         log.warn("handleS3Exception in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        return ResponseEntity.badRequest().body(new ErrorMessage(e.getMessage()));
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ErrorMessage> handleForbiddenException(ConflictException e) {
+        log.warn("handleForbiddenException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorMessage(e.getMessage()));
+    }
+
+    @ExceptionHandler(PaymentClientException.class)
+    public ResponseEntity<ErrorMessage> handlePaymentClientException(PaymentClientException e) {
+        log.warn("handlePaymentClientException in GlobalExceptionHandler throw {} : {}", e.getClass(), e.getMessage());
         return ResponseEntity.badRequest().body(new ErrorMessage(e.getMessage()));
     }
 

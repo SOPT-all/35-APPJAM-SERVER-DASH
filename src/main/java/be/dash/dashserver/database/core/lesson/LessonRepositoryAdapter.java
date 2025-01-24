@@ -15,6 +15,7 @@ import be.dash.dashserver.core.domain.lesson.Videos;
 import be.dash.dashserver.core.domain.lesson.service.LessonRepository;
 import be.dash.dashserver.core.domain.teacher.Teacher;
 import be.dash.dashserver.core.exception.DashException;
+import be.dash.dashserver.core.exception.NotFoundException;
 import be.dash.dashserver.database.core.member.MemberJpaEntity;
 import be.dash.dashserver.database.core.member.MemberJpaRepository;
 import be.dash.dashserver.database.core.teacher.TeacherImageJpaEntity;
@@ -139,6 +140,18 @@ public class LessonRepositoryAdapter implements LessonRepository {
     @Override
     public List<Lesson> findAllByTeacherIdOrderByStartDateTime(long teacherId) {
         return getLessons(lessonJpaEntityRepository.findAllByTeacherIdOOrderByStartDateTime(teacherId));
+    }
+
+    @Override
+    public void increaseReservationCount(long lessonId) {
+        lessonJpaEntityRepository.increaseReservationCount(lessonId);
+    }
+
+    @Override
+    public boolean isFull(long lessonId) {
+        return lessonJpaEntityRepository.findById(lessonId)
+                .map(lessonJpaEntity -> lessonJpaEntity.getReservationCount() >= lessonJpaEntity.getMaxReservationCount())
+                .orElseThrow(() -> new NotFoundException("해당하는 수업을 찾을 수 없습니다."));
     }
 
     @Override

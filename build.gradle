@@ -60,7 +60,9 @@ dependencies {
 
     // Actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    
+
+    // RestClient
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.4.1'
 }
 
 tasks.named('test') {

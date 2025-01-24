@@ -30,6 +30,7 @@ import be.dash.dashserver.core.domain.lesson.service.LessonService;
 import be.dash.dashserver.core.domain.member.Member;
 import be.dash.dashserver.core.domain.member.Role;
 import be.dash.dashserver.core.domain.member.service.MemberService;
+import be.dash.dashserver.api.core.lesson.dto.PaymentRequest;
 import be.dash.dashserver.core.domain.reservation.service.ReservationService;
 import be.dash.dashserver.core.log.annotation.Trace;
 import lombok.RequiredArgsConstructor;
@@ -106,8 +107,9 @@ public class LessonController {
     @PostMapping("/{lessonId}/reservations")
     public ResponseEntity<Void> createReservation(
             @MemberId Long memberId,
-            @PathVariable @Min(value = 1L, message = "수업의 식별자는 양수로 이루어져야 합니다.") long lessonId) {
-        long reservationId = reservationService.reserve(memberId, lessonId);
+            @Valid @RequestBody PaymentRequest paymentRequest,
+            @PathVariable@Min(value = 1L, message = "수업의 식별자는 양수로 이루어져야 합니다.") long lessonId) {
+        long reservationId = reservationService.reserve(paymentRequest.toCommand(memberId, lessonId));
         return ResponseEntity.created(URI.create("/reservations/" + reservationId)).build();
     }
 }

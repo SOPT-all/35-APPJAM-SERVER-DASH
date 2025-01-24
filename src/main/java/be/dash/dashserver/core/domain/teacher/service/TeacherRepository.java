@@ -11,7 +11,7 @@ public interface TeacherRepository {
 
     void register(Teacher teacher);
 
-    Optional<Teacher> findByMemberId(Long aLong);
+    Optional<Teacher> findByMemberId(Long memberId);
 
     Teacher findByTeacherId(Long teacherId);
 }
