@@ -16,6 +16,7 @@ public class TossClientCaller implements PaymentClientApi {
 
     private static final String BASIC = "Basic ";
     private static final String CANCEL_REASON_INTERNAL_ERROR = "내부 오류";
+    private static final String DELIMITER = ":";
 
     private final TossProperties tossProperties;
     private final RestClient tossRestClient;
@@ -27,7 +28,7 @@ public class TossClientCaller implements PaymentClientApi {
         this.tossRestClient = tossRestClient;
         this.paymentClientResponseErrorHandler = paymentClientResponseErrorHandler;
         this.secretKey = Base64.getEncoder()
-                .encodeToString((tossProperties.clientId()).getBytes());
+                .encodeToString((tossProperties.clientId() + DELIMITER).getBytes());
     }
 
     @Override
