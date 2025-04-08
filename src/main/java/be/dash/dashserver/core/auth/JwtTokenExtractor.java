@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JwtTokenExtractor {
 
+    private static final String JWT_CLAIM_ROLE = "role";
+
     private final JwtProperties jwtProperties;
     private final KeyGenerator keyGenerator;
 
@@ -25,9 +27,8 @@ public class JwtTokenExtractor {
                 .setSigningKey(keyGenerator.getKeyFromString(jwtProperties.secretKey()))
                 .parseClaimsJws(token)
                 .getBody()
-                .get("role", String.class);
+                .get(JWT_CLAIM_ROLE, String.class);
 
         return Role.valueOf(role);
     }
-
 }
