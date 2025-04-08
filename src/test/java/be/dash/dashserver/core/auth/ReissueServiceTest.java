@@ -44,7 +44,7 @@ class ReissueServiceTest extends ServiceSliceTest {
                 .isEqualTo(reissue.refreshToken());
     }
 
-    @DisplayName("동시에 reissue시 마지막 리프레시 토큰으로 업데이트된다.")
+    @DisplayName("동시에 reissue시 마지막 리프레시 토큰으로 업데이트한다.")
     @Test
     void reissue_concurrent() throws InterruptedException, ExecutionException {
         // Given
