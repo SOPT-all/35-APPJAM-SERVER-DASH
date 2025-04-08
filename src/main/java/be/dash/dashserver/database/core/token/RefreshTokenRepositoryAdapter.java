@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class RefreshRefreshTokenRepositoryAdapter implements RefreshTokenRepository {
+public class RefreshTokenRepositoryAdapter implements RefreshTokenRepository {
 
     private final RefreshTokenJpaRepository refreshTokenJpaRepository;
 
@@ -24,7 +24,17 @@ public class RefreshRefreshTokenRepositoryAdapter implements RefreshTokenReposit
     }
 
     @Override
-    public void deleteAllByMemberId(long memberId) {
-        refreshTokenJpaRepository.deleteAllByMemberId(memberId);
+    public boolean existsByMemberId(long memberId) {
+        return refreshTokenJpaRepository.existsByMemberId(memberId);
+    }
+
+    @Override
+    public void update(String refreshToken, long id) {
+        refreshTokenJpaRepository.update(refreshToken, id);
+    }
+
+    @Override
+    public void deleteByMemberId(long memberId) {
+        refreshTokenJpaRepository.deleteByMemberId(memberId);
     }
 }

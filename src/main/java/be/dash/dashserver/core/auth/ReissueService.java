@@ -25,8 +25,7 @@ public class ReissueService {
         String newAccessToken = jwtTokenGenerator.createAccessToken(memberId, role);
         String newRefreshToken = jwtTokenGenerator.createRefreshToken(memberId, role);
 
-        refreshTokenRepository.save(newRefreshToken, Long.parseLong(memberId));
-
+        refreshTokenRepository.update(newRefreshToken, Long.parseLong(memberId));
         return new Token(newAccessToken, newRefreshToken);
     }
 

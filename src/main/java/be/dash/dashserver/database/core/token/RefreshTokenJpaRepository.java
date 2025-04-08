@@ -10,5 +10,11 @@ public interface RefreshTokenJpaRepository extends JpaRepository<RefreshTokenJpa
 
     @Modifying
     @Query("DELETE FROM RefreshTokenJpaEntity r WHERE r.memberId = :memberId")
-    void deleteAllByMemberId(long memberId);
+    void deleteByMemberId(long memberId);
+
+    boolean existsByMemberId(long memberId);
+
+    @Modifying
+    @Query("UPDATE RefreshTokenJpaEntity r SET r.refreshToken = :refreshToken WHERE r.id = :id")
+    void update(String refreshToken, long id);
 }

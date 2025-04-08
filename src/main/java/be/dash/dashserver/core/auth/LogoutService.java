@@ -13,7 +13,7 @@ public class LogoutService {
 
     @Transactional
     public void logout(long memberId) {
-        refreshTokenRepository.deleteAllByMemberId(memberId);
+        refreshTokenRepository.deleteByMemberId(memberId);
     }
 }
 

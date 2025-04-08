@@ -7,5 +7,9 @@ public interface RefreshTokenRepository {
 
     Optional<RefreshToken> findByRefreshToken(String refreshToken);
 
-    void deleteAllByMemberId(long memberId);
+    boolean existsByMemberId(long memberId);
+
+    void deleteByMemberId(long memberId);
+
+    void update(String refreshToken, long id);
 }
