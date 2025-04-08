@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import be.dash.dashserver.ServiceSliceTest;
 import be.dash.dashserver.core.auth.command.LoginCommand;
 import be.dash.dashserver.core.auth.dto.KakaoAccount;
@@ -15,14 +16,19 @@ import be.dash.dashserver.core.auth.dto.LoginResult;
 import be.dash.dashserver.core.auth.dto.OauthTokenResult;
 import be.dash.dashserver.core.auth.dto.SocialInfoResult;
 import be.dash.dashserver.core.domain.member.SocialProvider;
+import be.dash.dashserver.database.core.token.RefreshTokenRepositoryAdapter;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class LoginServiceTest extends ServiceSliceTest {
     @Autowired
     private LoginService loginService;
+    @MockitoSpyBean
+    private RefreshTokenRepositoryAdapter refreshTokenRepositoryAdapter;
     @MockitoBean
     private OauthClientApi oauthClientApi;
 
@@ -37,7 +43,25 @@ class LoginServiceTest extends ServiceSliceTest {
                 .thenReturn(new SocialInfoResult("id", new KakaoAccount("email", new KakaoProfile("nickname"))));
         LoginResult login = loginService.login(new LoginCommand(SocialProvider.KAKAO, "redirectUrl", "code"));
 
+        verify(refreshTokenRepositoryAdapter).save(anyString(), anyLong());
         Assertions.assertThat(login.accessToken()).isNotNull();
         Assertions.assertThat(login.refreshToken()).isNotNull();
+    }
+
+    @Test
+    @DisplayName("재로그인 시 리프레쉬 토큰을 업데이트한다.")
+    void reLogin() throws InterruptedException {
+        // Given
+        when(oauthClientApi.getAccessToken(anyString(), anyString()))
+                .thenReturn(new OauthTokenResult("accessToken"));
+
+        when(oauthClientApi.getSocialUserInfo(anyString()))
+                .thenReturn(new SocialInfoResult("id", new KakaoAccount("email", new KakaoProfile("nickname"))));
+        LoginResult login = loginService.login(new LoginCommand(SocialProvider.KAKAO, "redirectUrl", "code"));
+        // When
+        LoginResult reLogin = loginService.login(new LoginCommand(SocialProvider.KAKAO, "redirectUrl", "code"));
+
+        // Then
+        verify(refreshTokenRepositoryAdapter).update(anyString(), anyLong());
     }
 }

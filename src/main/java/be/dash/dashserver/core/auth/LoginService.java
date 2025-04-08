@@ -26,13 +26,17 @@ public class LoginService {
         SocialInfoResult socialUserInfo = getSocialInfo(command);
         AuthMember authMember = loadOrCreateMember(command, socialUserInfo);
         Token token = createToken(authMember);
-        updateRefreshToken(token.refreshToken(), authMember.getId());
+        upsertRefreshToken(token.refreshToken(), authMember.getId());
         Member member = memberRepository.findById(authMember.getId());
 
         return LoginResult.of(token, member.isOnboarded());
     }
 
-    private void updateRefreshToken(String refreshToken, long id) {
+    private void upsertRefreshToken(String refreshToken, long id) {
+        if (refreshTokenRepository.existsByMemberId(id)) {
+            refreshTokenRepository.update(refreshToken, id);
+            return;
+        }
         refreshTokenRepository.save(refreshToken, id);
     }
 
