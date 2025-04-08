@@ -9,7 +9,7 @@ public interface RefreshTokenRepository {
 
     boolean existsByMemberId(long memberId);
 
-    void deleteAllByMemberId(long memberId);
+    void deleteByMemberId(long memberId);
 
     void update(String refreshToken, long id);
 }
