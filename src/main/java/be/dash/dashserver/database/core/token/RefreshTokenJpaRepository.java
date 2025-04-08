@@ -15,6 +15,6 @@ public interface RefreshTokenJpaRepository extends JpaRepository<RefreshTokenJpa
     boolean existsByMemberId(long memberId);
 
     @Modifying
-    @Query("UPDATE RefreshTokenJpaEntity r SET r.refreshToken = :refreshToken WHERE r.id = :id")
+    @Query("UPDATE RefreshTokenJpaEntity r SET r.refreshToken = :refreshToken WHERE r.memberId = :id")
     void update(String refreshToken, long id);
 }

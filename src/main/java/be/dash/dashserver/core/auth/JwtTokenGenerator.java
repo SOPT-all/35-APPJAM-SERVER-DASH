@@ -42,7 +42,7 @@ public class JwtTokenGenerator {
         Date now = new Date();
         Map<String, Object> claims = new HashMap<>();
         claims.put(JWT_CLAIM_ROLE, role);
-        claims.put(JWT_IS_ACCESS_TOKEN, true);
+        claims.put(JWT_IS_ACCESS_TOKEN, false);
 
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)

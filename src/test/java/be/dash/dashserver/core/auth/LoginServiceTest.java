@@ -35,14 +35,19 @@ class LoginServiceTest extends ServiceSliceTest {
         // Given
         when(oauthClientApi.getAccessToken(anyString(), anyString()))
                 .thenReturn(new OauthTokenResult("accessToken"));
-
         when(oauthClientApi.getSocialUserInfo(anyString()))
                 .thenReturn(new SocialInfoResult("id", new KakaoAccount("email", new KakaoProfile("nickname"))));
+
+        // When
         LoginResult login = loginService.login(new LoginCommand(SocialProvider.KAKAO, "redirectUrl", "code"));
 
-        verify(refreshTokenRepositoryAdapter).save(anyString(), anyLong());
+        // Then
+        Assertions.assertThat(refreshTokenRepositoryAdapter.findByRefreshToken(login.refreshToken()).get().getRefreshToken())
+                        .isEqualTo(login.refreshToken());
         Assertions.assertThat(login.accessToken()).isNotNull();
         Assertions.assertThat(login.refreshToken()).isNotNull();
+        verify(refreshTokenRepositoryAdapter).save(anyString(), anyLong());
+
     }
 
     @Test
@@ -59,6 +64,8 @@ class LoginServiceTest extends ServiceSliceTest {
         LoginResult reLogin = loginService.login(new LoginCommand(SocialProvider.KAKAO, "redirectUrl", "code"));
 
         // Then
+        verify(refreshTokenRepositoryAdapter).save(anyString(), anyLong());
         verify(refreshTokenRepositoryAdapter).update(anyString(), anyLong());
+
     }
 }
